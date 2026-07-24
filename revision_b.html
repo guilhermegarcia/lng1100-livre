@@ -1,0 +1,960 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="fr" xml:lang="fr"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.6.40">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>13&nbsp; Révision (b) – LNG-1100</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./extras.html" rel="next">
+<link href="./analysis_glm2.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-549806ee2085284f45b00abea8c6df48.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-925933c84195212b8c8a13ff5cdcbc27.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/quarto-contrib/fontawesome6-1.2.0/all.min.css" rel="stylesheet">
+<link href="site_libs/quarto-contrib/fontawesome6-1.2.0/latex-fontsize.css" rel="stylesheet">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "Pas de résultats",
+    "search-matching-documents-text": "documents trouvés",
+    "search-copy-link-title": "Copier le lien vers la recherche",
+    "search-hide-matches-text": "Cacher les correspondances additionnelles",
+    "search-more-match-text": "correspondance de plus dans ce document",
+    "search-more-matches-text": "correspondances de plus dans ce document",
+    "search-clear-button-title": "Effacer",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Annuler",
+    "search-submit-button-title": "Envoyer",
+    "search-label": "Recherche"
+  }
+}</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="nav-sidebar floating">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Basculer la barre latérale" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./partie2.html">Partie II</a></li><li class="breadcrumb-item"><a href="./revision_b.html"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Révision (b)</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Basculer la barre latérale" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Recherche" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">LNG-1100</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Recherche"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Bienvenue!</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./partie1.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Partie I</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Basculer la section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./fichiers.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Préparez-vous</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./intro_a_r.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Intro à R</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./exploration_a.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Exploration</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./analysis_testt.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Analyse : le test <em>t</em></span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./analysis_anova.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Analyse : l’ANOVA</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./analysis_lm1.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Régression linéaire (a)</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./analysis_lm2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Régression linéaire (b)</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./quarto-markdown.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Quarto</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./revision_a.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Révision (a)</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./partie2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Partie II</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Basculer la section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./nettoyage.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Nettoyage et exploration</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./analysis_glm1.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Régression logistique (a)</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./analysis_glm2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Régression logistique (b)</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./revision_b.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Révision (b)</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./extras.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Extras</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Basculer la section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./problemes.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Problèmes techniques</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./outils.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Outils</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./projects.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Projets</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./reussir.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Suggestions</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table des matières</h2>
+   
+  <ul>
+  <li><a href="#un-aperçu-de-notre-cours" id="toc-un-aperçu-de-notre-cours" class="nav-link active" data-scroll-target="#un-aperçu-de-notre-cours"><span class="header-section-number">13.1</span> Un aperçu de notre cours</a></li>
+  <li><a href="#les-concepts-les-plus-importants" id="toc-les-concepts-les-plus-importants" class="nav-link" data-scroll-target="#les-concepts-les-plus-importants"><span class="header-section-number">13.2</span> Les concepts les plus importants</a></li>
+  <li><a href="#projet-b" id="toc-projet-b" class="nav-link" data-scroll-target="#projet-b"><span class="header-section-number">13.3</span> Projet B</a></li>
+  <li><a href="#pratique-finale" id="toc-pratique-finale" class="nav-link" data-scroll-target="#pratique-finale"><i class="fa-solid fa-bullseye fa-xs" aria-label="bullseye"></i> Pratique finale</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./partie2.html">Partie II</a></li><li class="breadcrumb-item"><a href="./revision_b.html"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Révision (b)</span></a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Révision (b)</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<style>
+img.wrapfig {
+float: right; 
+margin: 10px;
+}
+</style>
+<blockquote class="blockquote">
+<p>Ce chapitre doit être lu <strong>avant</strong> la séance 13</p>
+</blockquote>
+<section id="un-aperçu-de-notre-cours" class="level2" data-number="13.1">
+<h2 data-number="13.1" data-anchor-id="un-aperçu-de-notre-cours"><span class="header-section-number">13.1</span> Un aperçu de notre cours</h2>
+<p>Révisons les objectifs de LNG-1100, détaillés sur monPortail :</p>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="true" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Important
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-1" class="callout-1-contents callout-collapse collapse show">
+<div class="callout-body-container callout-body">
+<ul>
+<li>Formuler et tester des hypothèses de recherche [en linguistique] <!-- - proposer des questions de recherche [pertinentes à la linguistique] --> <!-- - contraster des designs expérimentaux appropriés étant donnée une hypothèse spécifique  --></li>
+<li>Se familiariser avec les éléments de base de l’analyse de données quantitatives <!-- - manipuler des données en utilisant le langage R et l’extension tidyverse --> <!-- - décrire des patrons pertinents dans des données linguistiques en utilisant des tableaux et des figures --> <!-- - appliquer des modèles de régression aux données linguistiques --></li>
+<li>Interpréter et synthétiser des résultats statistiques dans un rapport scientifique <!-- - associer des résultats statistiques aux objectifs de recherche  --> <!-- - développer des rapports de recherche en utilisant Markdown et R --></li>
+</ul>
+</div>
+</div>
+</div>
+<p>Tous nos objectifs sont concentrés dans nos questionnaires et dans les deux projets du cours, où vous devez compléter une analyse de données complète. Donc, pendant le cours, vous avez :</p>
+<ol type="1">
+<li>importé des fichiers de données en format <code>csv</code>;</li>
+<li>nettoyé des fichiers générés à partir des sondages du <em>Microsoft Forms</em> (Questionnaire 3) et du <em>Google Forms</em> (Questionnaire 4);</li>
+<li>exploré des patrons pertinents en utilisant des tableaux résumés ainsi que des graphiques appropriés, effectuant les transformations nécessaires;<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></li>
+<li>exécuté et interprété des modèles statistiques (linéaire et logistique);</li>
+<li>communiqué vos résultats dans un rapport scientifique/académique en format <code>PDF</code>, dans lequel vous avez géré vos références bibliographiques en utilisant un fichier <code>.bib</code>;</li>
+<li>développé des compétences en gestion de fichiers afin d’optimiser votre flux de travail.</li>
+</ol>
+<p>Les étapes énumérées ci-dessus combinent l’analyse de données quantitatives, la composition de documents académiques et la gestion bibliographique — tout cela à partir d’un seul outil : RStudio. Même si vous n’utilisez pas des données quantitatives dans un projet, vous pouvez facilement le développer en utilisant Quarto. Donc, pour vos cours futurs dans le bac, vous pouvez facilement continuer à utiliser RStudio ainsi que votre bibliothèque de références.</p>
+</section>
+<section id="les-concepts-les-plus-importants" class="level2" data-number="13.2">
+<h2 data-number="13.2" data-anchor-id="les-concepts-les-plus-importants"><span class="header-section-number">13.2</span> Les concepts les plus importants</h2>
+<p>Voici une liste de concepts statistiques discutés en classe pendant le cours.</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Les concepts de base">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Les concepts de base
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-2" class="callout-2-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<ul>
+<li><strong>Valeur</strong> <span class="math inline">\(p\)</span> : la probabilité de trouver des données en question étant donné l’hypothèse nulle
+<ul>
+<li>Si l’hypothèse nulle est vraie et on la rejette <span class="math inline">\(\rightarrow\)</span> erreur de type I. Autrement dit, notre effet n’est pas réel, mais notre valeur <span class="math inline">\(p\)</span> est significatif</li>
+<li>Si l’hypothèse nulle est fausse et on ne la rejette pas <span class="math inline">\(\rightarrow\)</span> erreur de type II. Autrement dit, notre effet est réel, mais notre valeur <span class="math inline">\(p\)</span> n’est pas significatif (la <a href="https://fr.wikipedia.org/wiki/Puissance_statistique#:~:text=La%20puissance%20statistique%20d%27un,réalité%20les%20groupes%20sont%20différents" target="_blank">puissance statistique</a>.))</li>
+<li><em>Le problème</em> : on ne sait jamais si <span class="math inline">\(H_0\)</span> est vraie</li>
+</ul></li>
+<li><strong>Intervalle de confiance</strong> : si on répétait la même expérience <span class="math inline">\(n\)</span> fois, la valeur réelle serait dans l’intervalle en question 95 % du temps (mais l’intervalle serait différent pour chaque échantillon!). Simplement dit, l’intervalle de confiance à 95 % vous dit que la moyenne de la population est dans cet intervalle avec une probabilité de 95 % (pas trop intuitif!)</li>
+<li><strong>Hypothèse nulle</strong> : notre point de départ. On n’a que deux options : rejeter l’hypothèse nulle OU ne pas rejeter l’hypothèse nulle. <strong>On ne l’accepte jamais!</strong> Autrement dit, on ne peut pas prouver l’absence d’un effet, logiquement.<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>
+<ul>
+<li>Si on n’examine qu’un groupe, <span class="math inline">\(H_0 : \mu = 0\)</span> (la moyenne est de zéro)</li>
+<li>Si on compare les moyennes de deux groupes, <em>a</em> et <em>b</em>, <span class="math inline">\(H_0 : \mu_a = \mu_b\)</span> (il n’y a pas de différence entre les deux moyennes; autrement dit, les deux groupes/échantillons viennent de la même population)</li>
+<li>Si on examine des coefficients d’un modèle, <span class="math inline">\(H_0 : \beta = 0\)</span>.</li>
+</ul></li>
+<li><strong>Intercept</strong> (<span class="math inline">\(\beta_0\)</span>) : la valeur prévue par le modèle lorsque toutes les autres variables sont <code>0</code></li>
+<li><strong>Slope</strong> (<span class="math inline">\(\beta_n\)</span>) : l’effet d’une variable prédictive</li>
+<li><strong>Log-odds</strong> : l’unité standard pour les coefficients d’une régression logistique<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a></li>
+<li><strong>Transformation <em>wide-to-long</em></strong> : processus fréquemment nécessaire si notre tableau n’est pas <em>tidy</em>, c’est-à-dire s’il contient plus d’une observation par ligne et/ou plus d’une colonne par variable d’intérêt</li>
+</ul>
+</div>
+</div>
+</div>
+<p>Lorsqu’on utilise un modèle simple, on veut mesurer l’effet d’une variable prédictive sur une variable de réponse. Normalement, on examine plusieurs variables prédictives en même temps (c.-à-d.&nbsp;un modèle multiple).</p>
+<ul>
+<li><strong>Dans une régression linéaire :</strong>
+<ul>
+<li>vérifiez si la variable de réponse est plus ou moins normale/gaussienne;</li>
+<li>interprétez l’intercept seulement si cette interprétation est utile dans votre analyse (normalement, elle n’est pas);</li>
+<li>les coefficients utilisent toujours les mêmes unités utilisées par les variables dans le modèle;</li>
+<li>on peut utiliser la fonction <code>predict()</code> pour prévoir des réponses à partir du modèle.</li>
+</ul></li>
+<li><strong>Dans une régression logistique :</strong>
+<ul>
+<li>les coefficients sont listés en <em>log-odds</em> lorsque vous utilisez <code>summary()</code> pour imprimer les résultats;</li>
+<li>on évite une interprétation d’un coefficient individuel à partir des probabilités : on utilise <em>log-odds</em> ou <em>odds</em>;</li>
+<li>si vous voulez parler des probabilités, on peut utiliser la fonction <code>predict(..., type = "response")</code> pour prévoir des réponses à partir du modèle. C’est une bonne idée de visualiser les prévisions dans une figure (<a href="analysis_d.html">page supplémentaire de la séance 13</a>).</li>
+</ul></li>
+</ul>
+</section>
+<section id="projet-b" class="level2" data-number="13.3">
+<h2 data-number="13.3" data-anchor-id="projet-b"><span class="header-section-number">13.3</span> Projet B</h2>
+<p>Notre premier projet du cours (Projet A) a produit un document <code>PDF</code>. Vous serez donc à l’aise avec la structure nécessaire pour notre dernier projet. Si jamais vous avez des questions, consultez le <a href="./projects.html">chapitre</a> d’informations sur les projets. La révision qui suit se concentre sur les méthodes statistiques utilisées dans le cours, dont certaines seront essentielles pour vos projets finaux.</p>
+<!-- Suivez les étapes suivantes attentivement. Cliquez sur les liens pour visualiser des captures d'écran qui démontrent visuellement chaque étape. -->
+<!-- ::: {.callout-note title="Comment publier votre projet" collapse="true"} -->
+<!-- 1.  Visitez [Quarto Pub](http://quartopub.com){target="_blank"} pour créer un compte gratuit. Votre adresse sera `username.quarto.pub`. Donc, choisissez un `username` approprié lorsque vous créez votre compte (j'utilise `lng1100`, mais vous pourriez utilisez votre nom ou vos initiales, par exemple) -->
+<!-- 2.  Cliquez sur [*Manage Profile and Tokens*](Figures/quarto-pub/5.png){target="_blank"} et créez un [nouveau jeton](Figures/quarto-pub/5.png){target="_blank"} -->
+<!-- 3.  Dans RStudio, cliquer sur l'onglet [*Terminal*](Figures/quarto-pub/7.png){target="_blank"} et exécutez la commande ci-dessous. `VOTRE_FICHIER.qmd` sera votre rapport pour le projet B. Assurez-vous que le nom est **exact** et que vous êtes dans le dossier correct (appuyez sur `Tab` pour naviguer dans vos dossiers)[^revision_b-4] : `quarto publish quarto-pub VOTRE_FICHIER.qmd` -->
+<!-- 4.  Choisissez [`Use another account...`](Figures/quarto-pub/8.png){target="_blank"} -->
+<!-- 5.  [Autorisez la publication](Figures/quarto-pub/9.png){target="_blank"} et assurez-vous que vous êtes connecté à votre compte Quarto Pub créé ci-dessus. [Votre navigateur vous demandera l'autorisation](Figures/quarto-pub/10.png){target="_blank"} pour connecter votre compte Quarto Pub à RStudio -->
+<!-- 6.  Sélectionnez *Use another name...* pour [choisir le nom de votre publication](Figures/quarto-pub/12.png){target="_blank"}. Utilisez le modèle `nom_projet_b_année` -->
+<!-- 7.  Voilà! Votre navigateur ouvrira une page avec votre publication : [copiez l'adresse](Figures/quarto-pub/13.png){target="_blank"} et collez-la sur monPortail -->
+<!-- 8.  Finalement, vous pouvez définir votre projet comme « [site web par défaut](Figures/quarto-pub/13.png){target="_blank"} ». Par conséquent, vous pourrez y accéder à partir de l'adresse `https://username.quarto.pub`. C'est l'option que j'ai choisie pour la page du modèle pour le projet : `https://lng1100.quarto.pub` (mon `username` ici est `lng1100`). Sinon, vous devrez utiliser `https://username.quarto.pub/nom_projet_b_année` -->
+<!-- ::: -->
+<!-- [^revision_b-4]: Par exemple, si votre projet `Qmd` est dans le dossier `Projet B`, il faudra taper `quarto publish quarto-pub Projet\ B/VOTRE_FICHIER.qmd`. Autrement dit, il faut s'assurer que vous utilisez l'adresse correcte par rapport au répertoire actuel de votre Terminal. -->
+<hr>
+</section>
+<section id="pratique-finale" class="level2 unnumbered">
+<h2 class="unnumbered" data-anchor-id="pratique-finale"><i class="fa-solid fa-bullseye fa-xs" aria-label="bullseye"></i> Pratique finale</h2>
+<p><i class="fa-solid fa-question-circle fa-xs" aria-label="question-circle"></i> <strong>Question 1.</strong> Dans une étude examinant les effets d’une méthode fantastique d’enseignement sur la performance des étudiants, les chercheurs ont exécuté une <code>M</code> avec <code>X</code> groupes d’apprenants. Les scores de performance des étudiants ont été analysés pour déterminer s’il y avait des différences significatives entre les groupes à la fin de l’étude. Les résultats étaient les suivants : <em>F</em>(2, 57) = 4,32, <em>p</em> &lt; 0,038. Répondez aux questions suivantes :</p>
+<ol type="a">
+<li>Combien de groupes <code>X</code> étaient considérés dans l’étude ?</li>
+<li>La performance des participants a été calculée à partir d’un questionnaire. Combien de questions ce questionnaire comportait-il ?</li>
+<li>Quelles sont l’hypothèse nulle et l’hypothèse alternative de l’étude ?</li>
+<li>Quelle méthode statistique <code>M</code> a été employée ?</li>
+<li>Pouvons-nous rejeter l’hypothèse nulle ?</li>
+<li>Si nous rejetons l’hypothèse nulle, pouvons-nous déterminer à partir des informations données où se situent les différences parmi les méthodes d’enseignement considérées ?</li>
+<li>Supposons que l’objectif de l’étude est de quantifier l’efficacité de la méthode d’enseignement mentionnée. Quel est d’après vous le principal problème de l’étude?</li>
+</ol>
+<p><i class="fa-solid fa-question-circle fa-xs" aria-label="question-circle"></i> <strong>Question 2.</strong> Observez le tableau ci-dessous et rapportez les résultats de l’analyse. Combien de niveaux les facteurs A–B comportent-t-ils? Combien d’observations totales avons-nous dans l’analyse?</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 27%">
+<col style="width: 24%">
+<col style="width: 16%">
+<col style="width: 9%">
+<col style="width: 9%">
+<col style="width: 12%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Source de variation</th>
+<th>Somme des carrés</th>
+<th>Degrés de liberté</th>
+<th>Moyenne des carrés</th>
+<th><em>F</em></th>
+<th><em>p</em></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Facteur A</td>
+<td>6.068</td>
+<td>2</td>
+<td>3.034</td>
+<td>9.073</td>
+<td>0.000253</td>
+</tr>
+<tr class="even">
+<td>Facteur B</td>
+<td>5.122</td>
+<td>1</td>
+<td>5.122</td>
+<td>15.316</td>
+<td>0.000174</td>
+</tr>
+<tr class="odd">
+<td>Residuals</td>
+<td>30.765</td>
+<td>92</td>
+<td>0.334</td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p><br></p>
+<p><i class="fa-solid fa-question-circle fa-xs" aria-label="question-circle"></i> <strong>Question 3.</strong> Observez le tableau ci-dessus encore une fois. Vous vous souvenez quelle est la relation entre les valeurs dans les colonnes <em>Somme des carrés</em>, …, <em>F</em>? Comment pouvons-nous dériver les valeur <em>F</em> des autres colonnes?</p>
+<p><i class="fa-solid fa-question-circle fa-xs" aria-label="question-circle"></i> <strong>Question 4.</strong> Téléchargez le fichier <code>phonetique.RData</code>. Le format <code>RData</code> offre plusieurs avantages. Importez-le en utilisant la fonction <code>load()</code>. Vérifiez les classes des variables : qu’est-ce que vous notez? Il s’agit d’une étude sur l’acquisition de contrastes vocaliques en français à partir de trois groupes de participants (trois langues maternelles). Les apprenants ont étudié le français pendant une période de six mois. Les groupes ont été séparés en deux conditions (deux méthodes d’enseignement) : la condition <code>traditionelle</code>, où les séances n’avaient pas d’information explicite sur la phonétique du français, et la condition <code>phonétique</code>, où les séances avaient un élément dédié à la phonétique du français. Avant de commencer l’expérience, tous les participants on fait un test de français qui se concentrait sur l’identification des voyelles dans la langue. Après la période de six mois, un autre test a été fait. Les scores de chaque test sont dans les données. Explorez le fichier en question et répondez aux questions suivantes.</p>
+<ol type="a">
+<li><p>Créer une figure qui résume les patrons dans les données.</p></li>
+<li><p>Modélisez les données et rapportez les résultats. La méthode d’enseignement a-t-elle un effet sur l’apprentissage des contrastes vocaliques?</p></li>
+</ol>
+<p><i class="fa-solid fa-question-circle fa-xs" aria-label="question-circle"></i> <strong>Question 5.</strong> Voici les coefficients d’un modèle statistique. Vous pouvez peut-être deviner quelles sont les données modélisées ici. Les valeurs ont été arrondies à trois chiffres (donc les valeurs <em>p</em> ne sont pas vraiment zéro). Les données décrivent les passagers à bord du Titanic. Le modèle analyse la survie de ces passagers étant données trois variables, à savoir, la classe, le sexe, et l’âge (dichotomisé : enfant vs adulte) de chaque passager. Observez le résultat ci-dessous et répondez aux questions suivantes :</p>
+<div class="cell">
+<pre><code>#&gt;             Estimate Std. Error  z value Pr(&gt;|z|)
+#&gt; (Intercept)   2.0438     0.1679  12.1709        0
+#&gt; Class2nd     -1.0181     0.1960  -5.1944        0
+#&gt; Class3rd     -1.7778     0.1716 -10.3620        0
+#&gt; ClassCrew    -0.8577     0.1573  -5.4511        0
+#&gt; SexMale      -2.4201     0.1404 -17.2358        0
+#&gt; AgeChild      1.0615     0.2440   4.3501        0</code></pre>
+</div>
+<ol type="a">
+<li><p>Vous devez savoir déjà quel type de modèle on utilise ici, étant donnée l’information ci-dessus. Si nos données sont dans un objet nommé <code>Titanic</code>, quelle serait la formule pour exécuter le modèle en question? Vous pouvez télécharger les données à partir du <a href="https://github.com/guilhermegarcia/LNG1100" target="_blank">dépôt Git</a> du cours.</p></li>
+<li><p>Quelle était la probabilité de survie à la catastrophe si vous étiez un homme dans la deuxième classe? Et d’une femme dans la même classe?</p></li>
+<li><p>Considérant les types de passagers analysés ici, quelle était le meilleure scénario possible? Calculez la probabilité de survie pour chaque combinaison possible de passager.</p></li>
+</ol>
+
+
+</section>
+<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn1"><p>Par exemple, une colonne <code>incorrect/correct</code> vers <code>0/1</code> pour qu’on puisse calculer la précision des participants, c’est-à-dire la proportion des réponses correctes par opposition aux réponses incorrectes.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>J’ai mentionné en classe que la statistique bayésienne nous permet de confirmer un effet nul. Dans notre cours, cependant, on utilise la statistique traditionnelle (fréquentiste).<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3"><p>Notez que la fonction <code>sjPlot::tab_model()</code> affiche les <em>odds</em> par défaut; consultez les dernières pages supplémentaires.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copié");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copié");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./analysis_glm2.html" class="pagination-link" aria-label="Régression logistique (b)">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Régression logistique (b)</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./extras.html" class="pagination-link" aria-label="Extras">
+        <span class="nav-page-text">Extras</span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

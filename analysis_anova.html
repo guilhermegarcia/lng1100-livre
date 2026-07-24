@@ -1,0 +1,1195 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="fr" xml:lang="fr"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.9.38">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>5&nbsp; Analyse : l’ANOVA – LNG-1100</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./analysis_lm1.html" rel="next">
+<link href="./analysis_testt.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-ba523a544e19dd979aacfd4dc1569116.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/quarto-contrib/fontawesome6-1.2.0/all.min.css" rel="stylesheet">
+<link href="site_libs/quarto-contrib/fontawesome6-1.2.0/latex-fontsize.css" rel="stylesheet">
+<script src="site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
+<link href="site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
+<link href="site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "Pas de résultats",
+    "search-matching-documents-text": "documents trouvés",
+    "search-copy-link-title": "Copier le lien vers la recherche",
+    "search-hide-matches-text": "Cacher les correspondances additionnelles",
+    "search-more-match-text": "correspondance de plus dans ce document",
+    "search-more-matches-text": "correspondances de plus dans ce document",
+    "search-clear-button-title": "Effacer",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Annuler",
+    "search-submit-button-title": "Envoyer",
+    "search-label": "Recherche"
+  }
+}</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="nav-sidebar floating quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Basculer la barre latérale" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./partie1.html">Partie I</a></li><li class="breadcrumb-item"><a href="./analysis_anova.html"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Analyse : l’ANOVA</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Basculer la barre latérale" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Recherche" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">LNG-1100</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Recherche"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Bienvenue!</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./partie1.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Partie I</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Basculer la section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./fichiers.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Préparez-vous</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./intro_a_r.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Intro à R</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./exploration_a.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Exploration</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./analysis_testt.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Analyse : le test <em>t</em></span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./analysis_anova.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Analyse : l’ANOVA</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./analysis_lm1.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Régression linéaire (a)</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./analysis_lm2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Régression linéaire (b)</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./revision_a.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Bilan du mi-session</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./partie2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Partie II</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Basculer la section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./nettoyage.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Nettoyage (a)</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./nettoyage2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Nettoyage (b)</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./analysis_glm1.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Régression logistique (a)</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./analysis_glm2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Régression logistique (b)</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./extras.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Extras</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Basculer la section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./problemes.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Problèmes techniques</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./quarto-markdown.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Quarto et markdown</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./outils.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Outils</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./reussir.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Suggestions</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table des matières</h2>
+   
+  <ul>
+  <li><a href="#plus-de-deux-groupes" id="toc-plus-de-deux-groupes" class="nav-link active" data-scroll-target="#plus-de-deux-groupes"><span class="header-section-number">5.1</span> Plus de deux groupes…?</a>
+  <ul class="collapse">
+  <li><a href="#sec-type1" id="toc-sec-type1" class="nav-link" data-scroll-target="#sec-type1"><span class="header-section-number">5.1.1</span> Erreur de type I</a></li>
+  <li><a href="#erreur-de-type-ii" id="toc-erreur-de-type-ii" class="nav-link" data-scroll-target="#erreur-de-type-ii"><span class="header-section-number">5.1.2</span> Erreur de type II</a></li>
+  <li><a href="#un-exercice-déquilibre" id="toc-un-exercice-déquilibre" class="nav-link" data-scroll-target="#un-exercice-déquilibre"><span class="header-section-number">5.1.3</span> Un exercice d’équilibre</a></li>
+  </ul></li>
+  <li><a href="#introduction-à-lanova" id="toc-introduction-à-lanova" class="nav-link" data-scroll-target="#introduction-à-lanova"><span class="header-section-number">5.2</span> Introduction à l’ANOVA</a></li>
+  <li><a href="#le-calcul-trois-villes" id="toc-le-calcul-trois-villes" class="nav-link" data-scroll-target="#le-calcul-trois-villes"><span class="header-section-number">5.3</span> Le calcul : trois villes</a>
+  <ul class="collapse">
+  <li><a href="#le-sce-entre" id="toc-le-sce-entre" class="nav-link" data-scroll-target="#le-sce-entre"><span class="header-section-number">5.3.1</span> Le SCE entre</a></li>
+  <li><a href="#le-sce-intra" id="toc-le-sce-intra" class="nav-link" data-scroll-target="#le-sce-intra"><span class="header-section-number">5.3.2</span> Le SCE intra</a></li>
+  <li><a href="#la-valeur-f" id="toc-la-valeur-f" class="nav-link" data-scroll-target="#la-valeur-f"><span class="header-section-number">5.3.3</span> La valeur <em>F</em></a></li>
+  </ul></li>
+  <li><a href="#lanalyse-trois-villes" id="toc-lanalyse-trois-villes" class="nav-link" data-scroll-target="#lanalyse-trois-villes"><span class="header-section-number">5.4</span> L’analyse : trois villes</a>
+  <ul class="collapse">
+  <li><a href="#chargez-les-données" id="toc-chargez-les-données" class="nav-link" data-scroll-target="#chargez-les-données">1. Chargez les données</a></li>
+  <li><a href="#vérifier-les-premières-lignes" id="toc-vérifier-les-premières-lignes" class="nav-link" data-scroll-target="#vérifier-les-premières-lignes">2. Vérifier les premières lignes</a></li>
+  <li><a href="#créez-une-figure" id="toc-créez-une-figure" class="nav-link" data-scroll-target="#créez-une-figure">3. Créez une figure</a></li>
+  <li><a href="#analysez-les-données-anova" id="toc-analysez-les-données-anova" class="nav-link" data-scroll-target="#analysez-les-données-anova">4. Analysez les données : ANOVA</a></li>
+  </ul></li>
+  <li><a href="#doù-vient-la-différence" id="toc-doù-vient-la-différence" class="nav-link" data-scroll-target="#doù-vient-la-différence"><span class="header-section-number">5.5</span> D’où vient la différence…?</a>
+  <ul class="collapse">
+  <li><a href="#tukey-hsd" id="toc-tukey-hsd" class="nav-link" data-scroll-target="#tukey-hsd"><span class="header-section-number">5.5.1</span> Tukey HSD</a></li>
+  </ul></li>
+  <li><a href="#synthèse-des-fonctions" id="toc-synthèse-des-fonctions" class="nav-link" data-scroll-target="#synthèse-des-fonctions"><span class="header-section-number">5.6</span> Synthèse des fonctions</a></li>
+  <li><a href="#b58fc729-690b-4000-b19f-365a4093b2ff7b7b3c2066612062756c6c736579652073697a653d7873203e7d7d-pratique" id="toc-b58fc729-690b-4000-b19f-365a4093b2ff7b7b3c2066612062756c6c736579652073697a653d7873203e7d7d-pratique" class="nav-link" data-scroll-target="#b58fc729-690b-4000-b19f-365a4093b2ff7b7b3c2066612062756c6c736579652073697a653d7873203e7d7d-pratique"><i class="fa-solid fa-bullseye fa-xs" aria-label="bullseye"></i> Pratique</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./partie1.html">Partie I</a></li><li class="breadcrumb-item"><a href="./analysis_anova.html"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Analyse : l’ANOVA</span></a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Analyse : l’ANOVA</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<style>
+img.wrapfig {
+float: right; 
+margin: 10px;
+}
+</style>
+<section id="plus-de-deux-groupes" class="level2" data-number="5.1">
+<h2 data-number="5.1" data-anchor-id="plus-de-deux-groupes"><span class="header-section-number">5.1</span> Plus de deux groupes…?</h2>
+<p>Dans le chapitre précédent, on a analysé les notes de deux groupes d’apprenants (Montréal et Québec). C’est une situation typique pour l’utilisation d’un test <span class="math inline">\(t\)</span>. Si, par contre, on avait trois groupes, on aurait des problèmes, vu que cette méthode est utilisée juste pour un ou deux groupes. Une solution possible serait d’exécuter deux tests <span class="math inline">\(t\)</span>. On verra bientôt que cette approche est très problématique. La solution traditionnelle est donc d’utiliser une autre méthode d’analyse : l’<strong>ANOVA</strong>. Avant de discuter cette méthode célèbre, il faut bien comprendre pourquoi on évite l’utilisation de plusieurs tests <span class="math inline">\(t\)</span>, ce qui exige l’introduction de deux types d’erreurs en statistique.</p>
+<section id="sec-type1" class="level3" data-number="5.1.1">
+<h3 data-number="5.1.1" data-anchor-id="sec-type1"><span class="header-section-number">5.1.1</span> Erreur de type I</h3>
+<p>Une erreur de type I, souvent appelée « faux positif », se produit lorsque nous rejetons à tort une hypothèse nulle qui est en réalité vraie. Dans le contexte de la recherche, cela peut avoir des conséquences importantes, car cela peut mener à des conclusions incorrectes sur l’effet d’un traitement, par exemple, en affirmant qu’un médicament est efficace alors qu’il ne l’est pas. Dans notre contexte, le traitement est la ville où les apprenants étudient le français. Si on arrive à une valeur <span class="math inline">\(p\)</span> de 0,01, par exemple, on rejette l’hypothèse nulle, c’est-à-dire qu’on conclut que les notes des apprenants des deux villes sont différentes. Toutefois, cette conclusion peut être trompeuse : si, en réalité, au niveau de la population de tous les apprenants de français entre les deux villes, la différence n’existe pas, notre résultat est incorrect. Le problème, naturellement, est qu’on ne sait jamais quelle est la réalité : voilà pourquoi on utilise la statistique.</p>
+</section>
+<section id="erreur-de-type-ii" class="level3" data-number="5.1.2">
+<h3 data-number="5.1.2" data-anchor-id="erreur-de-type-ii"><span class="header-section-number">5.1.2</span> Erreur de type II</h3>
+<p>Une erreur de type II décrit la situation contraire à celle d’une erreur de type I : ici, on ne rejette pas l’hypothèse nulle quand, en réalité, elle est fausse. Par exemple, imaginez qu’au niveau de la population, les apprenants à Montréal et à Québec ont des notes vraiment différentes. Cependant, dans notre analyse, notre valeur <em>p</em> est de 0,08. Vu qu’on utilise le seuil de 0,05 (notre valeur alpha : <span class="math inline">\(\alpha = 0.05\)</span>), on n’est pas capable de rejeter l’hypothèse nulle ici. Cela constituerait une erreur.</p>
+</section>
+<section id="un-exercice-déquilibre" class="level3" data-number="5.1.3">
+<h3 data-number="5.1.3" data-anchor-id="un-exercice-déquilibre"><span class="header-section-number">5.1.3</span> Un exercice d’équilibre</h3>
+<p>Une analyse statistique est donc un exercice d’équilibre : on veut réduire la probabilité des erreurs de type I et II. Bien que les deux soient importants, on a tendance à éviter davantage les erreurs de type I. Voilà pourquoi on n’utilise pas plusieurs tests <em>t</em> dans notre analyse : étant donné notre <span class="math inline">\(\alpha\)</span>, chaque test a une probabilité de 5 % de produire une erreur de type I. Dans un exemple avec trois villes, on aurait besoin d’exécuter deux tests <span class="math inline">\(t\)</span>. En utilisant la formule ci-dessous, on arrive à une probabilité de presque 10 %, ce qui est trop élevé : <span class="math inline">\(P(erreur) = 1 - (0.95)^2 = 0.0975\)</span>. Si on avait quatre villes (c’est-à-dire quatre groupes), on aurait besoin d’exécuter 6 tests <span class="math inline">\(t\)</span> : <span class="math inline">\(\frac{n(n-1)}{2}\)</span>. Donc, la probabilité d’une erreur de type I serait de <span class="math inline">\(P(erreur) = 1 - (0.95)^6 \approx 0.735\)</span> (!). On voit donc que l’application de plusieurs tests devient rapidement problématique.</p>
+<p><span class="math display">\[P(\text{Erreur de type I}) = 1 - (1 - \alpha)^n\]</span></p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Votre tour
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Chargez le fichier <code>villes2.csv</code>. Essayez d’exécuter un test <span class="math inline">\(t\)</span> sur <code>note</code> en fonction de <code>ville</code>. Avez-vous réussi? Comment pourriez-vous utiliser des tests <span class="math inline">\(t\)</span> pour analyser ces données? Vous aurez besoin des fonctions pratiquées dans le <a href="./intro_a_r.html">chapitre 2</a>.</p>
+</div>
+</div>
+</section>
+</section>
+<section id="introduction-à-lanova" class="level2" data-number="5.2">
+<h2 data-number="5.2" data-anchor-id="introduction-à-lanova"><span class="header-section-number">5.2</span> Introduction à l’ANOVA</h2>
+<p>L’Analyse de la Variance, ou <strong>ANOVA</strong>, est une méthode statistique utilisée pour comparer les moyennes de plusieurs groupes (typiquement, &gt; 2 groupes). L’idée principale de l’ANOVA est d’examiner si les différences observées entre les moyennes des groupes sont suffisamment grandes pour qu’on puisse conclure qu’elles ne sont pas dues au hasard, mais plutôt à un effet réel. Autrement dit, la différence entre les groupes analysés est-elle statistiquement réelle? Par exemple, si vous testez, à partir d’un examen de grammaire, l’effet de trois villes canadiennes sur l’acquisition du français langue seconde, l’ANOVA peut vous aider à déterminer si les différences dans les notes de l’examen entre les groupes sont significatives. Imaginons trois groupes d’apprenants de français qui viennent au Canada pour étudier la langue pendant six mois. Un groupe s’installe à Montréal, un autre groupe s’installe à Québec, et le troisième groupe décide d’aller à Calgary. À la fin de la période en question, on teste la compétence grammaticale des apprenants à partir de l’examen mentionné ci-dessus. Comment savoir si les différences dans les notes sont vraiment réelles (et pas dues au hasard)? Le problème, naturellement, est que <strong>la variation est toujours présente</strong> dans les données. Par conséquent, il est naturel que les groupes n’aient pas exactement la même note moyenne.</p>
+<p>Pour comprendre l’ANOVA, il est utile de penser à deux sources principales de variabilité dans les données : la <strong>variabilité entre les groupes</strong> (due à des différences réelles entre les groupes) et la <strong>variabilité à l’intérieur des groupes</strong> (due à des variations naturelles ou aléatoires parmi les individus d’un même groupe). L’ANOVA compare ces deux sources de variabilité pour évaluer si les différences entre les groupes sont suffisamment grandes par rapport à la variabilité naturelle pour être significatives.</p>
+<p>Mathématiquement, l’ANOVA repose sur une équation clé :</p>
+<p><span class="math display">\[
+F = \frac{\text{Variabilité entre les groupes}}{\text{Variabilité à l'intérieur des groupes}}
+\]</span></p>
+<p>Le <em>F</em> est une mesure du rapport entre ces deux sources de variabilité. Si ce rapport est élevé, cela signifie que la variabilité entre les groupes est grande par rapport à la variabilité interne, ce qui suggère qu’il pourrait y avoir un effet réel. Pour déterminer si ce ratio est suffisamment grand, on le compare à une valeur critique issue d’une distribution appelée distribution <em>F</em>.</p>
+</section>
+<section id="le-calcul-trois-villes" class="level2" data-number="5.3">
+<h2 data-number="5.3" data-anchor-id="le-calcul-trois-villes"><span class="header-section-number">5.3</span> Le calcul : trois villes</h2>
+<p>Dans le fichier <code>villes2.csv</code>, on a une version élargie de <code>villes.csv</code> : maintenant, notre étude considère trois villes où des apprenants étudient le français. La troisième ville est la ville de Calgary. Avant de commencer notre discussion, il est important de se rappeler quelle est l’hypothèse nulle.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Astuce</span>L’hypothèse nulle
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><span class="math display">\[H_0 = \mu_{Calgary} = \mu_{Montréal} = \mu_{Québec}\]</span></p>
+<p>Les moyennes des notes des trois villes sont identiques. Autrement dit, il n’y pas de différences entre les moyennes des villes.</p>
+</div>
+</div>
+<p>On ne calcule jamais une ANOVA de façon manuelle. Ce n’est pas difficile, mais c’est fastidieux. Toutefois, il est très utile de le faire au moins une fois pour mieux comprendre le processus. Vous savez déjà qu’une ANOVA est effectivement une analyse de variance. La variance totale dans les données peut être décomposée en la variance expliquée par les variables examinées (ici, juste <code>ville</code>), c’est-à-dire le numérateur dans la fraction ci-dessus, et la variance qui n’est pas expliquée (résiduelle), c’est-à-dire le dénominateur de la fraction ci-dessus. La variance ici est calculée à partir de la <strong>somme des carrés des écarts</strong>, ou SCE. Il faudra donc calculer :</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Le calcul de la valeur <em>F</em>
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li><p>Variation entre les groupes : <span class="math inline">\(SCE_{\text{entre}} = \sum_{j=1}^{k} n_j (\bar{x}_j - \bar{X}_{\text{total}})^2\)</span></p></li>
+<li><p>Variation à l’intérieur des groupes : <span class="math inline">\(SCE_{\text{intra}} = \sum_{j=1}^{k} \sum_{i=1}^{n_i} (x_{ij} - \bar{X}_j)^2\)</span></p></li>
+<li><p>Dégrés de liberté entre : <span class="math inline">\(k - 1\)</span></p></li>
+<li><p>Dégrés de liberté intra : <span class="math inline">\(N - k\)</span></p></li>
+<li><p>Valeur <em>F</em> :</p></li>
+</ul>
+<p><span class="math display">\[F = \frac{\frac{SCE_{\text{entre}}}{ddl_{entre}}}{\frac{SCE_{\text{intra}}}{ddl_{intra}}}\]</span></p>
+<section id="signification-des-symboles" class="level5 unnumbered">
+<h5 class="unnumbered" data-anchor-id="signification-des-symboles">Signification des symboles</h5>
+<ul>
+<li><span class="math inline">\(k\)</span> : nombre total de groupes (3 villes)</li>
+<li><span class="math inline">\(n_j\)</span> : nombre d’observations dans le groupe <span class="math inline">\(j\)</span> (50 obs par ville)</li>
+<li><span class="math inline">\(x_{ij}\)</span> : valeur de l’observation <span class="math inline">\(i\)</span> dans le groupe <span class="math inline">\(j\)</span></li>
+<li><span class="math inline">\(\bar{x}_j\)</span> : moyenne des observations pour le groupe <span class="math inline">\(j\)</span><br>
+</li>
+<li><span class="math inline">\(\bar{X}_{\text{total}}\)</span> : moyenne globale de toutes les observations</li>
+<li><span class="math inline">\(SCE_{\text{entre}}\)</span> : somme des carrés expliquée par la variation <em>entre</em> les groupes</li>
+<li><span class="math inline">\(SCE_{\text{intra}}\)</span> : somme des carrés expliquée par la variation <em>à l’intérieur</em> des groupes</li>
+<li><span class="math inline">\(ddl_{\text{entre}}\)</span> : degrés de liberté entre les groupes (<span class="math inline">\(k - 1\)</span>)</li>
+<li><span class="math inline">\(ddl_{\text{intra}}\)</span> : degrés de liberté à l’intérieur des groupes (<span class="math inline">\(N - k\)</span>, où <span class="math inline">\(N\)</span> est le nombre total d’observations)</li>
+<li><span class="math inline">\(F\)</span> : valeur du test <span class="math inline">\(F\)</span>, qui compare la variance entre les groupes à la variance à l’intérieur des groupes</li>
+</ul>
+</section>
+</div>
+</div>
+<!-- Voici les étapes pour calculer notre ANOVA manuellement : -->
+<!-- 1. Déterminez le nombre total d'observations ($N$) ainsi que le nombre d'observations dans chaque groupe ($n$) -->
+<!-- 2. Calculez la note moyenne pour chaque ville ($\bar{X}_v$) ainsi que la moyenne globale des trois villes ensemble ($\bar{X}$) -->
+<!-- Pour calculer le SCE, vous devez : -->
+<!-- 3. Soustraier la moyenne de chaque note individuelle -->
+<!-- 4. Élever la différence au carré pour obtenir un nombre positif -->
+<!-- 5. Sommer toutes ces valeurs -->
+<section id="le-sce-entre" class="level3" data-number="5.3.1">
+<h3 data-number="5.3.1" data-anchor-id="le-sce-entre"><span class="header-section-number">5.3.1</span> Le SCE entre</h3>
+<p>On profite du calcul manuel pour réviser quelques fonctions de <code>dplyr</code> déjà explorées dans le <a href="./intro_a_r.html">chapitre d’introduction à R</a> (ainsi que dans <span class="citation" data-cites="barnier_R">Barnier (<a href="references.html#ref-barnier_R" role="doc-biblioref">2023</a>)</span>). Dans le code ci-dessous, on charge l’extension et les données. Ensuite, on créé des variables importantes pour le calcul manuel de la valeur <em>F</em> pour l’ANOVA.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-2"><a href="#cb1-2"></a>villes <span class="ot">=</span> <span class="fu">read_csv</span>(<span class="st">"donnees/villes2.csv"</span>)</span>
+<span id="cb1-3"><a href="#cb1-3"></a></span>
+<span id="cb1-4"><a href="#cb1-4"></a><span class="co"># Nombre d'observations :</span></span>
+<span id="cb1-5"><a href="#cb1-5"></a>N <span class="ot">=</span> <span class="fu">nrow</span>(villes) <span class="co"># = le nombre de lignes dans le tableau</span></span>
+<span id="cb1-6"><a href="#cb1-6"></a></span>
+<span id="cb1-7"><a href="#cb1-7"></a><span class="co"># Moyenne totalle X :</span></span>
+<span id="cb1-8"><a href="#cb1-8"></a>X <span class="ot">=</span> <span class="fu">mean</span>(villes<span class="sc">$</span>note)</span>
+<span id="cb1-9"><a href="#cb1-9"></a></span>
+<span id="cb1-10"><a href="#cb1-10"></a><span class="co"># Nombre de groupes k :</span></span>
+<span id="cb1-11"><a href="#cb1-11"></a>k <span class="ot">=</span> <span class="dv">3</span> <span class="co"># trois villes</span></span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Notre prochaine étape consiste à calculer les sommes des carrés écarts (SCE). On commence par la simplification de notre tableau : vu qu’on n’utilisera pas la colonne <code>duree</code>, on l’enlève avec la fonction <code>select()</code>. Après, on crée un nouveau tableau, <code>entreVilles</code>, qui contiendra les colonnes essentielles pour notre calcul. Le code entre les lignes 7 et 13 nous donne un tableau avec toutes les variables nécessaires : la note moyenne (<code>moyenne</code>) et la quantité d’observations pour chaque ville (<code>n</code>), ainsi que la différence entre la moyenne de chaque ville et la moyenne générale des trois villes (<code>X</code>, créé ci-dessus). Finalement, on élève cette différence au carré (<code>CE</code>) et on multiplie <code>CE</code> par <code>n</code>, ce qui nous donne la colonne finale <code>n_CE</code>. Notre tableau est imprimé entre les lignes 17 et 21, donc observez attentivement les valeurs. Veuillez noter que la fonction <code>n()</code> dans la ligne 9 nous donne le nombre d’observation selon le groupement par ville (<code>.by = ville</code>), ce qui est très pratique.</p>
+<p>Lorsqu’on a calculé toutes ces variables, il faut juste sommer les trois valeurs dans la colonne <code>n_CE</code> et diviser le résultat par <code>k-1</code>. Cela nous donne notre SCE entre groupes, représenté par la variable <code>SCEentre</code> dans la ligne 27, dont la valeur est imprimée dans la ligne 28. Finalement, on utilise la fonction <code>pull()</code> ici pour extraire des valeurs d’un tableau (d’un <code>tibble</code> dans notre cas).</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a><span class="co"># Ajoutons la moyenne de chaque ville au tableau :</span></span>
+<span id="cb2-2"><a href="#cb2-2"></a>villes <span class="ot">=</span> villes <span class="sc">|&gt;</span> </span>
+<span id="cb2-3"><a href="#cb2-3"></a>  <span class="fu">select</span>(<span class="sc">-</span>duree) <span class="sc">|&gt;</span> </span>
+<span id="cb2-4"><a href="#cb2-4"></a>  <span class="fu">mutate</span>(<span class="at">moyenne =</span> <span class="fu">mean</span>(note), <span class="at">.by =</span> ville)</span>
+<span id="cb2-5"><a href="#cb2-5"></a></span>
+<span id="cb2-6"><a href="#cb2-6"></a><span class="co"># Un tableau simples avec la moyenne de chaque ville</span></span>
+<span id="cb2-7"><a href="#cb2-7"></a>entreVilles <span class="ot">=</span> villes <span class="sc">|&gt;</span> </span>
+<span id="cb2-8"><a href="#cb2-8"></a>  <span class="fu">summarize</span>(<span class="at">moyenne =</span> <span class="fu">mean</span>(note), </span>
+<span id="cb2-9"><a href="#cb2-9"></a>            <span class="at">n =</span> <span class="fu">n</span>(),</span>
+<span id="cb2-10"><a href="#cb2-10"></a>            <span class="at">.by =</span> ville) <span class="sc">|&gt;</span> </span>
+<span id="cb2-11"><a href="#cb2-11"></a>  <span class="fu">mutate</span>(<span class="at">diff =</span> moyenne <span class="sc">-</span> X,</span>
+<span id="cb2-12"><a href="#cb2-12"></a>         <span class="at">CE =</span> diff<span class="sc">^</span><span class="dv">2</span>,</span>
+<span id="cb2-13"><a href="#cb2-13"></a>         <span class="at">n_CE =</span> n <span class="sc">*</span> CE)</span>
+<span id="cb2-14"><a href="#cb2-14"></a></span>
+<span id="cb2-15"><a href="#cb2-15"></a>entreVilles</span>
+<span id="cb2-16"><a href="#cb2-16"></a><span class="co">#&gt; # A tibble: 3 × 6</span></span>
+<span id="cb2-17"><a href="#cb2-17"></a><span class="co">#&gt;   ville    moyenne     n   diff     CE  n_CE</span></span>
+<span id="cb2-18"><a href="#cb2-18"></a><span class="co">#&gt;   &lt;chr&gt;      &lt;dbl&gt; &lt;int&gt;  &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt;</span></span>
+<span id="cb2-19"><a href="#cb2-19"></a><span class="co">#&gt; 1 Calgary     67.0    50 -3.25  10.5   527. </span></span>
+<span id="cb2-20"><a href="#cb2-20"></a><span class="co">#&gt; 2 Montréal    69.6    50 -0.671  0.451  22.5</span></span>
+<span id="cb2-21"><a href="#cb2-21"></a><span class="co">#&gt; 3 Québec      74.2    50  3.92  15.3   767.</span></span>
+<span id="cb2-22"><a href="#cb2-22"></a></span>
+<span id="cb2-23"><a href="#cb2-23"></a>SCEentre <span class="ot">=</span> entreVilles <span class="sc">|&gt;</span> </span>
+<span id="cb2-24"><a href="#cb2-24"></a>  <span class="fu">summarize</span>(<span class="at">SCEentre =</span> <span class="fu">sum</span>(n_CE)) <span class="sc">|&gt;</span> </span>
+<span id="cb2-25"><a href="#cb2-25"></a>  <span class="fu">pull</span>() </span>
+<span id="cb2-26"><a href="#cb2-26"></a></span>
+<span id="cb2-27"><a href="#cb2-27"></a>SCEentre</span>
+<span id="cb2-28"><a href="#cb2-28"></a><span class="co">#&gt; [1] 1316.82</span></span>
+<span id="cb2-29"><a href="#cb2-29"></a></span>
+<span id="cb2-30"><a href="#cb2-30"></a><span class="co"># La moyenne des la SCEentre :</span></span>
+<span id="cb2-31"><a href="#cb2-31"></a>MSCEentre <span class="ot">=</span> SCEentre <span class="sc">/</span> (k <span class="sc">-</span> <span class="dv">1</span>)</span>
+<span id="cb2-32"><a href="#cb2-32"></a>MSCEentre</span>
+<span id="cb2-33"><a href="#cb2-33"></a><span class="co">#&gt; [1] 658.4101</span></span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Avant de continuer, assurez-vous que la relation entre l’équation de <span class="math inline">\(SCE_{entre}\)</span> et son implémentation dans les codes ci-dessus est claire. Remarquez l’utilisation de <code>.by =</code> pour grouper les données dans chaque ville avant de calculer les moyennes et le nombre d’observations, par exemple.</p>
+</section>
+<section id="le-sce-intra" class="level3" data-number="5.3.2">
+<h3 data-number="5.3.2" data-anchor-id="le-sce-intra"><span class="header-section-number">5.3.2</span> Le SCE intra</h3>
+<p>Observez le code ci-dessous. C’est un code très économique qui est capable d’accomplir toutes les étapes nécessaires pour calculer la somme des carrés des écarts :</p>
+<ol type="1">
+<li>On calcule les écarts. Rappelez-vous qu’on a déjà calculé la moyenne pour chaque ville (colonne <code>moyenne</code>). Donc, pour calculer <code>diff</code>, on n’a pas besoin de grouper les données.</li>
+<li>On élève <code>diff</code> au carré</li>
+<li>Finalement, on somme les carrés des écarts et on divise le résultat par <code>N - k</code>.</li>
+</ol>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a>SCEintra <span class="ot">=</span> villes <span class="sc">|&gt;</span> </span>
+<span id="cb3-2"><a href="#cb3-2"></a>  <span class="fu">mutate</span>(<span class="at">diff =</span> note <span class="sc">-</span> moyenne) <span class="sc">|&gt;</span> </span>
+<span id="cb3-3"><a href="#cb3-3"></a>  <span class="fu">mutate</span>(<span class="at">CE =</span> diff<span class="sc">^</span><span class="dv">2</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb3-4"><a href="#cb3-4"></a>  <span class="fu">summarize</span>(<span class="at">SCEintra =</span> <span class="fu">sum</span>(CE)) <span class="sc">|&gt;</span> </span>
+<span id="cb3-5"><a href="#cb3-5"></a>  <span class="fu">pull</span>()</span>
+<span id="cb3-6"><a href="#cb3-6"></a></span>
+<span id="cb3-7"><a href="#cb3-7"></a>SCEintra</span>
+<span id="cb3-8"><a href="#cb3-8"></a><span class="co">#&gt; [1] 16609.83</span></span>
+<span id="cb3-9"><a href="#cb3-9"></a></span>
+<span id="cb3-10"><a href="#cb3-10"></a><span class="co"># La moyenne des la SCEintra :</span></span>
+<span id="cb3-11"><a href="#cb3-11"></a>MSCEintra <span class="ot">=</span> SCEintra <span class="sc">/</span> (N <span class="sc">-</span> k)</span>
+<span id="cb3-12"><a href="#cb3-12"></a>MSCEintra</span>
+<span id="cb3-13"><a href="#cb3-13"></a><span class="co">#&gt; [1] 112.992</span></span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="la-valeur-f" class="level3" data-number="5.3.3">
+<h3 data-number="5.3.3" data-anchor-id="la-valeur-f"><span class="header-section-number">5.3.3</span> La valeur <em>F</em></h3>
+<p>Maintenant, on est prêt à calculer notre valeur <em>F</em> à partir des moyennes des SCE calculées. Veuillez noter que <code>MSCEentre</code> équivaut à <span class="math inline">\(\frac{SCE_{entre}}{ddl_{entre}}\)</span>, par exemple. Donc, la ligne 1 ci-dessous nous donne exactement l’équation de la valeur <em>F</em></p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a>valeurF <span class="ot">=</span> MSCEentre <span class="sc">/</span> MSCEintra</span>
+<span id="cb4-2"><a href="#cb4-2"></a></span>
+<span id="cb4-3"><a href="#cb4-3"></a>valeurF </span>
+<span id="cb4-4"><a href="#cb4-4"></a><span class="co">#&gt; [1] 5.82705</span></span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>On constate que la valeur est supérieure à 1. Cela signifie que la variance <em>entre</em> les groupes est supérieure à la variance <em>dans</em> chaque groupe. Autrement dit, la variable <code>ville</code> semble générer des notes moyennes différentes pour les apprenants. Il faut toutefois vérifier la valeur <em>p</em> pour confirmer ce résultat.</p>
+<p>Dans le passé, on consultait un tableau des valeurs pour déterminer la limite <em>F</em> à partir de laquelle on obtient un résultat significatif, en fonction d’une valeur <span class="math inline">\(\alpha\)</span>. Consultez un exemple de tableau <a href="http://www.socr.ucla.edu/Applets.dir/F_Table.html" target="_blank">ici</a>.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> L’avantage d’utiliser une fonction comme <code>pf()</code>, montrée ci-dessous, est qu’elle nous permet de calculer une valeur de <em>p</em> exacte.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a><span class="fu">pf</span>(valeurF, <span class="at">df1 =</span> k<span class="dv">-1</span>, <span class="at">df2 =</span> N<span class="sc">-</span>k, <span class="at">lower.tail =</span> F)</span>
+<span id="cb5-2"><a href="#cb5-2"></a><span class="co">#&gt; [1] 0.003669896</span></span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Voilà! On confirme une valeur <em>p</em> significative. Autrement dit, il n’est pas vrai que les notes moyennes sont identiques à travers les trois villes. Donc, on rejette l’hypothèse nulle. Heureusement, on n’a pas besoin de faire ce calcul de façon manuelle : on utilisera une fonction très pratique pour arriver à nos résultats à partir d’ici.</p>
+</section>
+</section>
+<section id="lanalyse-trois-villes" class="level2" data-number="5.4">
+<h2 data-number="5.4" data-anchor-id="lanalyse-trois-villes"><span class="header-section-number">5.4</span> L’analyse : trois villes</h2>
+<p>Voyons comment une fonction en R est capable d’automatizer toutes les étapes décrites ci-dessus. Avant d’utiliser cette fonction, il est utile d’examiner une séquence typique de quatre étapes qui seront utilisées toujours dans notre cours :</p>
+<ol type="1">
+<li>Chargez le fichier de données</li>
+<li>Vérifiez sa structure</li>
+<li>Créez une figure pour visualiser les patrons d’intérêt</li>
+<li>Utilisez une méthode statistique pour analyser les patrons en question</li>
+</ol>
+<p>On vera comment exécuter une ANOVA dans l’étape 4 ci-dessous. Veuillez noter que les calculs manuels ci-dessus se concentrent sur l’étape 4 aussi, et que même si on décidait de faire les chose à main, il faudrait suivre les autres étapes, naturellement (p.&nbsp;ex., la création des figures).</p>
+<section id="chargez-les-données" class="level3 unnumbered">
+<h3 class="unnumbered" data-anchor-id="chargez-les-données">1. Chargez les données</h3>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb6-2"><a href="#cb6-2"></a>villes <span class="ot">=</span> <span class="fu">read_csv</span>(<span class="st">"donnees/villes2.csv"</span>)</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="vérifier-les-premières-lignes" class="level3 unnumbered">
+<h3 class="unnumbered" data-anchor-id="vérifier-les-premières-lignes">2. Vérifier les premières lignes</h3>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a>villes</span>
+<span id="cb7-2"><a href="#cb7-2"></a><span class="co">#&gt; # A tibble: 150 × 3</span></span>
+<span id="cb7-3"><a href="#cb7-3"></a><span class="co">#&gt;     note ville   duree</span></span>
+<span id="cb7-4"><a href="#cb7-4"></a><span class="co">#&gt;    &lt;dbl&gt; &lt;chr&gt;   &lt;dbl&gt;</span></span>
+<span id="cb7-5"><a href="#cb7-5"></a><span class="co">#&gt;  1  52.5 Calgary    36</span></span>
+<span id="cb7-6"><a href="#cb7-6"></a><span class="co">#&gt;  2  68.7 Calgary    15</span></span>
+<span id="cb7-7"><a href="#cb7-7"></a><span class="co">#&gt;  3  48.3 Calgary    18</span></span>
+<span id="cb7-8"><a href="#cb7-8"></a><span class="co">#&gt;  4  96.9 Calgary    12</span></span>
+<span id="cb7-9"><a href="#cb7-9"></a><span class="co">#&gt;  5  71.6 Calgary    13</span></span>
+<span id="cb7-10"><a href="#cb7-10"></a><span class="co">#&gt;  6  48.6 Calgary    34</span></span>
+<span id="cb7-11"><a href="#cb7-11"></a><span class="co">#&gt;  7  74.7 Calgary    22</span></span>
+<span id="cb7-12"><a href="#cb7-12"></a><span class="co">#&gt;  8  79.8 Calgary    25</span></span>
+<span id="cb7-13"><a href="#cb7-13"></a><span class="co">#&gt;  9  76.5 Calgary    29</span></span>
+<span id="cb7-14"><a href="#cb7-14"></a><span class="co">#&gt; 10  58.9 Calgary    30</span></span>
+<span id="cb7-15"><a href="#cb7-15"></a><span class="co">#&gt; # ℹ 140 more rows</span></span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="créez-une-figure" class="level3 unnumbered">
+<h3 class="unnumbered" data-anchor-id="créez-une-figure">3. Créez une figure</h3>
+<div class="cell" data-layout-align="center">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> villes, <span class="fu">aes</span>(<span class="at">x =</span> ville, <span class="at">y =</span> note)) <span class="sc">+</span> </span>
+<span id="cb8-2"><a href="#cb8-2"></a>  <span class="fu">stat_summary</span>() <span class="sc">+</span></span>
+<span id="cb8-3"><a href="#cb8-3"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Ville"</span>,</span>
+<span id="cb8-4"><a href="#cb8-4"></a>       <span class="at">y =</span> <span class="st">"Note"</span>,</span>
+<span id="cb8-5"><a href="#cb8-5"></a>       <span class="at">title =</span> <span class="st">"Notes de trois groupes (villes)"</span>)</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="analysis_anova_files/figure-html/unnamed-chunk-8-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1"><img src="analysis_anova_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:70.0%"></a></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Observez la figure. Vous voyez les notes moyennes ainsi que les erreurs standards des moyennes. Considérez chacune des trois comparaisons : Calgary vs Montréal, Calgary vs Québec, et Montréal vs Québec. Quelles différences pensez-vous être statistiquement significatives?</p>
+</section>
+<section id="analysez-les-données-anova" class="level3 unnumbered">
+<h3 class="unnumbered" data-anchor-id="analysez-les-données-anova">4. Analysez les données : ANOVA</h3>
+<p>On est maintenant prêt à exécuter notre anova. On utilise la fonction <code>aov()</code> en R. Ensuite, on utilise <code>summary()</code> pour imprimer un résumé du modèle :</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a>notreAnova <span class="ot">=</span> <span class="fu">aov</span>(note <span class="sc">~</span> ville, <span class="at">data =</span> villes)</span>
+<span id="cb9-2"><a href="#cb9-2"></a><span class="fu">summary</span>(notreAnova)</span>
+<span id="cb9-3"><a href="#cb9-3"></a><span class="co">#&gt;              Df Sum Sq Mean Sq F value  Pr(&gt;F)   </span></span>
+<span id="cb9-4"><a href="#cb9-4"></a><span class="co">#&gt; ville         2   1317   658.4   5.827 0.00367 **</span></span>
+<span id="cb9-5"><a href="#cb9-5"></a><span class="co">#&gt; Residuals   147  16610   113.0                   </span></span>
+<span id="cb9-6"><a href="#cb9-6"></a><span class="co">#&gt; ---</span></span>
+<span id="cb9-7"><a href="#cb9-7"></a><span class="co">#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Observez l’output de la fonction. Voici chaque élément dans l’output généré par la fonction :</p>
+<ul>
+<li><code>Df</code> : <em>Degrees of freedom</em>. Cette colonne nous donne les dégrés de liberté (ddl) de la variable <code>ville</code>. Il s’agit d’un concept clé en statistique qui désigne le nombre de valeurs indépendantes qui peuvent varier dans une analyse sans violer une contrainte. On a trois villes, donc notre dégré de liberté est 2 (<span class="math inline">\(n-1\)</span>).</li>
+<li><code>Sum Sq</code> : la variabilité des données. La première ligne nous donne 1317, ce qui représente la variabilité des données explicable à partir de la variable <code>ville</code>. La variabilité des résiduelles (16610) nous montre le complément de la variabilité : c’est la variation qui n’est pas expliquée par <code>ville</code>.</li>
+<li><code>Mean Sq</code> : si on divise <code>Sum Sq</code> par <code>Df</code>, on arrive à la colonne <code>Mean Sq</code>. Cette colonne nous permet de comparer la variabilité expliquée à travers plusieurs source de variation, vu qu’elle normalise la variation par rapport aux dégrés de liberté de chaque variable.</li>
+<li><code>F value</code> : La valeur <em>F</em> nous donne le ratio entre la variation expliquée par <code>ville</code> et la variation dans chaque groupe (c’est-à-dire, la variation qui n’est pas expliqué par <code>ville</code>; les résiduelles). Essentiellement, <em>F</em> = <code>Mean Sq</code> d’une variable divisé par <code>Mean Sq</code> des résiduelles.</li>
+<li><code>Pr(&gt;F)</code> : la valeur <em>p</em> de chaque variable (il y en a juste une dans notre ANOVA)</li>
+</ul>
+<p>On conclut donc qu’il faut rejeter l’hypothèse nulle : ce n’est pas vrai qu’il n’y a pas de différence entre les notes moyennes des villes. Voici comment vous pourriez rapporter nos résultats :</p>
+<blockquote class="blockquote">
+<p>Notre ANOVA a confirmé que la ville où les apprenants étudient le français a un effet statistiquement significatif sur leurs notes moyennes : F(2, 147) = 5.827, p = 0.00367.</p>
+</blockquote>
+<p>Remarquez que le modèle utilisé suit la structure suivante :</p>
+<ul>
+<li><em>F</em>(<em>x</em>, <em>y</em>), où
+<ul>
+<li><em>x</em> = <code>Df</code> de la variable d’intérêt</li>
+<li><em>y</em> = <code>Df</code> des résiduelles</li>
+</ul></li>
+</ul>
+<p>Si on avait deux variables d’intérêt, on indiquerait deux valeurs : <em>F</em>(<em>x1</em>, <em>y</em>) et <em>F</em>(<em>x2</em>, <em>y</em>).</p>
+</section>
+</section>
+<section id="doù-vient-la-différence" class="level2" data-number="5.5">
+<h2 data-number="5.5" data-anchor-id="doù-vient-la-différence"><span class="header-section-number">5.5</span> D’où vient la différence…?</h2>
+<p>Une ANOVA nous permet de dire si une différence existe ou non. Autrement dit, elle nous permet de rejeter ou de ne pas rejeter l’hypothèse nulle, soit qu’il n’y a pas de différences entre les moyennes des groupes analysés (les trois villes, dans notre cas). Toutefois, on ne sait pas où sont les différences. Est-ce qu’un résultat significatif vaut dire qu’il y a une différence entre Montréal et Québec? Entre Calgary et Montréal? Entre Calgary et Québec?</p>
+<p>Pour répondre à ces questions, il faut complémenter notre ANOVA avec des tests <em>post-hoc</em>, qui nous permettent de vérifier toutes les comparisons possibles. Ce type de test utilise automatiquement une correction pour les valeurs <em>p</em>, etant donné le problèmes des tests multiples discuté plus tôt (<a href="#sec-type1" class="quarto-xref"><span>Section 5.1.1</span></a>).</p>
+<section id="tukey-hsd" class="level3" data-number="5.5.1">
+<h3 data-number="5.5.1" data-anchor-id="tukey-hsd"><span class="header-section-number">5.5.1</span> Tukey HSD</h3>
+<p>L’une des façons de dériver les comparaisons multiples à partir de notre ANOVA est d’utiliser le test Tukey HSD (<em>Honest Significant Difference</em>). C’est une méthode <em>post-hoc</em> utilisée après une ANOVA pour comparer toutes les paires de moyennes entre les groupes. Il permet de déterminer quelles différences spécifiques entre les groupes sont significatives, tout en contrôlant le risque d’erreur de type I (faux positifs). Intuitivement, Tukey ajuste les seuils de significativité pour tenir compte du fait que plusieurs comparaisons sont effectuées en même temps (p.&nbsp;ex., notre discussion plus tôt à propos des multiples tests <em>t</em>). Cela garantit que les conclusions restent fiables, même avec de nombreuses comparaisons. Ce test est particulièrement utile quand l’ANOVA indique une différence globale, mais qu’on souhaite savoir précisément où ces différences se situent.</p>
+<p>La fonction <code>tukeyHSD()</code> est très pratique : à partir d’une ANOVA, elle renvoie toutes les comparaisons des villes dans nos données.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a><span class="fu">TukeyHSD</span>(notreAnova)</span>
+<span id="cb10-2"><a href="#cb10-2"></a><span class="co">#&gt;   Tukey multiple comparisons of means</span></span>
+<span id="cb10-3"><a href="#cb10-3"></a><span class="co">#&gt;     95% family-wise confidence level</span></span>
+<span id="cb10-4"><a href="#cb10-4"></a><span class="co">#&gt; </span></span>
+<span id="cb10-5"><a href="#cb10-5"></a><span class="co">#&gt; Fit: aov(formula = note ~ ville, data = villes)</span></span>
+<span id="cb10-6"><a href="#cb10-6"></a><span class="co">#&gt; </span></span>
+<span id="cb10-7"><a href="#cb10-7"></a><span class="co">#&gt; $ville</span></span>
+<span id="cb10-8"><a href="#cb10-8"></a><span class="co">#&gt;                      diff        lwr       upr     p adj</span></span>
+<span id="cb10-9"><a href="#cb10-9"></a><span class="co">#&gt; Montréal-Calgary 2.574834 -2.4587731  7.608442 0.4484897</span></span>
+<span id="cb10-10"><a href="#cb10-10"></a><span class="co">#&gt; Québec-Calgary   7.163834  2.1302269 12.197442 0.0027498</span></span>
+<span id="cb10-11"><a href="#cb10-11"></a><span class="co">#&gt; Québec-Montréal  4.589000 -0.4446075  9.622608 0.0818846</span></span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>On voit ici qu’il n’y a qu’une comparaison significative : celle entre Québec et Calgary. La colonne <code>p adj</code> nous donne des valeurs <em>p</em> qui sont ajustées par rapport aux comparaisons multiples. Rappelez-vous que notre hypothèse nulle suppose que il n’existe pas de différences entre les trois villes. Donc, maintenant on sait exactement pourquoi notre ANOVA nous a donné une valeur de <em>p</em> significative.</p>
+</section>
+</section>
+<section id="synthèse-des-fonctions" class="level2" data-number="5.6">
+<h2 data-number="5.6" data-anchor-id="synthèse-des-fonctions"><span class="header-section-number">5.6</span> Synthèse des fonctions</h2>
+<p>Les deux fonctions les plus importantes du chapitre :</p>
+<ul>
+<li><code>aov(y ~ x, data = ...)</code> pour exécuter une ANOVA</li>
+<li><code>summary()</code> pour imprimer les résultats (fonction générale qui est applicable à plusieurs objets en R)</li>
+<li><code>tukeyHSD()</code> pour générer un test <em>posthoc</em> de comparaisons multiples</li>
+</ul>
+</section>
+<section id="b58fc729-690b-4000-b19f-365a4093b2ff7b7b3c2066612062756c6c736579652073697a653d7873203e7d7d-pratique" class="level2 unnumbered">
+<h2 class="unnumbered" data-anchor-id="b58fc729-690b-4000-b19f-365a4093b2ff7b7b3c2066612062756c6c736579652073697a653d7873203e7d7d-pratique"><i class="fa-solid fa-bullseye fa-xs" aria-label="bullseye"></i> Pratique</h2>
+<p>Bien qu’on n’utilisera pas les ANOVAs directement dans le cours, les concepts discutés ici seront essentiels. Assurez-vous qu’ils soient clairs avant de continuer vers le chapitre sur la régression linéaire (dont l’ANOVA est un cas spécial). Ce pratique-ci vous aidera à réviser attentivement les concepts en question.</p>
+<p><i class="fa-solid fa-question-circle fa-xs" aria-label="question-circle"></i> <strong>Question 1.</strong> Créez un sous-ensemble des données à partir de <code>villes2.csv</code> où vous considérez juste les villes de Québec et Montréal. Exécuter un test <em>t</em> pour vérifier la différence entre les deux villes. Qu’est-ce que vous notez dans les résultats? Comparez ces résultats au résultat de notre test <em>posthoc</em> Tukey ci-dessus. Expliquez ce que vous remarquez.</p>
+<p><i class="fa-solid fa-question-circle fa-xs" aria-label="question-circle"></i> <strong>Question 2.</strong> Créez un sous-ensemble des données à partir de <code>villes2.csv</code> où vous considérez juste les notes supérieures à 80,0. Calculez une ANOVA manuellement et comparez votre travail aux résultats de la fonction <code>aov()</code>. Générez des comparaisons multiples avec Tukey. Les résultats à partir de ce sous-ensemble sont-ils différents des résultats discutés ci-dessus pour les données complètes?</p>
+
+
+<div id="refs" class="references csl-bib-body hanging-indent" role="list" style="display: none">
+<div id="ref-barnier_R" class="csl-entry" role="listitem">
+Barnier, Julien. 2023. <em>Introduction à <span>R</span> et au <code>tidyverse</code></em>.
+</div>
+</div>
+</section>
+<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn1"><p>Cherchez le tableau pour <span class="math inline">\(\alpha = 0.05\)</span>. Dans ce tableau, localisez la colonne <em>df1 = 2</em> (nos degrés de liberté pour <code>ville</code>) et la ligne <span class="math inline">\(\infty\)</span> pour <em>df2</em>, car le ddl pour nos observations est élevé (147 = 150 observations - 3 villes). Vous verrez que la valeur dans cette cellule est de 2,99. Comme notre valeur de <em>F</em> est supérieure à cette valeur, cela signifie que notre <em>p</em> est significatif, c’est-à-dire <span class="math inline">\(p &lt; 0,05\)</span>.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copié");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copié");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./analysis_testt.html" class="pagination-link" aria-label="Analyse : le test *t*">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Analyse : le test <em>t</em></span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./analysis_lm1.html" class="pagination-link" aria-label="Régression linéaire (a)">
+        <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Régression linéaire (a)</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+<script>var lightboxQuarto = GLightbox({"closeEffect":"zoom","descPosition":"bottom","loop":false,"openEffect":"zoom","selector":".lightbox"});
+(function() {
+  let previousOnload = window.onload;
+  window.onload = () => {
+    if (previousOnload) {
+      previousOnload();
+    }
+    lightboxQuarto.on('slide_before_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      const href = trigger.getAttribute('href');
+      if (href !== null) {
+        const imgEl = window.document.querySelector(`a[href="${href}"] img`);
+        if (imgEl !== null) {
+          const srcAttr = imgEl.getAttribute("src");
+          if (srcAttr && srcAttr.startsWith("data:")) {
+            slideConfig.href = srcAttr;
+          }
+        }
+      } 
+    });
+  
+    lightboxQuarto.on('slide_after_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(slideNode);
+      }
+    });
+  
+  };
+  
+})();
+          </script>
+
+
+
+
+</body></html>

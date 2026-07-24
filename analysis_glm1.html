@@ -1,0 +1,1223 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="fr" xml:lang="fr"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.9.38">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>11&nbsp; Régression logistique (a) – LNG-1100</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./analysis_glm2.html" rel="next">
+<link href="./nettoyage2.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-ba523a544e19dd979aacfd4dc1569116.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/quarto-contrib/fontawesome6-1.2.0/all.min.css" rel="stylesheet">
+<link href="site_libs/quarto-contrib/fontawesome6-1.2.0/latex-fontsize.css" rel="stylesheet">
+<script src="site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
+<link href="site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
+<link href="site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "Pas de résultats",
+    "search-matching-documents-text": "documents trouvés",
+    "search-copy-link-title": "Copier le lien vers la recherche",
+    "search-hide-matches-text": "Cacher les correspondances additionnelles",
+    "search-more-match-text": "correspondance de plus dans ce document",
+    "search-more-matches-text": "correspondances de plus dans ce document",
+    "search-clear-button-title": "Effacer",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Annuler",
+    "search-submit-button-title": "Envoyer",
+    "search-label": "Recherche"
+  }
+}</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="nav-sidebar floating quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Basculer la barre latérale" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./partie2.html">Partie II</a></li><li class="breadcrumb-item"><a href="./analysis_glm1.html"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Régression logistique (a)</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Basculer la barre latérale" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Recherche" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">LNG-1100</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Recherche"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Bienvenue!</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./partie1.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Partie I</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Basculer la section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./fichiers.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Préparez-vous</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./intro_a_r.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Intro à R</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./exploration_a.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Exploration</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./analysis_testt.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Analyse : le test <em>t</em></span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./analysis_anova.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Analyse : l’ANOVA</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./analysis_lm1.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Régression linéaire (a)</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./analysis_lm2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Régression linéaire (b)</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./revision_a.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Bilan du mi-session</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./partie2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Partie II</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Basculer la section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./nettoyage.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Nettoyage (a)</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./nettoyage2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Nettoyage (b)</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./analysis_glm1.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Régression logistique (a)</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./analysis_glm2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Régression logistique (b)</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./extras.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Extras</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Basculer la section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./problemes.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Problèmes techniques</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./quarto-markdown.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Quarto et markdown</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./outils.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Outils</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./reussir.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Suggestions</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table des matières</h2>
+   
+  <ul>
+  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction"><span class="header-section-number">11.1</span> Introduction</a>
+  <ul class="collapse">
+  <li><a href="#la-logique-du-modèle" id="toc-la-logique-du-modèle" class="nav-link" data-scroll-target="#la-logique-du-modèle"><span class="header-section-number">11.1.1</span> La logique du modèle</a></li>
+  </ul></li>
+  <li><a href="#un-exemple" id="toc-un-exemple" class="nav-link" data-scroll-target="#un-exemple"><span class="header-section-number">11.2</span> Un exemple</a></li>
+  <li><a href="#r²-classique-et-r²-de-tjur" id="toc-r²-classique-et-r²-de-tjur" class="nav-link" data-scroll-target="#r²-classique-et-r²-de-tjur"><span class="header-section-number">11.3</span> R² classique et R² de Tjur</a>
+  <ul class="collapse">
+  <li><a href="#exemple-simple" id="toc-exemple-simple" class="nav-link" data-scroll-target="#exemple-simple"><span class="header-section-number">11.3.1</span> Exemple simple</a></li>
+  </ul></li>
+  <li><a href="#prédictions" id="toc-prédictions" class="nav-link" data-scroll-target="#prédictions"><span class="header-section-number">11.4</span> Prédictions</a></li>
+  <li><a href="#b58fc729-690b-4000-b19f-365a4093b2ff7b7b3c2066612062756c6c736579652073697a653d7873203e7d7d-pratique" id="toc-b58fc729-690b-4000-b19f-365a4093b2ff7b7b3c2066612062756c6c736579652073697a653d7873203e7d7d-pratique" class="nav-link" data-scroll-target="#b58fc729-690b-4000-b19f-365a4093b2ff7b7b3c2066612062756c6c736579652073697a653d7873203e7d7d-pratique"><i class="fa-solid fa-bullseye fa-xs" aria-label="bullseye"></i> Pratique</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./partie2.html">Partie II</a></li><li class="breadcrumb-item"><a href="./analysis_glm1.html"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Régression logistique (a)</span></a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Régression logistique (a)</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="introduction" class="level2" data-number="11.1">
+<h2 data-number="11.1" data-anchor-id="introduction"><span class="header-section-number">11.1</span> Introduction</h2>
+<p>L’idée principale d’une régression logistique est d’adapter l’architecture de la régression linéaire pour analyser la relation entre une variable réponse <code>y</code> <strong>binaire</strong> et une variable prédictive <code>x</code> (ou plusieurs variables prédictives). On représente cette relation avec l’expression <code>y ~ x</code> et un utilise la fonction <code>glm(..., family = "binomial")</code> en R. La représentation mathématique discutée en classe est donnée ci-dessous (régression logistique simple) :</p>
+<p><span class="math display">\[logit(P) = \hat\beta_0 + \hat\beta_1x_{i_{1}}\]</span></p>
+<section id="la-logique-du-modèle" class="level3" data-number="11.1.1">
+<h3 data-number="11.1.1" data-anchor-id="la-logique-du-modèle"><span class="header-section-number">11.1.1</span> La logique du modèle</h3>
+<ul>
+<li>On veut utiliser la même architecture de modèle<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> utilisée pour les régressions linéaires déjà discutées dans le cours : une droite (changement constant)</li>
+<li>Mais cela n’est pas compatible avec la notion de probabilité, qui contraint les valeurs à l’intervalle [0,1]. En plus, la ligne de tendance représentant une probabilité est typiquement en forme de S (sigmoïde)</li>
+<li>On pourrait utiliser les cotes (<em>odds</em>), qui sont linéaires et qui, par conséquent, génèrent une droite. Cependant, les <em>odds</em> sont asymétriques, comme discuté en classe</li>
+<li><strong>Solution</strong> : on utilise les <strong>logs de cotes</strong> (<em>log-odds</em>) = c’est le <strong>logit de la probabilité</strong></li>
+</ul>
+<p>Voici l’exemple discuté en classe (<code>villes2.csv</code>) :</p>
+<ul>
+<li>La cote (les chances) d’être dans une ville francophone = <strong>2.9</strong></li>
+<li>La cote (les chances) de n’être pas dans une ville francophone = <strong>0.3</strong></li>
+</ul>
+<p>À partir du point central (1), on remarque que l’échelle en <em>odds</em> est très asymétrique :</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="Figures/odds.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1" title="Odds : linéaires mais asymétriques"><img src="Figures/odds.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:70.0%" alt="Odds : linéaires mais asymétriques"></a></p>
+</figure>
+</div>
+<figcaption><em>Odds</em> : linéaires mais asymétriques</figcaption>
+</figure>
+</div>
+<p>Lorsqu’on transforme <em>odds</em> en <em>log-odds</em>, on arrive à une échelle symétrique dont le point central est toujours zéro :</p>
+<ul>
+<li>Le <em>log-odds</em> d’être dans une ville francophone = <strong>1.08</strong></li>
+<li>Le <em>log-odds</em> de n’être pas dans une ville francophone = <strong>-1.08</strong></li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="Figures/logodds.png" class="lightbox" data-gallery="quarto-lightbox-gallery-2" title="Log-odds : linéaires et symétriques"><img src="Figures/logodds.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:80.0%" alt="Log-odds : linéaires et symétriques"></a></p>
+</figure>
+</div>
+<figcaption><em>Log-odds</em> : linéaires et symétriques</figcaption>
+</figure>
+</div>
+<p>Donc, alors que les modèles linéaires donnent des coefficients dans l’unité originale (brute) de la variable de réponse, les modèles logistiques donnent des coefficients en <em>log-odds</em>. C’est la principale différence du modèle dans notre cours, vu que les modèles linéaires ont déjà été discutés.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Tableau de conversion">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Tableau de conversion
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-1" class="callout-1-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Voici un tableau adapté à partir de <span class="citation" data-cites="garcia_2021_dvaslr">Garcia (<a href="references.html#ref-garcia_2021_dvaslr" role="doc-biblioref">2021</a>)</span> (p.&nbsp;146) pour faciliter la conversion entre les unités discutées en classe. L’hypothèse nulle = <span class="math inline">\(\hat\beta = 0\)</span>, ce qui équivaut intuitivement à une probabilité de 50 %.</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th style="text-align: right;">P</th>
+<th style="text-align: right;"><strong>Odds</strong></th>
+<th style="text-align: right;"><strong>ln(odds)</strong> = <span class="math inline">\(\hat\beta\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">0.10</td>
+<td style="text-align: right;">0.11</td>
+<td style="text-align: right;">–2.20</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">0.20</td>
+<td style="text-align: right;">0.25</td>
+<td style="text-align: right;">–1.39</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">0.30</td>
+<td style="text-align: right;">0.43</td>
+<td style="text-align: right;">–0.85</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">0.40</td>
+<td style="text-align: right;">0.67</td>
+<td style="text-align: right;">–0.41</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">0.50</td>
+<td style="text-align: right;">1.00</td>
+<td style="text-align: right;">0.00</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">0.60</td>
+<td style="text-align: right;">1.50</td>
+<td style="text-align: right;">0.41</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">0.70</td>
+<td style="text-align: right;">2.33</td>
+<td style="text-align: right;">0.85</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">0.80</td>
+<td style="text-align: right;">4.00</td>
+<td style="text-align: right;">1.39</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">0.90</td>
+<td style="text-align: right;">9.00</td>
+<td style="text-align: right;">2.20</td>
+</tr>
+</tbody>
+</table>
+<p>Donc, vous pouvez mémoriser les valeurs extrêmes, qui couvrent des probabilités allant de 10 % à 90 %.</p>
+</div>
+</div>
+</div>
+<p>Assurez-vous de réviser <span class="citation" data-cites="larmarange2023">Larmarange (<a href="references.html#ref-larmarange2023" role="doc-biblioref">2023</a>)</span> (chap.&nbsp;22) ou <span class="citation" data-cites="garcia_2021_dvaslr">Garcia (<a href="references.html#ref-garcia_2021_dvaslr" role="doc-biblioref">2021</a>)</span> (chap.&nbsp;7) pour bien comprendre la logique des régressions logistiques.</p>
+</section>
+</section>
+<section id="un-exemple" class="level2" data-number="11.2">
+<h2 data-number="11.2" data-anchor-id="un-exemple"><span class="header-section-number">11.2</span> Un exemple</h2>
+<p>Voici l’exemple de la séance : <code>francophone ~ note</code>. On avait déjà examiné si une ville pourrait affecter les notes des apprenants : <code>note ~ ville</code>. C’était une <strong>régression linéaire</strong>, vu que la variable de réponse est continue. Maintenant, on vérifie si on peut prédire la ville où un apprenant a étudié à partir de sa note dans le même fichier (<code>villes2.csv</code>) en utilisant une <strong>régression logistique</strong>, vu que la variable de réponse est binaire. En fait, ce n’est pas la ville qui sera prédite : c’est la francophonie de la ville, vu qu’une régression logistique n’est pas capable de modéliser une réponse avec trois niveaux (<code>ville</code>), voilà pourquoi la dichotomisation est essentielle ici.</p>
+<p>On utilise ici l’extension <code>arm</code> pour convertir facilement une valeur en <em>log-odds</em> en probabilité avec la fonction <code>invlogit()</code>. On commence avec la création de la variable binaire <code>francophone</code> avec la fonction <code>if_else()</code> et l’exploration visuelle des données. Veuillez noter que la nouvelle variable sera dichotomisée (<code>0/1</code>). Pour la figure, on utilise les langues comme valeurs, mais, dans les valeurs originales, cette variable est codée sous <code>0</code> ou <code>1</code>.</p>
+<div class="cell" data-layout-align="center">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(arm)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Importer les données</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>villes <span class="ot">=</span> <span class="fu">read_csv</span>(<span class="st">"donnees/villes2.csv"</span>)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Créer la nouvelle colonne : 0/1</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>villes <span class="ot">=</span> villes <span class="sc">|&gt;</span> </span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">francophone =</span> <span class="fu">if_else</span>(ville <span class="sc">==</span> <span class="st">"Calgary"</span>, <span class="dv">0</span>, <span class="dv">1</span>))</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Figure</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> villes, <span class="fu">aes</span>(<span class="at">x =</span> francophone <span class="sc">|&gt;</span> </span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>                              <span class="fu">as_factor</span>(), </span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>                          <span class="at">y =</span> note)) <span class="sc">+</span> </span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">fill =</span> <span class="st">"darkorange"</span>, <span class="at">alpha =</span> <span class="fl">0.5</span>, <span class="at">width =</span> <span class="fl">0.5</span>) <span class="sc">+</span>  </span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_summary</span>() <span class="sc">+</span> </span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>(<span class="at">base_size =</span> <span class="dv">13</span>) <span class="sc">+</span></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"</span><span class="sc">\n</span><span class="st">Langue officielle de la ville"</span>,</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Note"</span>) <span class="sc">+</span> </span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_discrete</span>(<span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"0"</span> <span class="ot">=</span> <span class="st">"Anglais"</span>,</span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>                              <span class="st">"1"</span> <span class="ot">=</span> <span class="st">"Français"</span>))</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output-display">
+<div id="fig-villes1" class="quarto-float quarto-figure quarto-figure-center" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-villes1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="analysis_glm1_files/figure-html/fig-villes1-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-3" title="Figure&nbsp;11.1. L’influence de la langue de la ville sur les notes des apprenants"><img src="analysis_glm1_files/figure-html/fig-villes1-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:80.0%"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-villes1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;11.1. L’influence de la langue de la ville sur les notes des apprenants
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>Bien que les boîtes soient superposées, si vous examinez la position des moyennes dans la figure, vous remarquerez un possible effet de la francophonie sur les notes dans la <a href="#fig-villes1" class="quarto-xref">Fig.&nbsp;<span>11.1</span></a>.<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a> Pour le confirmer, on exécute notre régression logistique en utilisant la fonction <code>glm()</code>. Notre modèle sera spécifié sous <code>francophone ~ note</code>. Observez la figure encore une fois : notre axe <em>y</em> contient notre variable prédictive. Jusqu’ici, l’axe <em>y</em> était toujours l’axe de la variable de réponse. Ici, étant donnée la nature binaire de la variable de réponse, on utilise souvent l’axe <em>y</em> pour des variables prédictives continues (s’il y en a). La <a href="#fig-villes2" class="quarto-xref">Fig.&nbsp;<span>11.2</span></a> présente la version plus « traditionnelle » de la relation en question, où la variable de réponse est <code>0</code> et <code>1</code> dans l’axe <em>y</em>. Les deux options sont valides, mais la <a href="#fig-villes1" class="quarto-xref">Fig.&nbsp;<span>11.1</span></a> est probablement plus commune dans les la littérature.</p>
+<div class="cell" data-layout-align="center">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> villes, <span class="fu">aes</span>(<span class="at">x =</span> francophone <span class="sc">|&gt;</span> <span class="fu">as_factor</span>(), <span class="at">y =</span> note)) <span class="sc">+</span> </span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">fill =</span> <span class="st">"darkorange"</span>, <span class="at">alpha =</span> <span class="fl">0.5</span>, <span class="at">width =</span> <span class="fl">0.5</span>) <span class="sc">+</span>  </span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_summary</span>() <span class="sc">+</span> </span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>(<span class="at">base_size =</span> <span class="dv">13</span>) <span class="sc">+</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"</span><span class="sc">\n</span><span class="st">Francophone"</span>,</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Note"</span>) <span class="sc">+</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>()</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output-display">
+<div id="fig-villes2" class="quarto-float quarto-figure quarto-figure-center" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-villes2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="analysis_glm1_files/figure-html/fig-villes2-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-4" title="Figure&nbsp;11.2. L’influence de la langue de la ville sur les notes des apprenants"><img src="analysis_glm1_files/figure-html/fig-villes2-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:80.0%"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-villes2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;11.2. L’influence de la langue de la ville sur les notes des apprenants
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>Voici le rapport du modèle discuté en classe (<a href="#tbl-glm1" class="quarto-xref">Tableau&nbsp;<span>11.1</span></a>).</p>
+<!-- [^analysis_c-3]: Le $R^2$ dans le @tbl-glm1 n'est pas exactement le même type de coefficient de détermination déjà vu pour les régressions linéaires (on l'appelle pseudo $R^2$), mais vous pouvez l'utiliser si vous voulez. Consultez @tjur. -->
+<blockquote class="blockquote">
+<p>Notre modèle confirme un effet significatif de la variable sur la variable (<span class="math inline">\(\hat\beta = 0,04\)</span>, IC 95 % = <span class="math inline">\([0,0094; 0,0076], p = 0,015\)</span>). Ces résultats indiquent que, pour chaque augmentation de 10 points dans la note d’un apprenant, les log-odds d’être dans une ville francophone augmente de 0,4. Autrement dit, les chances d’être dans une ville francophone augmentent d’un facteur de 1,5.<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a></p>
+</blockquote>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sjPlot)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>mod1 <span class="ot">=</span> <span class="fu">glm</span>(francophone <span class="sc">~</span> note, <span class="at">data =</span> villes, <span class="at">family =</span> <span class="st">"binomial"</span>)</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="fu">tab_model</span>(mod1, <span class="at">transform =</span> <span class="cn">NULL</span>,</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>          <span class="at">string.pred =</span> <span class="st">"Variables"</span>, </span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>          <span class="at">string.ci =</span> <span class="st">"IC 95 %"</span>,</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>          <span class="at">string.est =</span> <span class="st">"Coefficients"</span>,</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>          <span class="at">string.p =</span> <span class="st">"Valeur p"</span>)</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div id="tbl-glm1" class="cell quarto-float quarto-figure quarto-figure-center">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-glm1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Tableau&nbsp;11.1. Régression logistique (coefficients en log-odds)
+</figcaption>
+<div aria-describedby="tbl-glm1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output-display">
+<table class="cell caption-top table table-sm table-striped small">
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th" style="text-align: center; border-top: double; font-style: normal; font-weight: bold; padding: 0.2cm;">&nbsp;</th>
+<th colspan="3" data-quarto-table-cell-role="th" style="text-align: center; border-top: double; font-style: normal; font-weight: bold; padding: 0.2cm;">francophone</th>
+</tr>
+<tr class="even">
+<td style="text-align: center; border-bottom: 1px solid; font-style: italic; font-weight: normal;">Variables</td>
+<td style="text-align: center; border-bottom: 1px solid; font-style: italic; font-weight: normal;">Coefficients</td>
+<td style="text-align: center; border-bottom: 1px solid; font-style: italic; font-weight: normal;">IC 95 %</td>
+<td style="text-align: center; border-bottom: 1px solid; font-style: italic; font-weight: normal;">Valeur p</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding: 0.2cm; vertical-align: top;">(Intercept)</td>
+<td style="text-align: left; padding: 0.2cm; vertical-align: top;">-2.18</td>
+<td style="text-align: left; padding: 0.2cm; vertical-align: top;">-4.65&nbsp;–&nbsp;0.06</td>
+<td style="text-align: left; padding: 0.2cm; vertical-align: top;">0.067</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding: 0.2cm; vertical-align: top;">note</td>
+<td style="text-align: left; padding: 0.2cm; vertical-align: top;">0.04</td>
+<td style="text-align: left; padding: 0.2cm; vertical-align: top;">0.01&nbsp;–&nbsp;0.08</td>
+<td style="text-align: left; padding: 0.2cm; vertical-align: top;"><strong>0.015</strong></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding: 0.2cm; vertical-align: top; padding-top: 0.1cm; padding-bottom: 0.1cm; border-top: 1px solid;">Observations</td>
+<td colspan="3" style="text-align: left; padding: 0.2cm; vertical-align: top; padding-top: 0.1cm; padding-bottom: 0.1cm; border-top: 1px solid;">150</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding: 0.2cm; vertical-align: top; padding-top: 0.1cm; padding-bottom: 0.1cm;">R<sup>2</sup> Tjur</td>
+<td colspan="3" style="text-align: left; padding: 0.2cm; vertical-align: top; padding-top: 0.1cm; padding-bottom: 0.1cm;">0.052</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</figure>
+</div>
+</div>
+</section>
+<section id="r²-classique-et-r²-de-tjur" class="level2" data-number="11.3">
+<h2 data-number="11.3" data-anchor-id="r²-classique-et-r²-de-tjur"><span class="header-section-number">11.3</span> R² classique et R² de Tjur</h2>
+<p>Dans un modèle de régression linéaire classique (<code>lm()</code>), le coefficient de détermination (<span class="math inline">\(R^2\)</span>) mesure la proportion de la variance totale de la variable de réponse expliquée par les prédicteurs du modèle. Il est défini comme :</p>
+<p><span class="math display">\[
+R^2 = 1 - \frac{\text{RSS}}{\text{TSS}}
+\]</span></p>
+<p>où RSS est la somme des carrés des résidus et TSS est la somme totale des carrés. Ce <span class="math inline">\(R^2\)</span>) varie de 0 à 1 et a une interprétation intuitive : il indique le pourcentage de la variance de <span class="math inline">\(Y\)</span> que le modèle explique.</p>
+<p>En revanche, pour les modèles de type <code>glm(family = "binomial")</code>, où la variable dépendante est binaire (0 ou 1), le <span class="math inline">\(R^2\)</span> classique n’est plus approprié, car la variance des résidus ne suit plus une loi normale avec variance constante. Pour évaluer l’ajustement dans ce contexte, plusieurs mesures de <strong>pseudo-<span class="math inline">\(R^2\)</span></strong> ont été proposées. Parmi celles-ci, le <strong><span class="math inline">\(R^2\)</span> de Tjur</strong> est particulièrement intuitif <span class="citation" data-cites="tjur">(<a href="references.html#ref-tjur" role="doc-biblioref">Tjur 2009</a>)</span>.</p>
+<p>Le <strong>R² de Tjur</strong> (ou coefficient de discrimination) est défini comme la différence entre :</p>
+<ul>
+<li>la moyenne des probabilités prédites pour les observations où <span class="math inline">\(Y = 1\)</span></li>
+<li>et la moyenne des probabilités prédites pour les observations où <span class="math inline">\(Y = 0\)</span></li>
+</ul>
+<p>Formellement :</p>
+<p><span class="math display">\[
+R^2_{\text{Tjur}} = \bar{p}_1 - \bar{p}_0
+\]</span></p>
+<p>Ce <span class="math inline">\(R^2\)</span> mesure donc la capacité du modèle à <strong>séparer</strong> les deux classes. Une valeur de 1 indique une séparation parfaite, tandis qu’une valeur proche de 0 indique une absence de pouvoir discriminant.</p>
+<section id="exemple-simple" class="level3" data-number="11.3.1">
+<h3 data-number="11.3.1" data-anchor-id="exemple-simple"><span class="header-section-number">11.3.1</span> Exemple simple</h3>
+<p>Supposons qu’un modèle de régression logistique prédise les probabilités suivantes :</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th style="text-align: center;">Vrai Y</th>
+<th style="text-align: center;">Probabilité prédite</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">0,85</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">0,90</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">0,20</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">0,15</td>
+</tr>
+</tbody>
+</table>
+<p>On calcule :</p>
+<ul>
+<li><span class="math inline">\(\bar{p}_1 = (0,85 + 0,90) / 2 = 0,875\)</span></li>
+<li><span class="math inline">\(\bar{p}_0 = (0,20 + 0,15) / 2 = 0,175\)</span></li>
+</ul>
+<p>Ainsi :</p>
+<p><span class="math display">\[
+R^2_{\text{Tjur}} = 0,875 - 0,175 = 0,70
+\]</span></p>
+<p>Ce résultat indique que le modèle sépare assez bien les deux classes.</p>
+</section>
+</section>
+<section id="prédictions" class="level2" data-number="11.4">
+<h2 data-number="11.4" data-anchor-id="prédictions"><span class="header-section-number">11.4</span> Prédictions</h2>
+<p>Quel est l’effet de <code>note</code> sur <code>francophone</code>? La question ici est vraiment « <em>Quelle est la probabilité qu’une ville soit francophone étant donnée la note moyenne d’un apprenant qui étudie dans cette ville?</em> ». Autrement dit, on veut analyser <span class="math inline">\(P(francophone = 1 | note)\)</span>. Le modèle nous donne un effet positif de <code>note</code> : <span class="math inline">\(\hat\beta=\)</span> 0.04 (log-odds). Cela veut dire qu’une augmentation d’un point dans la note augmente les chances que la ville est francophone d’un facteur de 1.042 (<code>exp(beta)</code> = 1.042), c’est-à-dire une augmentation de 4.2 %. On parle des chances (<em>odds</em>) et de <em>log-odds</em> parce que les deux nous donnent une droite, c’est-à-dire un changement constant qui nous permet d’évaluer n’importe quel effet pour n’importe quelle valeur de variable prédictive qu’on choisit.</p>
+<p>Si vous voulez parler des probabilités, la suggestion est de prendre des valeurs spécifiques pour la variable <code>note</code> et de vérifier les changements des probabilités. On peut utiliser la fonction <code>invlogit()</code> de l’extension <code>arm</code> :</p>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(arm)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Supposez la note 79 :</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="fu">invlogit</span>(<span class="sc">-</span><span class="fl">2.18</span> <span class="sc">+</span> <span class="dv">79</span> <span class="sc">*</span> <span class="fl">0.04</span>) <span class="co"># P(francophone = 1 | note = 79)</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 0.7271082</span></span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+<p>Le code ci-dessus montre comment calculer manuellement <em>P</em>(<code>francophone=1</code>|<code>note=79</code>). Cependant, il y a une facon plus automatisée d’accomplir la tâche, heureusement. La fonction <code>predict()</code> nous permet de prédire la probabilité de n’importe quelle <code>note</code> ici à partir d’un modèle (linéaire ou logistique) :</p>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Supposez la note 79 :</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">predict</span>(mod1,</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>        <span class="at">newdata =</span> <span class="fu">tibble</span>(<span class="at">note =</span> <span class="dv">79</span>),</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>        <span class="at">type =</span> <span class="st">"response"</span>)</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;         1 </span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 0.7459201</span></span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+<p>C’est une fonction très importante : on peut calculer plusieurs probabilités rapidement. <strong>Attention :</strong> il faut utiliser <strong>toutes</strong> les variables prédictives dans le modèle en question. Ici, on n’a qu’une variable. Donc, l’argument <code>newdata</code> contient un tableau très simple. Voyons comment calculer les probabilités pour plusieurs notes :</p>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">predict</span>(mod1,</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>        <span class="at">newdata =</span> <span class="fu">tibble</span>(<span class="at">note =</span> <span class="fu">c</span>(<span class="dv">40</span>, <span class="dv">50</span>, <span class="dv">60</span>, <span class="dv">70</span>, <span class="dv">80</span>)),</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>        <span class="at">type =</span> <span class="st">"response"</span>)</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;         1         2         3         4         5 </span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 0.3706795 0.4706742 0.5730795 0.6695812 0.7536465</span></span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Avertissement
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Notez que les différences entre chaque probabilité ne sont pas constantes. Voilà pourquoi on évite de parler des probabilités de manière absolue : c’est toujours un question de comparaison, vu que la ligne des probabilités n’est pas droite.</p>
+</div>
+</div>
+<hr>
+</section>
+<section id="b58fc729-690b-4000-b19f-365a4093b2ff7b7b3c2066612062756c6c736579652073697a653d7873203e7d7d-pratique" class="level2 unnumbered">
+<h2 class="unnumbered" data-anchor-id="b58fc729-690b-4000-b19f-365a4093b2ff7b7b3c2066612062756c6c736579652073697a653d7873203e7d7d-pratique"><i class="fa-solid fa-bullseye fa-xs" aria-label="bullseye"></i> Pratique</h2>
+<p><i class="fa-solid fa-question-circle fa-xs" aria-label="question-circle"></i> <strong>Question 1.</strong> Chargez le script qui nettoie les données du fichier <code>questionnaire2.csv</code> et créez une figure appropriée.</p>
+<p><i class="fa-solid fa-question-circle fa-xs" aria-label="question-circle"></i> <strong>Question 2.</strong> Exécutez une régression logistique pour analyser l’effet de la variable <code>langues</code> sur la précision des participants.</p>
+<p><i class="fa-solid fa-question-circle fa-xs" aria-label="question-circle"></i> <strong>Question 3.</strong> Interprétez vos résultats en détail.</p>
+<p><i class="fa-solid fa-question-circle fa-xs" aria-label="question-circle"></i> <strong>Question 4.</strong> La variable <code>geo</code> a-t-elle un effet sur la précision des réponses tout en tenant compte de l’effet potentiel de <code>langues</code>?</p>
+<p><i class="fa-solid fa-question-circle fa-xs" aria-label="question-circle"></i> <strong>Question 5.</strong> Quelle est la probabilité qu’un participant répondra correctement si il n’aime pas la géographie? Considérez deux scénarios : il parle d’autres langues et il ne parle pas d’autres langues.</p>
+
+
+<div id="refs" class="references csl-bib-body hanging-indent" role="list" style="display: none">
+<div id="ref-garcia_2021_dvaslr" class="csl-entry" role="listitem">
+Garcia, Guilherme Duarte. 2021. <em>Data visualization and analysis in second language research</em>. Routledge.
+</div>
+<div id="ref-larmarange2023" class="csl-entry" role="listitem">
+Larmarange, Joseph. 2023. <em>Introduction à l’analyse d’enquêtes avec R et RStudio</em>.
+</div>
+<div id="ref-tjur" class="csl-entry" role="listitem">
+Tjur, Tue. 2009. <span>«&nbsp;Coefficients of Determination in Logistic Regression Models—A New Proposal: The Coefficient of Discrimination&nbsp;»</span>. <em>The American Statistician</em> 63 (4): 366‑72. <a href="http://www.jstor.org/stable/25652317">http://www.jstor.org/stable/25652317</a>.
+</div>
+</div>
+</section>
+<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn1"><p>Il s’agit d’une famille de modèles statistiques : les <a href="https://fr.wikipedia.org/wiki/Modèle_linéaire_généralisé" target="_blank">modèles linéaires généralisés</a> (<em>Generalized Linear Models</em>), ce qui comprend les régressions linéaires, logistiques, poissons, etc.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>Notez aussi que les tailles des boîtes sont très différentes, ce qui indique une différence dans les variances des groupes. Bien que ce type de situation soit un problème pour les régressions <strong>linéaires</strong>, qui supposent que les groupes ont la même variance, ce n’est pas un problème pour les régressions <strong>logistiques</strong>. Cette supposition est fréquemment incorrecte.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3"><p>C’est le résultat de <code>exp(0.04^10)</code>. La fonction <code>exp()</code> nous donne le rapport des cotes (<em>odds-ratio</em>). Le <code>10</code> ici indique la quantité de points qu’on veut utiliser dans le calcul. Pour calculer le rapport des cotes d’un seul point, on utiliserait <code>exp(0.04)</code>. Si vous utilisez la fonction <code>tab_model()</code> de l’extension <code>sjPlot</code>, les coefficients seront affichés en <em>odds-ratio</em>, pas en <em>log-odds</em>. Consultez le code ci-dessous pour vérifier comment afficher les coefficients en <em>log-odds</em>.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copié");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copié");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./nettoyage2.html" class="pagination-link" aria-label="Nettoyage (b)">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Nettoyage (b)</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./analysis_glm2.html" class="pagination-link" aria-label="Régression logistique (b)">
+        <span class="nav-page-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Régression logistique (b)</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+<script>var lightboxQuarto = GLightbox({"closeEffect":"zoom","descPosition":"bottom","loop":false,"openEffect":"zoom","selector":".lightbox"});
+(function() {
+  let previousOnload = window.onload;
+  window.onload = () => {
+    if (previousOnload) {
+      previousOnload();
+    }
+    lightboxQuarto.on('slide_before_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      const href = trigger.getAttribute('href');
+      if (href !== null) {
+        const imgEl = window.document.querySelector(`a[href="${href}"] img`);
+        if (imgEl !== null) {
+          const srcAttr = imgEl.getAttribute("src");
+          if (srcAttr && srcAttr.startsWith("data:")) {
+            slideConfig.href = srcAttr;
+          }
+        }
+      } 
+    });
+  
+    lightboxQuarto.on('slide_after_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(slideNode);
+      }
+    });
+  
+  };
+  
+})();
+          </script>
+
+
+
+
+</body></html>
