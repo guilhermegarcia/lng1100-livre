@@ -1,0 +1,113 @@
+---
+title: "Régression linéaire (b)"
+---
+
+Dans ce chapitre, on se concentre sur la pratique de la régression linéaire. Vous devez avoir bien compris le [chapitre 6](analysis_lm1.qmd) avant de continuer. 
+
+
+## Les données
+
+Pour la pratique suivante, téléchargez le fichier `anglais.csv`. Il s’agit d’une tâche de [décision lexicale](https://fr.wikipedia.org/wiki/D%C3%A9cision_lexicale){target="_blank"} où les participants doivent décider rapidement si un mot est réel ou non. On extrait leurs temps de réaction, qui sont normalement mesurés en millisecondes. Ce type de variable, toutefois, a tendance à être orienté vers la droite, ce qui produit une distribution asymétrique (non normale). Cela n'est pas idéale compte tenu des hypothèses d'une régression linéaire (c'est-à-dire que la variable de réponse soit distribuée de façon normale). 
+
+Pour réduire le problème, il est commun de transformer la variable. Par exemple, on utilise souvent l’échelle logarithmique. C’est le cas des données ci-dessous : la variable `TR` suit l’échelle logarithmique, c’est-à-dire `log(ms)`. Veuillez noter que la fonction logarithmique naturelle `log()` et la fonction exponentielle `exp()` sont inverses l'une de l'autre. Donc `exp(log(x)) = x` ($x > 0$). Par conséquent, il est facile de passe de l'une à l'autre.
+
+Dans le fichier, vous trouverez les variables suivantes :
+
+- `Mot` = mot monomorphémique de l'anglais
+- `Familiarite` = une mesure de la familiarité de chaque mot  utilisé dans l'expérience
+- `Age` = l'âge de chaque participant (chaque ligne), dichotomisé en `old` ou `young`
+- `TR` = temps de réaction (échelle logarithmique)
+
+La variable `Familiarite` est basée sur le jugement des locuteurs natifs (elle est donc subjective). En bref, plus un mot est utilisé en général, plus sa `Familiarite` sera élevée dans les données.
+
+
+
+## {{< fa bullseye size=xs >}} Pratique {-}
+
+
+{{< fa question-circle size=xs >}} **Question 1.** Importez le fichier `anglais.csv`. Visualisez les premières lignes du fichier. Créez une nouvelle colonne pour les temps de réaction en millisecondes. Appelez-la `TRms`.
+
+{{< fa question-circle size=xs >}} **Question 2.** Créez deux histogrammes en utilisant `ggplot2`, un pour chaque variable de réponse (`TR` et `TRms`). Notez-vous des différences?
+
+{{< fa question-circle size=xs >}} **Question 3.** La variable `age` a-t-elle un effet sur les temps de réaction des participants? Créez une figure et exécuter une régression pour répondre à la question.
+
+{{< fa question-circle size=xs >}} **Question 4.** La variable `Familiarite` a-t-elle un effet sur les temps de réaction des participants? Créez une figure et exécuter une régression pour répondre à la question.
+
+{{< fa question-circle size=xs >}} **Question 5.** Étant données les deux dernières questions, quelle serait la meilleure figure pour représenter les données en question? Et quel serait le meilleur modèle?
+
+{{< fa question-circle size=xs >}} **Question 6.** Rapporter vos résultats à partir du modèle proposé dans la dernière question. 
+
+
+## Les comparaisons multiples
+
+On a vu dans le [chapitre 5](analysis_anova.qmd) qu'une ANOVA n'est pas suffisante pour localiser les différences dans des groupes : cette méthode produit une valeur *F* et une valeur *p* qui nous permettent de rejeter ou non l'hypothèse nulle. Pour savoir *quelles* sont les différences de façon explicite, on a utilisé un test *post hoc* apellé *Tukey HSD*.
+
+Dans les régressions linéaires utilisées dans le [chapitre 6](analysis_lm1.qmd), on a utilisé un niveau de référence (notre *intercept*). Par défaut, ce niveau est choisi automatiquement par R. Dans le fichier `villes2.csv`, par exemple, notre *intercept* était Calgary (ordre alphabétique). C'était la ville à laquelle les autres villes étaient comparés. Donc, bien qu'on puisse dire quelle sont les différences entre Calgary et Montréal, ainsi qu'entre Calgary et Québec, on n'est pas capable de dire quelle est la différence entre Montréal et Québec. Voici le modèle :
+
+```{r}
+#| message: false
+library(tidyverse)
+villes = read_csv("donnees/villes2.csv")
+
+modele = lm(note ~ ville, data = villes)
+summary(modele)$coef |> round(4)
+```
+
+Parfois, on a besoin de visualiser toutes les comparaisons possibles. Il y a une extension très pratique qui nous aide à atteindre cet objectif : `emmeans`. Voici un exemple :
+
+```{r}
+#| message: false
+#| code-fold: false
+library(emmeans) # il faut installer l'extension avant de l'utiliser
+
+emmeans(modele, pairwise ~ ville, adjust = "tukey")$contrasts
+```
+
+Vous voyez que la fonction `emmeans()` est capable de nous donner le même type de comparaison utilisé dans le [chapitre 5](analysis_anova.qmd). C'est une méthode très pratique *si* on en a besoin. Veuillez noter que les valeurs *p* seront ajustées (méthode `tukey` dans le code). Par conséquent, on réduit la probabilité des erreurs de type I, mais on augmente la probabilité des erreurs de type II. Remarquez, par exemple, que la valeur *p* de Montréal était 0.22 dans le modèle ci-dessus. Dans nos comparaisons multiples, en revanche, la valeur est ajustée à 0.44. Il est donc parfaitement possible de « perdre » un effet significatif après l'ajustement des valeurs *p* dans une telle comparaison.
+
+
+## {{< fa bullseye size=xs >}} Pratique {-}
+
+{{< fa question-circle size=xs >}} **Question 7.** La variable `Familiarite` déjà analysée ci-dessus est une variable continue. On pourrait, par contre, la transformer en une variable *catégorielle* de *k* niveaux. Pour le faire, on utilise la fonction `ntile()` de l'extension `dplyr` (dans `tidyverse`). Ajouter une nouvelle colonne aux données : `Fam_cat`. Cette colonne sera une version catégorielle de 4 niveaux de `Familiarite`. Utilisez la fonction `ntile()`. Par défaut, le résultat sera une colonne de classe `numeric`. Changez-la en `factor` en utilisant la fonction `as_factor()`. 
+
+
+{{< fa question-circle size=xs >}} **Question 8.** Exécutez une régression linéaire dont les variables prédictives sont `Age` et `Fam_cat`. Le coefficient de détermination est-il inférieur ou supérieur à celui du modèle de la question 5 ci-dessus?  
+
+{{< fa question-circle size=xs >}} **Question 9.** Eféctuez les comparaisons multiples de `Fam_cat` à partir du modèle que vous venez d'exécuter en utilisant l'extension `emmeans`. Constatez-vous des avantages d'utiliser la version catégorielle de `Familiarite`? 
+
+
+
+
+
+## ANOVA vs regréssion linéaire
+
+Une ANOVA est un type spécifique de régression linéaire où la variable prédictive est catégorique---la variable `ville` discutée ci-dessus, par exemple. Toutefois, il y a des différences importantes entre ce deux méthodes. Dans notre cours, on se concentre sur la régression linéaire, vu que ce type d'analyse est plus complet et beaucoup plus puissant. 
+
+- **Objectif** :
+  - **ANOVA** : Utilisée pour comparer les moyennes de deux groupes ou plus afin de déterminer s'il existe des différences significatives entre elles.
+  - **Régression linéaire** : Utilisée pour modéliser la relation entre une variable de réponse continue et une ou plusieurs variables prédictives, permettant de prédire les valeurs de la variable de réponse.
+
+- **Type de variables** :
+  - **ANOVA** : Généralement utilisée lorsque la variable prédictive est catégorique (ex. : groupes de traitement, villes) et la variable de réponse est continue.
+  - **Régression linéaire** : Peut utiliser des variables prédictives continues, catégoriques ou une combinaison des deux.
+
+- **Formulation du modèle** :
+  - **ANOVA** : Se concentre sur les différences de moyennes entre les groupes, sans tenir compte de l'effet des covariables.
+  - **Régression linéaire** : Inclut les effets des covariables et permet de modéliser des relations plus complexes.
+
+<!-- - **Hypothèses** : -->
+<!--   - **ANOVA** : Suppose que les échantillons sont indépendants, que les résidus sont normalement distribués et que les variances des groupes sont égales (homoscédasticité). -->
+<!--   - **Régression linéaire** : Implique également l'indépendance des observations, la normalité des résidus et l'homoscédasticité, mais elle se concentre sur la relation linéaire entre la variable dépendante et les variables indépendantes. -->
+
+- **Interprétation des résultats** :
+  - **ANOVA** : Fournit une statistique *F* et une valeur *p* pour évaluer si au moins une moyenne de groupe est différente des autres.
+  - **Régression linéaire** : Fournit des coefficients ($\hat\beta$) qui quantifient l'effet des variables prédictives sur la variable dépendante, ainsi que des indicateurs de la qualité de l'ajustement ($R^2$, valeurs *p*).
+
+
+
+
+
+
+
+
+

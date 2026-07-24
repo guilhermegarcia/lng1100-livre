@@ -1,0 +1,74 @@
+project:
+  type: book
+lang: fr
+lightbox: true
+language:
+  fr:
+    title-block-author-single: "Auteur"
+    title-block-published: "Mis à jour"
+crossref: 
+  fig-title: "Figure"
+  tbl-title: "Tableau"
+  title-delim: "."
+  fig-prefix: "Fig."
+  tbl-prefix: "Tableau"
+book:
+  cover-image: cover.jpg
+  title: "LNG-1100"
+  subtitle: "Méthodes expérimentales et analyse de données"
+  author: 
+  - name: Guilherme D. Garcia
+    orcid: 0000-0003-1412-3856
+    email: guilherme.garcia@lli.ulaval.ca
+    degrees: PhD
+    corresponding: true
+    url: "https://gdgarcia.ca"
+    affiliations:
+    - name: Université Laval
+      url: https://www.flsh.ulaval.ca/langues-linguistique-traduction
+      city: Ville de Québec
+      state: Québec, Canada
+    - name: CRBLM
+      url: https://crblm.ca
+      city: Montréal
+      state: Québec, Canada
+  date: today
+  chapters:
+    - index.qmd
+    - part: partie1.qmd 
+      chapters: 
+      - fichiers.qmd
+      - intro_a_r.qmd
+      - exploration_a.qmd
+      - analysis_testt.qmd
+      - analysis_anova.qmd
+      - analysis_lm1.qmd
+      - analysis_lm2.qmd
+      - quarto-markdown.qmd
+      - revision_a.qmd
+    - part: partie2.qmd
+      chapters:
+      - nettoyage.qmd
+      - exploration_b.qmd
+      - analysis_glm1.qmd
+      - analysis_glm2.qmd
+      - revision_b.qmd
+    - part: extras.qmd
+      chapters:
+      - problemes.qmd
+      - projects.qmd
+      - reussir.qmd
+      - references.qmd
+
+bibliography: references.bib
+code-fold: true
+format:
+  html:
+    theme: 
+      - journal
+      - lng1100.scss
+    code-block-bg: "lighten(gray, 45%)"
+    link-external-icon: false
+    link-external-newwindow: false
+    anchor-sections: false
+    # code-block-border-left: "lighten(blue, 20%)"

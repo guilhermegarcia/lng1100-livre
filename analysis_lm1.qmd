@@ -1,0 +1,306 @@
+---
+title: "Régression linéaire (a)"
+---
+
+## De l'ANOVA à la régression linéaire
+
+L'analyse de variance (ANOVA) n'est en réalité qu'un cas particulier de la **régression** **linéaire.** Dans une ANOVA classique, on analyse l'effet d'une variable catégorielle sur une variable continue en comparant les moyennes des groupes. Toutefois, ce modèle peut être reformulé comme une régression linéaire où les niveaux de la variable catégorielle sont encodés à l'aide de variables indicatrices. Ainsi, une ANOVA à un facteur n'est rien d'autre qu'un modèle de régression linéaire où les prédicteurs sont exclusivement catégoriels. Dès lors, plutôt que de traiter l'ANOVA comme une approche distincte, il est plus logique de la considérer comme un cas particulier du modèle linéaire général.
+
+Privilégier un modèle de régression linéaire complet plutôt qu'une simple ANOVA présente plusieurs avantages. Par exemple, la régression permet d'incorporer simultanément des prédicteurs continus et catégoriels, offrant ainsi une plus grande flexibilité dans la modélisation des relations entre variables. Ensuite, la régression permet d'étudier les interactions et d'intégrer des covariables, ce qui est essentiel pour éviter les biais d'omission (bien que les interactions ne seront pas dans nos analyses). De plus, elle fournit des coefficients interprétables qui permettent d'évaluer l'effet précis de chaque variable, plutôt que de se limiter à de simples comparaisons de moyennes (dans une ANOVA, il faut calculer l'effet séparément). Enfin, la régression linéaire s'inscrit dans un cadre plus général qui englobe de nombreux autres modèles statistiques (modèles linéaires généralisés, modèles à effets mixtes, etc.), ce qui en fait un outil plus puissant et polyvalent pour l'analyse des données.
+
+## La régression linéaire
+
+L'idée principale d'une régression linéaire est d'analyser la relation entre une variable de réponse `y` et une variable prédictive `x`. Naturellement, cette relation doit être linéaire pour que nos résultats soient fiables et précis. On représente cette relation avec l'expression `y ~ x` et on utilise la fonction `lm()` en R. La représentation mathématique est donnée ci-dessous :
+
+$$\hat y_i = \hat\beta_0 + \hat\beta_1x_{i_{1}} + \hat{e}$$ 
+
+« La réponse $y_i$ est le résultat de la somme des variables + l'erreur ($\hat{e}$) ».
+
+On peut ajouter n'importe combien de variables à notre modèle : `y ~ x + w + z ...`. Donc, c'est facile d'examiner les effets de plusieurs variables prédictives sur la variable de réponse `y`. Dans la séance, on a commencé notre analyse avec le modèle suivant (`villes.csv`) :
+
+`mod1 = lm(note ~ ville, data = villes)`
+
+Ici, on estime l'effet de la variable `ville` sur la réponse (`note`). Effectivement, ce modèle compare les notes moyennes de Montréal et de Québec. L'hypothèse nulle est toujours la même : la différence réelle entre les deux villes est nulle (zéro). C'est toujours une bonne idée de visualiser les données **avant d'exécuter** un modèle.
+
+```{r}
+#| eval: true
+#| echo: true
+#| code-fold: true
+#| fig-align: center
+#| fig-width: 5
+#| out-width: 70%
+#| fig-height: 4
+#| message: false
+#| warning: false
+#| label: fig-montreal-quebec
+#| fig-cap: "Les apprenants de Montréal vs Québec"
+library(tidyverse)
+
+villes = read_csv("donnees/villes.csv")
+
+ggplot(data = villes, aes(x = ville, 
+                          y = note)) + 
+    stat_summary() +
+    theme_minimal(base_size = 15) +
+    labs(x = "Ville",
+         y = "Note")
+```
+
+En examinant la @fig-montreal-quebec, on constate que la moyenne du groupe de Québec est supérieure à celle du groupe de Montréal. Il faut maintenant vérifier cet effet statistiquement avec une régression linéaire (fonction `lm()`).
+
+Normalement, on utilise la fonction `summary()` pour visualiser les résultats de nos modèles (cette fonction ne nous donne pas les intervalles de confiance). Par contre, la fonction `tab_model()` de l'extension `sjPlot` nous donne un résultat plus clair avec un tableau qui est déjà mis en forme et qui inclut les intervalles de confiance au niveau de 95 % :
+
+```{r}
+#| message: false
+library(sjPlot)
+mod1 = lm(note ~ ville, data = villes)
+
+tab_model(mod1, 
+          title = "Tableau statistique 
+          de la régression", dv.labels = "",
+          string.pred = "Variables", 
+          string.ci = "IC 95 %",
+          string.est = "Coefficients",
+          string.p = "Valeur p")
+```
+
+Le modèle nous donne les coefficients, c'est-à-dire nos bêtas ($\hat\beta$). Notre variable prédictive (`ville`) étant catégorielle, R choisit Montréal comme l'intercept (ordre alphabétique). Par conséquent, notre modèle peut être représenté par :
+
+$$\hat y_i = \hat\beta_0 + \overbrace{\hat\beta_1x_{i_{1}}}^{\text{Québec}} + \hat{e}$$ L'intercept **est toujours** la réponse prévue lorsque toutes les autres variables prédictives sont égales à zéro. Ici, on voit que :
+
+-   la moyenne du groupe de Montréal = 69.6
+-   la moyenne du groupe de Québec = 69.6 + 4.59
+-   **la différence entre eux = 4.59 (**$p < 0.0001$)
+
+Donc, on conclut que l'effet de `ville` est statistiquement significatif. Si on utilise la fonction `summary()` pour visualiser les résultats de notre modèle, on peut calculer les intervalles de confiance au niveau de 95 % séparément, qui seront normalement rapportés avec les effets $\hat\beta$ et leurs valeurs $p$ :
+
+```{r}
+confint(mod1)
+```
+
+Finalement, il faut noter que chaque valeur *p* représente un test statistique qui nous permet de rejeter ou non l'hypothèse nulle. Prenons l'intercept, représenté ici par Montréal. L'hypothèse nulle de notre bêta est que la note moyenne de Montréal est de zéro. Évidemment, on rejette cette hypothèse, vu que la note moyenne est de 69.58. Ensuite, l'hypothèse nulle pour Québec (notre slope) sera de zéro aussi, c'est-à-dire que la différence entre la note moyenne de Montréal et Québec est de zéro. On rejette cette hypothèse aussi.
+
+## Comparaison avec l'ANOVA
+
+Il est utile de comparer **les résultats** de notre régression ci-dessus à ceux d'une ANOVA équivalente. Voici une ANOVA simple, déjà discutée en classe, pour les mêmes données modélisées dans notre régression `mod1`.
+
+```{r}
+#| message: false
+une_anova = aov(note ~ ville, data = villes)
+
+summary(une_anova)
+
+```
+
+Veuillez noter que les résultats d'une ANOVA ne nous donne que les valeurs *F* et *p*. On peut simplement vérifier si l'hypothèse nulle serra rejetée ou non. Si vous voulez examiner où les différences se retrouvent, il faudra exécuter un test *post-hoc*, par exemple. Dans une régression traditionnelle, en revanche, on mets l'accent sur les **effets** de chaque variable analysée. Bien que les deux méthodes nous permettent de rejeter l'hypothèse nulle ici, les résultats de l'ANOVA sont beaucoup plus limités.
+
+
+## {{< fa bullseye size=xs >}} Pratique {-}
+
+Comme d'habitude, révisez attentivement les questions et les solutions ci-dessous. Si vous avez des questions, utilisez le forum sur monPortail. Lisez les interprétations plusieurs fois pour vous assurer que vous comprenez bien les résultats de chaque régression/modèle.
+
+{{< fa question-circle size=xs >}} **Question 1.** *Une ville de plus*. Dans un nouveau script, importez le fichier `villes2.csv` et explorez les différences entre les groupes par rapport à la variable `ville`. Créez une figure pour les variables `ville` et `note`. Exécutez un modèle linéaire avec ces variables. Interprétez les résultats. Répétez les étapes 3--6 avec les variables `duree` (temps d'étude du français) et `note`
+
+
+{{< fa question-circle size=xs >}} **Question 2.** *Une variable de plus*. On peut avoir plusieurs variables prédictives : `y ~ x + w + z ...`. Créez une figure pour `note`, `ville` et `duree`. Exécutez un modèle linéaire avec ses variables. Interprétez les résultats : nos conclusions changent-elles? **Extra** : reproduisez la figure dans la diapo de la séance 5.
+
+
+
+
+::: {.callout-warning title="Régression linéaire multiple" collapse="true"}
+Quand on ajoute plus d'une variable prédictive dans une régression, il s'agit d'une **régression (linéaire) multiple**. Essentiellement, ici on pose la question « lorsque la variable `ville` est considérée, est-ce que l'on observe un effet de la variable `duree`? » (et vice versa). C'est pourquoi il est important de considérer plusieurs variables à la fois : parfois, l'effet observé provient d'une autre variable! Notre modèle ici peut être représenté mathématiquement ainsi :
+
+$$\overbrace{\hat\beta_0}^{\text{Calgary}} + \overbrace{\hat\beta_1X}^{\text{Montréal}} +\overbrace{\hat\beta_2X}^{\text{Québec}} + \overbrace{\hat\beta_3X}^{\text{temps d'étude}} + {\hat{e}}$$
+:::
+
+
+::: {.callout-note title="Un paradoxe?"}
+L'avantage de créer la figure de la question 2 est que c'est plus facile de constater que l'effet de `duree` était apparent, mais il n'est pas réel une fois que l'on considère la variable `ville` aussi. La situation observée ici entre `ville` et `duree` est connue sous le nom de « [paradoxe de Simpson](https://fr.wikipedia.org/wiki/Paradoxe_de_Simpson){target="_blank"} ».
+:::
+
+**Une version plus avancée de la figure**. Si vous aimez la visualisation de données, voici une option plus intéressante où on utilise les couleurs dans le titre pour signaler chaque groupe. On ne va pas examiner ce type de code dans le cours : c'est un « extra ». Le code ici utilise Markdown ainsi que HTML et CSS, mais vous n'avez pas besoin de le comprendre pour l'utiliser, naturellement. La police de la figure est différente aussi (*Futura*).
+
+```{r}
+#| eval: true
+#| fig-align: center
+#| fig-width: 6
+#| out-width: 80%
+#| fig-height: 4
+#| message: false
+#| warning: false
+#| code-fold: true
+#| label: fig-temps
+#| fig-cap: "Nuage de points avec `ville` représentée par trois couleurs"
+
+# Choisir quelques couleurs pour les villes et les nommer :
+library(tidyverse)
+villes = read_csv("donnees/villes2.csv")
+couleurs = c("darkorange2", "darkviolet", "steelblue")
+names(couleurs) = c("Montréal", "Québec", "Calgary")
+
+# Créer le titre :
+titre = glue::glue('Les apprenants de <span style="color:{couleurs["Calgary"]}">**Calgary**</span>,
+<span style="color:{couleurs["Montréal"]}">**Montréal**</span> et
+    <span style="color:{couleurs["Québec"]}">**Québec**</span>')
+
+
+ggplot(villes, aes(x = duree, y = note)) + 
+    stat_smooth(method = "lm", color = "black") +
+    geom_point(size = 4, alpha = 0.5, aes(color = ville)) +
+    coord_cartesian(xlim = c(0, 60)) + 
+    labs(x = "Temps d'étude du français (en mois)",
+         y = "Note",
+         color = "Ville:",
+         title = titre,
+         subtitle = "Un effet général légèrement positif") + 
+    theme_minimal(base_size = 13) + 
+    theme(plot.title = ggtext::element_markdown(),
+          legend.position = "none") +
+    coord_cartesian(ylim = c(0, 100)) +
+    theme(plot.title = ggtext::element_markdown(),
+          plot.subtitle = ggtext::element_markdown()) +
+    scale_color_manual(values = couleurs)
+```
+
+------------------------------------------------------------------------
+
+## Extras
+
+### L'erreur standard
+
+L'erreur standard est **l'écart type de la distribution d'échantillonnage**. Il s'agit un concept très abstrait, mais ce n'est pas difficile de le vérifier en simulant des données en R.
+
+Imaginez les étapes suivantes :
+
+1.  Considérez une population de 20 000 personnes
+2.  Prenez un échantillon de 50 personnes et calculez la moyenne
+3.  Répétez l'étape 2 plusieurs fois (p. ex., 100), ce qui vous donne 100 moyennes
+
+L'écart type de ces moyennes est l'erreur standard de la moyenne. On peut estimer l'erreur standard manuellement : $ES = \frac{s}{\sqrt{n}}$. Finalement, on peut calculer les intervalles de confiance au niveau de 95 % : $\bar{x} \pm 1,96 \cdot ES$.
+
+```{r}
+#| eval: true
+#| echo: true
+#| code-fold: true
+#| fig-align: center
+#| fig-width: 5
+#| out-width: 80%
+#| fig-height: 4
+#| message: false
+#| warning: false
+#| label: fig-hist
+#| fig-cap: "La distribution des notes dans notre échantillon : une distribution suffisamment normale"
+library(tidyverse)
+
+# Simulez une population :
+set.seed(1)
+pop = rnorm(n = 20000, mean = 5, sd = 5)
+
+# Prélevez 100 échantillons de 50 observations chacun et calculer la moyenne :
+set.seed(1)
+moyennes = map_dbl(1:100, ~mean(sample(pop, size = 50)))
+
+# Visualiser la distribution :
+ggplot(data = tibble(x = moyennes), aes(x = x)) +
+    geom_histogram(color = "white", 
+    bins = 8, binwidth = 0.2,
+    fill = "darkorange2") +
+    theme_minimal(base_size = 12) +
+    labs(x = "Distribution des moyennes",
+         y = NULL)
+
+# Calculer l'écart type de « moyennes » :
+sd(moyennes)
+# Voilà : on vient de simuler le calcul manuel de l'erreur standard
+
+# On peut l'estimer avec un seul échantillon aussi :
+set.seed(1)
+echant = sample(pop, size = 50)
+
+sd(echant) / sqrt(50)
+```
+
+Consultez l'appli *Standard Error* [ici](https://guilherme.shinyapps.io/lng1100/){target="_blank"} pour examiner la relation entre la taille de l'échantillon et l'erreur standard.
+
+### Le calcul de la droite
+
+On ne va jamais calculer la droite d'une régression manuellement, mais c'est utile de comprendre **pourquoi** une droite est la meilleure pour les données. La droite d'une régression linéaire lorsque la variable sur l'axe $x$ est catégorielle sera toujours la droite entre la moyenne de la catégorie de référence (c'est-à-dire l'intercept) et la moyenne de la catégorie d'intérêt. La question, par contre, est comment calculer la droite lorsque la variable $x$ est continue.
+
+On commence avec le calcul de la moyenne des variables $y$ et $x$ :
+
+$$\bar{x} = \frac{\sum\limits_{i=1}^{n}x_i}{n}$$
+
+$$\bar{y} = \frac{\sum\limits_{i=1}^ny_i}{n}$$
+
+Après, on peut calculer l'intercept et le slope :
+
+$$\hat\beta_0 = \bar{y} - \hat\beta_1\bar{x}$$
+
+$$\hat\beta_1 = \frac{\sum\limits_{i=1}^n(x_i - \bar{x})(y_i - \bar{y})}{\sum\limits_{i=1}^n(x_i - \bar{x})^2}$$\
+Simplement dit, la droite idéale sera cela qui minimise la distance entre chaque point dans la figure et elle-même. Consultez la simulation [ici](https://guilherme.shinyapps.io/lng1100/){target="_blank"} (*trend line*).
+
+### Les résidus
+
+Les distances entre la droite et les observations réelles représentent tout ce que le modèle n'est pas capable d'expliquer (soit la variable prédictive numérique ou catégorielle). Il s'agit des **résidus**, représentés par $\hat{e}$. On peut visualiser ces distances pour la @fig-temps ci-dessus.
+
+```{r}
+#| eval: true
+#| echo: false
+#| code-fold: true
+#| fig-align: center
+#| fig-width: 7
+#| out-width: 95%
+#| fig-height: 4
+#| message: false
+#| warning: false
+#| label: fig-res
+#| fig-cap: "Les résidus de la régression"
+
+x = villes$duree
+y = villes$note
+z = villes$ville
+
+model <- lm(note ~ duree, data = villes)
+
+# Extract the fitted values and residuals
+data <- data.frame(x = x, y = y, ville = z, fit = fitted(model), resid = residuals(model))
+
+# Exaggerate residuals by multiplying by a factor (e.g., 2)
+data$extreme_resid = data$resid * 2
+
+# Adjust y-values based on exaggerated residuals to plot the points further from the line
+data$y_extreme = data$fit + data$extreme_resid
+
+
+
+ggplot(data, aes(x = x, y = y)) +
+    # stat_smooth(method = "lm", color = "black") +
+    geom_line(aes(y = fit), size = 1) +  # Plot the fitted line
+    geom_segment(aes(xend = x, yend = fit), linetype="dashed") +
+    geom_point(size = 4, alpha = 0.5, aes(color = ville)) +
+    coord_cartesian(xlim = c(0, 60)) +
+    labs(x = "Temps d'étude du français (en mois)",
+         y = "Note",
+         color = "Ville:",
+         title = titre,
+         subtitle = "Un effet général légèrement positif") +
+    theme_minimal(base_size = 13) +
+    theme(plot.title = ggtext::element_markdown(),
+          legend.position = "none") +
+    coord_cartesian(ylim = c(0, 100)) +
+    theme(plot.title = ggtext::element_markdown(),
+          plot.subtitle = ggtext::element_markdown()) +
+    scale_color_manual(values = couleurs)
+
+```
+
+<!-- <br> -->
+
+<!-- ::: {style="text-align: center;"} -->
+
+<!-- [<i class="fa-solid fa-arrow-left"></i>](3-analysis.html) [<i class="fa-solid fa-house"></i>](materiels.html) [<i class="fa-solid fa-arrow-right"></i>](5-quarto-markdown.html) -->
+
+<!-- ::: -->
+
+------------------------------------------------------------------------
+

@@ -1,0 +1,313 @@
+---
+title: "Exploration"
+code-fold: false
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+    collapse = TRUE,
+    comment = "#>",
+    fig.retina=TRUE,
+    # fig.width=7,    # Default width
+    # fig.height=5,   # Default height
+    fig.dpi=800     # High resolution
+)
+
+
+```
+
+> {{< fa book size=xs >}} @barnier_R (chap. 8)
+
+
+## Introduction
+
+La visualisation de données permet d'optimiser la compréhension des patrons et des résultats. L'extension la plus complète pour créer des figures en R est appelée `ggplot2` --- cette extension est chargée automatiquement quand on charge `tidyverse`, heureusement. Bien qu'il ait d'autres extensions, on va se concentrer sur `ggplot2` pour notre cours.
+
+Pour être capable de générer des figures optimales, vous devez vous concentrer sur deux éléments :
+
+1.  La compréhension de vos données ainsi que de votre message : qu'est-ce que vous voulez communiquer avec la figure? Quelle est la façon la plus optimale de le faire?
+2.  La partie technique, c'est-à-dire l'implémentation de votre code en R
+
+Comme déjà mentionnée en classe, la deuxième partie est plus facile que la première, ce qui surprend certains. Spécifiquement, vous devez connaître quel genre de figure sera approprié étant données les variables qui seront visualisées.
+
+## La structure d'une figure
+
+L'idée principale du `ggplot2` implique l'utilisation des « couches » d'informations qui sont connectées par le symbole d'addition `+`. On commence avec la couche de base en utilisant la fonction `ggplot()`. Cette couche indique l'origine des données, ainsi que les variables qui seront utilisées dans chaque axe. Pour l'exemple ci-dessous, on utilise le fichier `sampleData.csv`, téléchargé dans la dernière séance.
+
+```{r}
+#| eval: true
+#| fig-align: center
+#| out-width: 80%
+#| fig-width: 5
+#| fig-height: 3
+#| message: false
+#| warning: false
+# ggplot(data = ..., aes(x = ..., y = ...)) + 
+# 
+library(tidyverse)
+donnees = read_csv("donnees/sampleData.csv")
+
+# la première couche de la figure :
+ggplot(data = donnees, aes(x = group, y = testA)) 
+```
+
+Lorsqu'on exécute la ligne en question, on voit que le résultat serait simplement une toile vide. R sait quelles données seront visualisées, mais on n'a pas encore indiqué le type de visualisation souhaité.
+
+L'argument `data` indique l'objet qui contient nos données (un `tibble`, un `data frame`, etc.). Dans la fonction `aes()`, on spécifie les variables pour les axes `x` et `y`. Jusqu'ici, on a pas décidé quel type de figure on va créer. Pour prendre cette décision, il faut évaluer les variables en question.
+
+::: {.callout-note title="Quels types de figures...?" collapse="true"}
+Voici quelques règles **générales**. Il y a quelques exceptions à ces règles, mais vous pouvez les considérer comme les règles de base.
+
+1.  L'axe `y` contient la variable de réponse, c'est-à-dire les « résultats » dans les données. Par exemple, si je compare les notes de deux groupes de participants, les notes seront dans l'axe `y`.
+2.  L'axe `x` contient la variable qui influe sur notre `y`. Par exemple, les deux groupes de participants mentionnés ci-dessus. On peut ajouter d'autres variables en utilisant de différentes couleurs, des tailles, des formes, etc.
+3.  Si notre `x` contient une variable continue, un nuage de points est souvent utilisé avec la fonction `geom_point()`. On peut ajouter une ligne de régression à la figure en utilisant la fonction `stat_smooth()` ou `geom_smooth()` (cette droite sera accompagnée d'une région ombrée représentant les intervalles de confiance à 95 %)
+4.  Si notre `x` contient une variable catégorique, un graphique en barres (horizontales) est souvent utilisé avec les fonctions `geom_bar()` ou `geom_col()`. On peut utiliser aussi la <a href = "https://fr.wikipedia.org/wiki/Boîte_à_moustaches" target = "_blank">boîte à moustaches</a> avec `geom_boxplot()`, des barres d'erreur avec `stat_summary()`, etc.
+:::
+
+Vu que l'axe `x` est catégorique et que l'axe `y` est continu, on pourrait créer une <a href = "https://fr.wikipedia.org/wiki/Boîte_à_moustaches" target = "_blank">boîte à moustaches</a> avec `geom_boxplot()`. Cela sera notre deuxième couche :
+
+```{r}
+#| eval: true
+#| fig-align: center
+#| out-width: 80%
+#| fig-width: 5
+#| fig-height: 3
+#| message: false
+#| warning: false
+
+ggplot(data = donnees, aes(x = group, y = testA)) +
+    geom_boxplot()
+```
+
+Ensuite, on peut ajouter n'importe combien de couches à la figure. Par exemple, vu que la boîte à moustaches ne montre pas les moyennes, on pourrait inclure une troisième couche en utilisant la fonction `stat_summary()`, qui crée les moyennes ainsi que les erreurs standards de la moyenne. Pour différencier les erreurs des boîtes, on peut utiliser des couleurs :
+
+```{r}
+#| eval: true
+#| fig-align: center
+#| out-width: 80%
+#| fig-width: 5
+#| fig-height: 3
+#| fig-dpi: 800
+#| message: false
+#| warning: false
+
+ggplot(data = donnees, aes(x = group, y = testA)) +
+    geom_boxplot() + 
+    stat_summary(color = "darkviolet") +
+    theme_minimal()
+```
+
+Les boîtes sont dans la deuxième couche ici; les moyennes sont dans la troisième couche (si on change l'ordre, les moyennes seraient derrière les boîtes)
+
+C'est un bon moment pour examiner notre tableau :
+
+```{r}
+donnees
+```
+
+On a déjà vu en classe qu'il s'agit d'un tableau large (donc, pas *tidy*). Par conséquent, c'est difficile de créer une figure dont l'axe `y` montre **toutes** les notes des tests A, B et C : la fonction `aes()` dans `ggplot()` ne permet qu'une colonne pour chaque axe du graphique. Donc, avant de développer la figure en question, il faut transformer les données vers le format *tidy* en utilisant la fonction `pivot_longer()` (consultez la page de la deuxième séance [ici](1-intro_a_r.html)) :
+
+```{r}
+long = donnees |> 
+    pivot_longer(names_to = "test",  
+                 values_to = "note", 
+                 cols = testA:testC) 
+
+long
+```
+
+Maintenant, on peut facilement copier et ajuster le code de la figure ci-dessus pour créer un graphique général des notes à partir de notre nouvel objet `long` :
+
+```{r}
+#| eval: true
+#| fig-align: center
+#| out-width: 80%
+#| fig-width: 5
+#| fig-height: 3
+#| message: false
+#| warning: false
+
+ggplot(data = long, aes(x = group, y = note)) +
+    geom_boxplot() +
+    stat_summary(color = "darkviolet")
+```
+
+1.  On utilise `long` Notez que l'argument pour l'axe `y` est `note` maintenant.
+
+Finalement, on peut faire quelques ajustes esthétiques. C'est toujours une bonne idée d'avoir des étiquettes informatives et claires. Ici, on change aussi la transparence des boîtes (`alpha = ...`) et on ajoute un titre.
+
+```{r}
+#| eval: true
+#| fig-align: center
+#| fig-width: 5
+#| out-width: 80%
+#| fig-height: 4
+#| message: false
+#| warning: false
+
+ggplot(data = long, aes(x = group, y = note)) + 
+    geom_boxplot(alpha = 0.5) + 
+    stat_summary(color = "darkviolet") +
+    labs(x = "Groupe", # <1>
+         y = "Note",
+         title = "Notre graphique",
+         subtitle = "Un sous-titre ici") +
+    theme_minimal()
+```
+
+1.  Ici, on spécifie les étiquettes de la figure (les noms pour les axes, le titre, etc.)
+
+L'argument `alpha` exige un nombre de 0 (complètement transparent) à 1 (solide). Il y a une liste de thèmes disponibles, spécialement si on installe l'extension <a href = "https://yutannihilation.github.io/allYourFigureAreBelongToUs/ggthemes/" target = "_blank">`ggthemes`</a>.
+
+------------------------------------------------------------------------
+
+## Exploration de données
+
+Normalement, avant de visualiser nos données, on a besoin de faire quelques ajustements. L'extension `dplyr` @barnier_R (chap. 10), incluse dans `tidyverse`, nous permet d'exécuter plusieurs opérations utiles avec des fonctions intuitives. En plus, on peut facilement enchaîner ces opérations avec le *pipe*. Parmi les fonctions les plus utiles, vous devez être capable d'utiliser :
+
+-   `filter()` : pour subdiviser les données (c'est-à-dire sélectionner les **lignes** qui nous intéressent ou qui ne nous intéressent pas)
+-   `mutate()` : pour créer des nouvelles colonnes
+-   `arrange()` : pour ordonner les données à partir des n'importe quelle·s variable·s
+-   `group_by()` : pour grouper les données (normalement utilisé avant de créer un résumé statistique, par exemple)
+-   `select()` : pour sélectionner des **colonnes**
+-   `summarize()` : pour générer un résumé des données (le résultat sera un nouveau *tibble*)
+
+Si on utilise ces fonctions et le *pipe*, on peut exécuter plusieurs commandes de façon rapide et intuitive. Par exemple, imaginons le scénario suivant :
+
+-   prenez l'objet `long` (ligne 1)
+-   sélectionnez les tests B et C (ligne 2)
+-   grouper les données par `test` (ligne 3)
+-   calculer la note moyenne de chaque test (ligne 4)
+
+Les opérations sont toutes enchaînées avec le *pipe* (`|>`), ce qui rend la séquence facile à comprendre. Lorsqu'on exécute le code, on constate que la moyenne pour `testA` n'est pas calculé grâce à la ligne 2.
+
+```{r}
+long |> 
+    filter(test != "testA") |> 
+    mutate(langue = "japonais") |> 
+    group_by(test) |> 
+    summarize(moyenne = mean(note))
+```
+
+On peut également filtrer les données *dans la fonction* `ggplot`, c'est-à-dire dans un seule pas :
+
+```{r}
+#| eval: true
+#| fig-align: center
+#| fig-width: 5
+#| fig-height: 3
+#| out-width: 80%
+#| message: false
+#| warning: false
+ggplot(data = long |> filter(test != "testA"), 
+       aes(x = test, y = note)) + 
+    stat_summary() +
+    theme_minimal()
+```
+
+Finalement, on peut enchaîner les opérations de `dplyr` avec `ggplot`.
+
+```{r}
+#| eval: true
+#| fig-align: center
+#| fig-width: 5
+#| fig-height: 3
+#| out-width: 80%
+#| message: false
+#| warning: false
+long |> 
+    filter(test != "testA") |> 
+    mutate(langue = "japonais") |> 
+    group_by(test) |> 
+    summarize(moyenne = mean(note)) |> 
+    ggplot(data = _, aes(x = test, y = moyenne)) + # <1>
+    geom_col() +
+    theme_minimal()
+```
+
+1.  Notez que l'enchaînement utilise `|>` avant `ggplot`, mais `+` dans `ggplot`
+
+Ici, le code n'a pas du sens, vu que la fonction `stat_summary(geom = "bar")` peut calculer les moyennes pour nous. En plus, ce type d'enchaînement peut être difficile d'interpréter dans notre *script*. Par conséquent, c'est mieux de séparer les étapes : on prépare les données *avant* de les visualiser.
+
+## {{< fa bullseye size=xs >}} Pratique {-}
+
+> Comme d'habitude, c'est une bonne idée de créer un `script` pour les exercices de pratique dans chaque chapitre.
+
+{{< fa question-circle size=xs >}} **Question 1.** Importez le fichier `feedbackData.csv` et examinez la structure des données avec la fonction `glimpse()`. Vous pouvez utiliser la fonction `summary()` aussi. Il s'agit d'une étude hypothétique sur l'impact de la rétroaction sur la performance des étudiants et des étudiantes dans deux types de tâches, `A` et `B`. Il y a deux genres de rétroaction dans les données : la correction explicite et la reformulation. Après avoir examiné rapidement les données, éliminez les colonnes de la tâche B (on va se concentrer sur la tâche A). Il y a trois groupes de participants (trois langues maternelles) : `German`, `Italian`, `Japanese`.
+
+{{< fa question-circle size=xs >}} **Question 2.** Le type de rétroaction affecte-t-il la performance des participants dans la tâche A? Créez une boîte à moustaches pour répondre à la question.
+
+
+{{< fa question-circle size=xs >}} **Question 3.** La langue maternelle des participants a-t-elle un effet sur leurs notes? Vous pouvez continuer à utiliser la boîte à moustaches ici.
+
+{{< fa question-circle size=xs >}}️ **Question 4.** Maintenant, ajouter au graphique de la question 3 une couche avec les moyennes et les erreurs standards. Quel problème rencontrez-vous?
+
+*** 
+
+> Les conclusions qu'on tire d'une figure dépendent de plusieurs facteurs, dont certains sont purement esthétiques. Comparez les deux versions du graphique ci-dessous : le changement de l'axe `y` affecte notre perception. Consultez l'appli <a href = "https://guilherme.shinyapps.io/lng1100" target = "_blank">**ici**</a>.
+
+::: panel-tabset
+### Boîte + des moyennes
+
+```{r}
+#| eval: true
+#| echo: false
+#| fig-align: center
+#| out-width: 80%
+#| fig-width: 5
+#| fig-height: 3
+#| message: false
+#| warning: false
+fb = read_csv("donnees/feedbackData.csv")
+
+fb = fb |> 
+    select(-c(task_B1:task_B5)) |> 
+    pivot_longer(names_to = "tache",
+                 values_to = "note",
+                 cols = task_A1:task_A5)
+
+ggplot(data = fb, aes(x = Feedback, 
+                      y = note, 
+                      color = L1)) + 
+    geom_boxplot() + 
+    stat_summary(position = 
+                     position_dodge(
+                         width = 0.75)
+                 ) +
+    theme_minimal()
+
+```
+
+### Des moyennes
+
+```{r}
+#| eval: true
+#| echo: false
+#| fig-align: center
+#| out-width: 80%
+#| fig-width: 5
+#| fig-height: 3
+#| message: false
+#| warning: false
+
+ggplot(data = fb, aes(x = Feedback, 
+                      y = note, 
+                      color = L1)) + 
+    # geom_boxplot() + 
+    stat_summary(position = 
+                     position_dodge(
+                         width = 0.5)
+                 ) +
+    theme_minimal()
+
+```
+:::
+
+------------------------------------------------------------------------
+
+{{< fa question-circle size=xs >}} **Question 5.** La quantité d'heures d'étude (`Hours`) a-t-elle un rôle sur la performance des participants? Quel type de figure pourriez-vous créer ici? Pour mettre en évidence des tendances dans les données, ajoutez une ligne de régression au graphique.
+
+{{< fa question-circle size=xs >}} **Question 6.** Ajustez les étiquettes de la figure créée dans la question 5 et changez la taille, la couleur, et la transparence des points.
+
+> En effet, notre analyse statistique sera basée sur ce type de relation : la variable dans l'axe `x` est-elle importante pour prévoir les résultats dans l'axe `y`? La seule différence sera la supposition de que cette relation sera complètement **linéaire** (pour la première partie du cours).
+

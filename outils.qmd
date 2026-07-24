@@ -1,0 +1,79 @@
+#  Outils {-}
+
+## Raccourcis utiles
+
+Voici une petite liste des raccourcis qui seront utilisés pendant le cours. Vous pouvez également profiter des [*snippets*](https://gdgarcia.ca/posts/2024-01-15-snippets/) dans RStudio si vous voulez.
+
+| **Fonction**            | **Raccourci Mac**                             | **Raccourci Windows**                      |
+|-------------------------|-----------------------------------------------|-------------------------------------------|
+| Exécuter une ligne      | <kbd>Cmd</kbd> + <kbd>Entrée</kbd>             | <kbd>Ctrl</kbd> + <kbd>Entrée</kbd>        |
+| Ajouter le pipe         | <kbd>Cmd</kbd> + <kbd>Shift</kbd> + <kbd>M</kbd> | <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>M</kbd> |
+| Enregistrer le document | <kbd>Cmd</kbd> + <kbd>S</kbd>                 | <kbd>Ctrl</kbd> + <kbd>S</kbd>            |
+| Exécuter tout le script | <kbd>Cmd</kbd> + <kbd>Shift</kbd> + <kbd>Entrée</kbd> | <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>Entrée</kbd> |
+| Nettoyer la console     | <kbd>^</kbd> + <kbd>L</kbd>                   | <kbd>Ctrl</kbd> + <kbd>L</kbd>            |
+| Compiler un doc `Qmd`   | <kbd>Cmd</kbd> + <kbd>Shift</kbd> + <kbd>K</kbd> | <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>K</kbd> |
+| Ajouter  `<-`   | <kbd>Option</kbd> + <kbd>-</kbd> | <kbd>Alt</kbd> + <kbd>Shift</kbd> + <kbd>K</kbd> |
+
+Consultez la liste complète [ici](https://support.posit.co/hc/en-us/articles/200711853-Keyboard-Shortcuts-in-the-RStudio-IDE){target="_blank"}.
+
+## Aides-mémoire
+
+-   [`dplyr`](https://rstudio.github.io/cheatsheets/data-transformation.pdf) : exploration et manipulation
+-   [`ggplot2`](https://rstudio.github.io/cheatsheets/data-visualization.pdf) : visualisation
+-   [Quarto](https://rstudio.github.io/cheatsheets/quarto.pdf) : composition
+
+## Fonctions
+
+Voici les principales fonctions utilisées dans le cours --- ces fonctions viennent de l'extension `tidyverse`.
+
+### Exploration
+
+-   `read_csv()` ou `read_csv2()` : importer les fichiers `csv` qui utilisent `,` ou `;` pour séparer les colonnes. La classe de l'objet en question sera `tibble` (un type spécifique de tableau en R)
+-   `glimpse()` : visualiser toutes les colonnes d'un tableau en format de liste
+-   `mutate()` : ajouter ou modifier des colonnes
+-   `select()` : sélectionner ou enlever des colonnes
+-   `arrange()` : ordonner les données en fonction d'une ou plusieurs variables
+-   `rename()` : renommer des colonnes
+-   `filter()` : filtrer les données (c'est-à-dire sélectionner des lignes)
+-   `pivot_longer()` : transformer le tableau (*wide-to-long transformation*)
+-   `summarize()` : créer des résumés à partir des données
+-   `group_by()` : grouper les données en fonction des variables
+-   `.by()` : alternative à `group_by()`. On utilise `.by` comme un argument dans quelques fonctions (`mutate()`, `summarize()`, etc.)
+-   `ntile(v, k)` : catégoriser une variable continue `v` dans `k` niveaux
+
+### Visualisation
+
+-   `ggplot()` : la première couche d'une figure
+-   `geom_boxplot()` : des boîtes à moustaches
+-   `stat_summary()` : les moyennes + les barres d'erreurs standard
+-   `geom_point()` : un nuage des points
+-   `labs()` : la couche des étiquettes dans une figure
+-   `theme_classic()` : un thème plus minimal pour vos figures (il y en a beaucoup qui commencent par `theme_...()`)
+
+### Analyse
+
+-   `lm()` : une régression linéaire
+-   `glm()` : une régression logistique
+-   `emmeans()` : fonctions pour générer des comparaisons multiples pour une variable `v`
+  - P. ex., `emmeans(fit, pairwise ~ v, adjust = "tukey")$contrasts`
+-   `summary()` : le résumé d'un modèle[^problemes-1]
+
+[^problemes-1]: On peut utiliser la fonction `summary()` avec plusieurs types d'objet en R : c'est une fonction polymorphe.
+
+### Opérateurs relationnels
+
+-   `==` (deux `=`) : indique si deux valeurs sont identiques
+-   `!=` (`! =` sans espace) : indique si deux valeurs sont différentes
+-   `=` ou `<-` (`< -` sans espace) : attribue des valeurs à un objet
+-   `|>` (`| >` sans espace) ou `%>%` : le *pipe* enchaîne des opérations
+-   `%in%` : vérifie la présence des valeurs dans un objet. Par exemple, `5 %in% c(1, 3, 5)` renvoie `TRUE`
+-   `!` : la négation d'une opération. Par exemple, `!5 %in% c(1, 3, 5)` renvoie `FALSE`, vu que ce n'est pas vrai que 5 n'est pas dans le vecteur
+-   `&` : utilisé pour évaluer deux éléments (c'est-à-dire le « et » logique). L'opérateur est vrai si les deux opérandes de chaque côté sont vrai : `5 > 3 & 3 > 4` renvoi `FALSE`
+-   `|` : utilisé pour évaluer deux éléments (c'est-à-dire le « ou » logique). L'opérateur est vrai si au moins un des opérandes de chaque côté sont vrai : `5 > 3 | 3 > 4` renvoie `TRUE`
+
+### Bonus
+
+-   `if_else()` : une expression conditionnelle
+-   `as_factor()` : transformer un vecteur (une colonne) en facteur `fct`
+-   `str_c()` : combiner des caractères (texte)
+-   `clean_names()` : standardiser les noms des colonnes dans un tableau (il faut charger l'extension `janitor`)

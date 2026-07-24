@@ -1,0 +1,39 @@
+# Problèmes techniques {-}
+
+
+::: {.callout-important collapse="false"}
+## Pour mettre à jour vos fichiers
+
+Allez sur `Terminal` et exécutez les deux commandes suivantes :
+
+1. `git fetch origin`
+2. `git reset --hard origin/main`
+
+Veuillez noter que si vous changez les scripts du projet, ces commandes réinitialiseront les fichier et **les vos modifications seront perdues**. Voilà pourquoi vous devez créer vos propres fichiers/scripts pour ajouter vos notes.
+:::
+
+
+## Problèmes généraux
+
+1. Le site de Posit ne marche pas. Vous pouvez consulter le statut de Posit ici sur <http://status.posit.co>.
+1.  **L'installation de `tidyverse` ne fonctionne pas.** Utilisez la version en ligne et cela n'arrivera pas. 
+2.  **Je ne peux pas trouver les fichiers de données**. Voilà pourquoi vous devez télécharger les fichiers à partir du dépôt Git, qui vous donnera déjà la structure correcte de dossiers et de données. Le reste dépend de votre propre organisation, d'où vous enregistrez les fichiers que vous créez, etc. Si jamais vous désirez réinitialiser tous les fichiers, vous pouvez simplement répéter les pas dans le [chapitre 1](fichiers.qmd#sec-cloner), mais cela supprimera tous les fichiers que vous avez créés vous-même, donc gardez cela à l'esprit.
+3.  **Le code ne marche pas!** Voici quelques origines de ce type de problème :
+    -   lisez le message d'erreur attentivement et collez-le sur Google/ChatGPT s'il n'est pas clair;
+    -   R n'est pas capable de trouver les objets ou les fichiers que votre code utilise. Dans ce cas-là, il faut s'assurer que vous avez créé l'objet pertinent *avant* de l'utiliser dans votre code;
+    -   votre code n'est pas correct. Vérifier les lettres majuscule/minuscule, les parenthèses, les noms des variables, etc. Si vous utilisez un code de référence (p. ex., nos pages supplémentaires), comparez attentivement les codes; cherchez des fautes de frappe, etc.;
+    -   Si vous êtes 100% certain que votre code est correct, vous pouvez essayer de redémarrer R (`Session > Restart R`);
+    -   vous pouvez certainement coller votre code sur ChatGPT pour trouver le problème. C'est la dernière option : vous devez essayer de trouver les problèmes vous même (c'est une compétence très importante). Il faut également garder à l'esprit que certains types de problèmes dépendent de votre structure de fichiers. Donc, ChatGPT ne sera pas capable de vous aider dans ce type de situation.
+4.  **Mes références ne sont pas affichées dans le document (Quarto)**. Vérifiez votre préambule et assurez-vous que votre fichier de références `bib` est correct, notamment sans guillemets, et que sa localisation est correcte aussi. Si vous utilisez le modèle dans notre dépôt Git, vous n'aurez pas ce type de problème.
+6.  **Une erreur qui n'existait pas auparavant.** Par exemple : `Error in select(...)`. Si on charge plus d'une extension qui contient des fonctions de noms identiques, on peut arriver à ce type de problème. C'est le cas ici : `tidyverse` a une fonction appelée `select()` (c'est une fonction de l'extension `dplyr`, chargée *avec* `tidyverse`). Quand on parle des modèles logistiques, on utilise souvent la fonction `invlogit()` de l'extension `arm`. Cette extension contient aussi une fonction `select()` (!), qui sera priorisée par R. C'est pourquoi vous avez ce type de problème. Pour régler le problème, il y a deux options : déchargez `arm` en exécutant `detach("package:arm", unload = TRUE)` ou ajoutez le préfixe `dplyr::` à la fonction `select()` : `dplyr::select()`. Cela clarifie que vous voulez utilisez la fonction `select()` de l'extension `dplyr`.
+7.  **J'ai un problème pour importer un fichier `csv`**. Si vous avez un fichier `csv`, il faut vérifier quel type de séparation de colonnes le fichier utilise. S'il utilise une virgule, on utilise la fonction `read_csv()`; s'il utilise un point-virgule, `read_csv2()`. **N'utilisez jamais Excel** pour visualiser votre fichier `csv` avant de l'importer dans RStudio pour éviter des problèmes.
+8. **Mes tableaux ne marchent pas dans le document `PDF` produit avec Quarto**. Bien que Quarto nous permette de créer plusieurs formats de fichiers, il faut dire que chaque format a ses propres particularités. Un document `HTML`, par exemple, est dynamique, tandis qu'un document `PDF` sera toujours statique. Il y a donc des extensions qui ne marcheront pas dans les deux. Des tableaux en sont un exemple : les tableaux utilisés dans un document Quarto `HTML` peuvent ne pas fonctionner correctement si vous décider de créer un document `PDF` en changeant le format dans le préambule de votre document. Encore une fois, utilisez le modèle fourni tel quel et vous n'aurez pas de problèmes.
+
+
+## Évaluations du cours
+
+Vous pouvez consulter la politique du cours par rapport aux problèmes techniques sur monPortail (Évaluation). La politique en question s'applique aussi au <https://posit.cloud>, naturellement. Vous êtes donc responsable pour régler des problèmes techniques **locaux.** Consulter le statut des serveurs Posit ici : <http://status.posit.co>. En cas de problème avec les serveurs de Posit, les dates limites de remise seront adaptées au besoin.
+
+> Si vous éprouvez des difficultés avec un questionnaire sur monPortail, vous pouvez en tout temps fermer et réouvrir la fenêtre ; vos réponses ne seront pas perdues. Cependant, rappelez-vous que vous êtes **responsable** des conditions dans lesquelles vous faites votre évaluation. En cas de perte de connexion avec le serveur, une reprise pourra être organisée **seulement si le problème provient des serveurs du Portail**. Assurez-vous donc de ne pas surcharger votre bande passante lors de la passation de vos évaluations.
+
+

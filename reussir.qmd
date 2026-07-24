@@ -1,0 +1,45 @@
+
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+    collapse = TRUE,
+    comment = "#>",
+    cache = F,
+    fig.retina=TRUE,
+    # fig.width=7,    # Default width
+    # fig.height=5,   # Default height
+    fig.dpi=800     # High resolution
+)
+
+
+```
+
+# Suggestions {-}
+
+## Comment réussir le cours {-}
+
+Pour ce cours, vous devez être capable d'organiser et de localiser des fichiers et des dossiers dans votre ordinateur. Votre organisation sera donc essentielle.
+
+`tldr` : **lisez, pratiquez, répétez**
+
+Voici quelques suggestions pour maximiser votre performance dans le cours :
+
+1. Familiarisez-vous avec RStudio. La pratique sera essentielle pendant le cours. Prenez le temps d'explorer le logiciel, vu qu'il s'agit du principal outil utilisé dans le cours. Il y a beaucoup de tutoriels en ligne (p. ex., sur YouTube) qui peuvent vous aider à comprendre les bases. On va l'explorer en classe, naturellement, mais plus il y en a, mieux c'est.
+
+2. Connectez les questions de recherche aux méthodes expérimentales. Essayez de comprendre comment les questions de recherche se traduisent en méthodes d'analyse de données. Reliez toujours vos analyses aux questions que vous essayez de répondre.
+
+3. Pratiquez avec des données réelles (ou simulées). Travaillez avec des ensembles de données autant que possible. Cela vous aidera à comprendre comment appliquer les concepts en pratique. La répétition est essentielle quand on apprend à coder.
+
+4. N'hésitez pas à demander de l'aide. Si vous êtes bloqué, demandez de l'aide à vos collègues, à votre professeur, ou consultez les forums en ligne. La communauté R est généralement très accueillante et prête à aider. ChatGPT est toujours votre ami aussi — mais assurez-vous que ses réponses sont précises et que vous les comprenez bien.
+
+5. Soyez patient·e et persévérant·e. L'apprentissage de l'analyse de données peut être difficile, surtout si c'est nouveau pour vous. Soyez patient et persistant, et n'hésitez pas à expérimenter.
+
+6. Utilisez des ressources complémentaires. Il existe de nombreux livres et cours en ligne qui peuvent compléter ce que vous apprenez en classe. Trouvez ceux qui correspondent à votre style d'apprentissage. Notre page sur monPortail contient plusieurs outils complémentaires : explorez-les!
+
+7. Prenez des notes et réfléchissez critiquement. Notez vos réflexions et vos questions pendant que vous apprenez. Pensez de manière critique à ce que les données vous disent et ce qu'elles ne vous disent pas. Quand on travaille avec des scripts, il est essentiel d'inclure des commentaires explicatifs qui vous aideront lorsque vous analysez votre analyse plus tard.
+
+8. Étudiez en groupe si possible. Collaborer avec des camarades peut enrichir votre compréhension et vous offrir différentes perspectives sur l'analyse de données.
+
+9. Aidez vos collègues si vous avez déjà terminé une tâche ou si vous avez déjà compris un concept. Cela vous aiderez à consolider vos compétences.
+
+

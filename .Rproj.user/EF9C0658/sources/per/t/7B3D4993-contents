@@ -1,0 +1,94 @@
+# Problèmes techniques? {-}
+
+## Problèmes généraux
+
+1.  **L'installation de `tidyverse` ne fonctionne pas.** C'est le problème le plus important, vu qu'on utilise cette extension pendant le cours. Lisez attentivement le message d'erreur dans la console. Collez le message sur Google ou sur ChatGPT et expliquez-lui le problème. Si vous utilisez Windows, l'installation de [`RTools`](https://cran.r-project.org/bin/windows/Rtools/) peut être nécessaire. C'est nécessaire d'installer `tidyverse` pour compléter le cours. Donc, il faut régler le problème. Sinon, <span style="color:red">vous devrez utiliser la version [en ligne de RStudio](http://posit.cloud).</span>
+2.  **Je ne peux pas trouver les fichiers de données**. C'est le deuxième problème le plus important. Voilà pourquoi vous devez téléchargez les fichiers à partir du dépôt Git, qui vous donnera déjà la structure correcte de dossiers et de données. Le reste dépend de votre propre organisation, d'où vous enregistrez les fichiers que vous créez, etc.
+3.  **Le code ne marche pas!** Voici quelques origines de ce type de problème :
+    -   lisez le message d'erreur attentivement et collez-le sur Google/ChatGPT s'il n'est pas clair;
+    -   R n'est pas capable de trouver les objets ou les fichiers que votre code utilise. Dans ce cas-là, il faut s'assurer que vous avez créé l'objet pertinent *avant* de l'utiliser dans votre code;
+    -   votre code n'est pas correct. Vérifier les lettres majuscule/minuscule, les parenthèses, les noms des variables, etc. Si vous utilisez un code de référence (p. ex., nos pages supplémentaires), comparez attentivement les codes; cherchez des fautes de frappe, etc.;
+    -   Si vous êtes 100% certain que votre code est correct, vous pouvez essayer de redémarrer R (`Session > Restart R`);
+    -   vous pouvez certainement coller votre code sur ChatGPT pour trouver le problème. C'est la dernière option : vous devez essayer de trouver les problèmes vous même (c'est une compétence très importante). Il faut également garder à l'esprit que certains types de problèmes dépendent de votre structure de fichiers. Donc, ChatGPT ne sera pas capable de vous aider dans ce type de situation.
+4.  **Mes références ne sont pas affichées dans le document (Quarto)**. Vérifiez votre préambule et assurez-vous que votre fichier de références `bib` est correct, notamment sans guillemets, et que sa localisation est correcte aussi. Si vous utilisez le modèle dans notre dépôt Git, vous n'aurez pas ce type de problème.
+6.  **Une erreur qui n'existait pas auparavant.** Par exemple : `Error in select(...)`. Si on charge plus d'une extension qui contient des fonctions de noms identiques, on peut arriver à ce type de problème. C'est le cas ici : `tidyverse` a une fonction appelée `select()` (c'est une fonction de l'extension `dplyr`, chargée *avec* `tidyverse`). Quand on parle des modèles logistiques, on utilise souvent la fonction `invlogit()` de l'extension `arm`. Cette extension contient aussi une fonction `select()` (!), qui sera priorisée par R. C'est pourquoi vous avez ce type de problème. Pour régler le problème, il y a deux options : déchargez `arm` en exécutant `detach("package:arm", unload = TRUE)` ou ajoutez le préfixe `dplyr::` à la fonction `select()` : `dplyr::select()`. Cela clarifie que vous voulez utilisez la fonction `select()` de l'extension `dplyr`.
+7.  **J'ai un problème pour importer un fichier `csv`**. Si vous avez un fichier `csv`, il faut vérifier quel type de séparation de colonnes le fichier utilise. S'il utilise une virgule, on utilise la fonction `read_csv()`; s'il utilise un point-virgule, `read_csv2()`. **N'utilisez jamais Excel** pour visualiser votre fichier `csv` avant de l'importer dans RStudio pour éviter des problèmes.
+8. **Mes tableaux ne marchent pas dans le document `PDF` produit avec Quarto**. Bien que Quarto nous permette de créer plusieurs formats de fichiers, il faut dire que chaque format a ses propres particularités. Un document `HTML`, par exemple, est dynamique, tandis qu'un document `PDF` sera toujours statique. Il y a donc des extensions qui ne marcheront pas dans les deux. Des tableaux en sont un example : les tableaux utilisés dans un document Quarto `HTML` peuvent ne pas fonctionner correctement si vous décider de créer un document `PDF` en changeant le format dans le préambule de votre document. Encore une fois, utilisez le modèle fourni tel quel et vous n'aurez pas de problèmes.
+
+
+## Raccourcis utiles
+
+Voici une petite liste des raccourcis qui seront utilisés pendant le cours. Vous pouvez également profiter des [*snippets*](https://gdgarcia.ca/posts/2024-01-15-snippets/) dans RStudio si vous voulez.
+
+| **Fonction**            | **Raccourci Mac**                             | **Raccourci Windows**                      |
+|-------------------------|-----------------------------------------------|-------------------------------------------|
+| Exécuter une ligne      | <kbd>Cmd</kbd> + <kbd>Entrée</kbd>             | <kbd>Ctrl</kbd> + <kbd>Entrée</kbd>        |
+| Ajouter le pipe         | <kbd>Cmd</kbd> + <kbd>Shift</kbd> + <kbd>M</kbd> | <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>M</kbd> |
+| Enregistrer le document | <kbd>Cmd</kbd> + <kbd>S</kbd>                 | <kbd>Ctrl</kbd> + <kbd>S</kbd>            |
+| Exécuter tout le script | <kbd>Cmd</kbd> + <kbd>Shift</kbd> + <kbd>Entrée</kbd> | <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>Entrée</kbd> |
+| Nettoyer la console     | <kbd>^</kbd> + <kbd>L</kbd>                   | <kbd>Ctrl</kbd> + <kbd>L</kbd>            |
+| Compiler un doc `Qmd`   | <kbd>Cmd</kbd> + <kbd>Shift</kbd> + <kbd>K</kbd> | <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>K</kbd> |
+
+Consultez la liste complète [ici](https://support.posit.co/hc/en-us/articles/200711853-Keyboard-Shortcuts-in-the-RStudio-IDE){target="_blank"}.
+
+## Aides-mémoire
+
+-   [`dplyr`](https://rstudio.github.io/cheatsheets/data-transformation.pdf) : exploration et manipulation
+-   [`ggplot2`](https://rstudio.github.io/cheatsheets/data-visualization.pdf) : visualisation
+-   [Quarto](https://rstudio.github.io/cheatsheets/quarto.pdf) : composition
+
+## Fonctions
+
+Voici les principales fonctions utilisées dans le cours --- ces fonctions viennent de l'extension `tidyverse`.
+
+### Exploration
+
+-   `read_csv()` ou `read_csv2()` : importer les fichiers `csv` qui utilisent `,` ou `;` pour séparer les colonnes. La classe de l'objet en question sera `tibble` (un type spécifique de tableau en R)
+-   `glimpse()` : visualiser toutes les colonnes d'un tableau en format de liste
+-   `mutate()` : ajouter ou modifier des colonnes
+-   `select()` : sélectionner ou enlever des colonnes
+-   `arrange()` : ordonner les données en fonction d'une ou plusieurs variables
+-   `rename()` : renommer des colonnes
+-   `filter()` : filtrer les données (c'est-à-dire sélectionner des lignes)
+-   `pivot_longer()` : transformer le tableau (*wide-to-long transformation*)
+-   `summarize()` : créer des résumés à partir des données
+-   `group_by()` : grouper les données en fonction des variables
+-   `.by()` : alternative à `group_by()`. On utilise `.by` comme un argument dans quelques fonctions (`mutate()`, `summarize()`, etc.)
+-   `ntile(v, k)` : catégoriser une variable continue `v` dans `k` niveaux
+
+### Visualisation
+
+-   `ggplot()` : la première couche d'une figure
+-   `geom_boxplot()` : des boîtes à moustaches
+-   `stat_summary()` : les moyennes + les barres d'erreurs standard
+-   `geom_point()` : un nuage des points
+-   `labs()` : la couche des étiquettes dans une figure
+-   `theme_classic()` : un thème plus minimal pour vos figures (il y en a beaucoup qui commencent par `theme_...()`)
+
+### Analyse
+
+-   `lm()` : une régression linéaire
+-   `glm()` : une régression logistique
+-   `emmeans()` : fonctions pour générer des comparaisons multiples pour une variable `v`
+  - P. ex., `emmeans(fit, pairwise ~ v, adjust = "tukey")$contrasts`
+-   `summary()` : le résumé d'un modèle[^problemes-1]
+
+[^problemes-1]: On peut utiliser la fonction `summary()` avec plusieurs types d'objet en R : c'est une fonction polymorphe.
+
+### Opérateurs relationnels
+
+-   `==` (deux `=`) : indique si deux valeurs sont identiques
+-   `!=` (`! =` sans espace) : indique si deux valeurs sont différentes
+-   `=` ou `<-` (`< -` sans espace) : attribue des valeurs à un objet
+-   `|>` (`| >` sans espace) ou `%>%` : le *pipe* enchaîne des opérations
+-   `%in%` : vérifie la présence des valeurs dans un objet. Par exemple, `5 %in% c(1, 3, 5)` renvoie `TRUE`
+-   `!` : la négation d'une opération. Par exemple, `!5 %in% c(1, 3, 5)` renvoie `FALSE`, vu que ce n'est pas vrai que 5 n'est pas dans le vecteur
+-   `&` : utilisé pour évaluer deux éléments (c'est-à-dire le « et » logique). L'opérateur est vrai si les deux opérandes de chaque côté sont vrai : `5 > 3 & 3 > 4` renvoi `FALSE`
+-   `|` : utilisé pour évaluer deux éléments (c'est-à-dire le « ou » logique). L'opérateur est vrai si au moins un des opérandes de chaque côté sont vrai : `5 > 3 | 3 > 4` renvoie `TRUE`
+
+### Bonus
+
+-   `if_else()` : une expression conditionnelle
+-   `as_factor()` : transformer un vecteur (une colonne) en facteur `fct`
+-   `str_c()` : combiner des caractères (texte)
+-   `clean_names()` : standardiser les noms des colonnes dans un tableau (il faut charger l'extension `janitor`)

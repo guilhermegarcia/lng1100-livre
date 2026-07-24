@@ -1,0 +1,5 @@
+---
+title: "Partie II"
+---
+
+Dans la première partie du cours, nous avons exploré les données dont la variable de réponse est continue. Maintenant, on considère les variables **binaires**, qui jouent un rôle très important dans l'analyse de données linguistiques. La deuxième partie du cours est basée directement sur la première partie, donc tout ce que vous venez d'utiliser sera utile pour mieux comprendre les régressions **logistiques**, par exemple.

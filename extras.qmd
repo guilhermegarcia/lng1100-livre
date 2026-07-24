@@ -1,0 +1,21 @@
+---
+title: "Extras"
+---
+
+![](extras.png){width="30%" .right-aligned-image}Dans les chapitres suivants, vous trouverez quelques informations utiles par rapport aux [problèmes techniques](problemes.qmd) les plus fréquents. Ces informations sont basées sur les problèmes vécus par les étudiants du cours, donc il est possible que vous en rencontriez certains pendant cette session. Si jamais vous avez des questions, consultez ces chapitres *avant* d'utiliser le forum du cours. En plus, lisez le chapitre de [suggestions](reussir.qmd) dans cette partie du livre : il pourra vous aider pendant le cours.
+
+
+
+## Aide-mémoires
+
+Voici une liste d'aide-mémoires utiles pour le cours.
+
+- [RStudio](https://rstudio.github.io/cheatsheets/translations/french/rstudio-ide_fr.pdf)
+- [Quarto](https://rstudio.github.io/cheatsheets/quarto.pdf) (en anglais)
+- [`ggplot2`](https://rstudio.github.io/cheatsheets/translations/french/data-visualization_fr.pdf)
+- [`dplyr`](https://rstudio.github.io/cheatsheets/data-transformation.pdf) (en anglais)
+
+## Avez-vous trouvé des problèmes?
+
+Si vous avez trouvé des fautes dans le matériel du cours, visiter l'onglet [*issues*](https://github.com/guilhermegarcia/LNG1100/issues) dans notre dépôt Git pour créer une nouvelle entrée.
+

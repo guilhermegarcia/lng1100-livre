@@ -1,0 +1,47 @@
+/*-- scss:defaults --*/
+
+/*-- scss:rules --*/ 
+
+.right-aligned-image {
+    float: right; 
+    width: 20%;
+    margin-left: 20px; 
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.left-aligned-image {
+    float: left;
+    width: 20%;
+    margin-right: 20px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+/*-- scss:defaults --*/
+
+// Text color:
+$body-color: #212529;
+$theme-black: #4c4c4c;
+$theme-blue: #76AADB;
+$theme-teal: #50847B;
+
+// Navigation bar:
+$navbar-fg: #EAECEE;
+$navbar-bg: darken($theme-black, 20%);
+$body-color: $theme-black;
+
+// Code:
+$code-color: lighten(blue, 20%);
+$code-bg: lighten($theme-black, 65%);
+$progress-bg: lighten($theme-black, 65%);
+
+/*-- scss:rules --*/
+
+html{
+  scroll-behavior: smooth;
+}
+
+pre code {
+  font-family: 'JetBrains Mono', monospace;
+}

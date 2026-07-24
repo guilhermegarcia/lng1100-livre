@@ -1,0 +1,521 @@
+---
+title: "Nettoyage (a)"
+---
+
+
+```{=html}
+<style>
+img.wrapfig {
+float: right; 
+margin: 10px;
+}
+</style>
+```
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+    collapse = TRUE,
+    comment = "#>",
+    cache = FALSE,
+    fig.retina=TRUE,
+    # fig.width=7,    # Default width
+    # fig.height=5,   # Default height
+    fig.dpi=800     # High resolution
+)
+```
+
+
+## Données binaires
+
+Jusqu'ici, on a exploré des variables continues (temps de réaction, note, etc.) ainsi que des variables catégorielles (p. ex., ville). Cependant, notre variable de réponse était toujours continue. Dans la deuxième partie du cours, on examine les variables de réponse **binaire**, c'est-à-dire les variables telles que « correct/incorrect », « oui/non », etc. Ce type de variable est très commun dans la recherche en linguistique, mais on verra que les méthodes de visualisation ainsi que d'analyse statistique utilisée sont distinctes.
+
+### Une situation plus réaliste
+
+Bien que les données examinées jusqu'ici soient généralement propres et organisées, la situation réaliste de l'analyste est rarement aussi simple. Pour commencer notre exploration des données binaires, on utilisera des données plus réalistes à partir d'un questionnaire élaboré sur *MS Forms*. On a vu en classe que les données générées par ce type de plateforme sont souvent chaotiques. Donc, il a fallu les nettoyer avant d'être capable d'explorer ou d'analyser les patrons d'intérêt. Le nettoyage des données était notre objectif en classe. Bref, pour nettoyer nos données, on peut utiliser une combinaison d'outils :
+
+1.  L'extension [`janitor`](https://cran.r-project.org/web/packages/janitor/vignettes/janitor.html){target="_blank"} pour simplifier et standardiser les noms des variables/colonnes
+2.  La fonction `pivot_longer()`, déjà utilisée dans la première partie du cours, pour transformer nos données
+3.  La fonction `rename()` pour renommer des variables selon le besoin
+4.  Les fonctions `select()` et `filter()`, déjà utilisées dans le cours, selon le besoin
+
+------------------------------------------------------------------------
+
+
+## Une structure de travail organisée
+
+Pour éviter des scripts qui sont trop longs (et qui seront normalement moins organisés), on peut diviser notre travail dans une séquence d'étapes. Par exemple, on utilise un script pour charger les extensions, pour importer nos données et pour les nettoyer. Ensuite, on utilise un autre script pour explorer les patrons pertinents. Finalement, un troisième script contiendra l'analyse statistique.
+
+```{mermaid}
+%%| fig-width: 6.5
+flowchart LR
+  A[Nettoyage] --> B[Exploration]
+  B --> C{Analyse}
+```
+
+Chaque script qui dépend du script précédent contiendra la ligne `source(...)` pour « charger » le script nécessaire. On verra bientôt comment enchaîner nos scripts avec cette fonction-là. Pour l'instant, on utilise un seul script, vu qu'on travaille sur le nettoyage des données. Le script en question s'appellera `script_10_net.R` (choisissez un nom logique pour votre script).
+
+------------------------------------------------------------------------
+
+## Notre script + nettoyage de données
+
+Le script utilisé en classe, `script_10_net.R` est commenté ci-dessous --- il faudra installer[^donnees-binaires-1] l'extension `janitor` (suivez le modèle ci-dessous).
+
+[^donnees-binaires-1]: Une fois que vous l'avez installée, enlevez (ou masquez) la ligne qui l'installe pour éviter des installations multiples chaque fois que vous exécutez le script. Autrement dit, vous devez installer l'extension **une seule fois**.
+
+```{r}
+#| message: false
+#| warning: false
+#| code-fold: show
+
+# Charger les extensions :
+library(tidyverse)
+# install.packages(janitor)
+library(janitor)
+
+# Importer les données :
+q = read_csv2("donnees/questionnaire.csv")
+```
+
+Si vous visualisez les données avec `glimpse(d)`, vous verrez que le fichier n'est pas *tidy* : il y a plusieurs colonnes qui ne sont pas nécessaires. En plus, les questions sont distribuées à travers les colonnes, et les noms des colonnes sont immenses. Simplement dit, le fichier est chaotique.
+
+### Standardisation des noms
+
+Il faut simplifier et standardiser les noms des colonnes. Idéalement, on ne veut pas avoir des espaces dans les noms des variables (c'est pourquoi on voit plusieurs accents graves dans les noms de colonnes maintenant). La fonction `clean_names()` de l'extension `janitor` sera très utile ici :
+
+```{r}
+q = clean_names(q) # Remplacer la version originale par la version simplifiée/standardisée
+glimpse(q)
+```
+
+### Sélection des colonnes pertinentes
+
+Ensuite, on va enlever des colonnes inutiles. Par exemple, on voit des colonnes qui commencent par « feedback\_... », par « points\_... », etc. Les colonnes qui commencent par « heure\_... », « adresse\_... », « quiz\_... » ou « total\_... » peuvent être enlevées aussi. Ici, on utilise la fonction `select()`, déjà utilisée dans le cours, ainsi que la fonction `matches()` pour trouver des patrons des caractères. L'accent circonflexe signifie « le début d'une séquence »; la barre verticale signifie « ou ». Donc, ici on enlève les colonnes qui contiennent les mots « heure », « adresse », « nom », « feedback », « points », « total » ou « quiz ».
+
+```{r}
+q = q |> 
+  select(-matches("^(heure|adresse|nom|feedback|points|total|quiz)"))
+
+glimpse(q, width = 50) # largeur de 50%
+```
+
+### Transformation *wide-to-long*
+
+On a déjà vu comment transformer les tableaux qui sont trop longs : on utilise la fonction `pivot_longer()`. Dans la fonction, il faut spécifier quelles colonnes seront transformées. Normalement, c'est facile de nommer ces colonnes. Le problème ici, ce sont les noms des colonnes, qui sont trop longs. Une solution est d'utiliser les indices des colonnes pertinentes (c'est-à-dire les positions des colonnes dans le tableau). Comment trouver ces indices? On utilise la fonction `names(q)` pour lister les noms de toutes les colonnes *avec leurs indices*. Cherchez la première question et remarquez son indice. Ici, les questions de notre questionnaire sont dans les colonnes 6 à 15.
+
+```{r}
+#| message: false
+#| warning: false
+
+# Vérifions les noms des colonnes :
+names(q)
+
+# Notez que les questions du questionnaire commencent dans la colonne 6 (jusqu'à la colonne 15)
+
+# Transformation wide-to-long :
+long = q |> 
+  pivot_longer(names_to = "question",
+               values_to = "reponse",
+               cols = 6:15)
+
+glimpse(long, width = 50)
+
+```
+
+### Ajustements finaux
+
+Finalement, notez qu'on a une colonne immense : « avez_vous_suivi\_... ». C'est terrible. On va encore simplifier les noms des variables avec la fonction `rename()` :
+
+```{r}
+long = long |> 
+  rename("nom" = "votre_nom", # on va enlever cette colonne pour garantir l'anonymat
+         "naissance" = "votre_date_de_naissance",
+         "langues" = "combien_de_langues_parlez_vous",
+         "phonologie" = "avez_vous_suivi_le_cours_de_phonologie_ou_de_phonetique") |> 
+    select(-nom)
+
+# On pourrait utiliser les indices des colonnes au lieu de leurs noms
+
+glimpse(long, width = 50)
+```
+
+L'avantage d'utiliser la fonction `glimpse()` est qu'elle nous donne la classe de chaque variable dans le tableau. Ici, on voit que la variable `id` est considérée comme `dbl` (*double*, c'est-à-dire numérique). C'est un problème, vu que l'identification de chaque participant représente un facteur (`fct`). En plus, toutes les variables `chr` sont, en réalité, `fct` aussi. Observez le code ci-dessous.
+
+```{r}
+long = long |> 
+  mutate(id = as_factor(id),
+         across(where(is_character), as_factor))
+
+glimpse(long, width = 50)
+
+```
+
+La ligne `across(where(is_character), as_factor)` vérifie la classe de chaque variable. Si la classe est `chr`, on la change vers `fct` --- n'importe combien des colonnes `chr` existe dans le tableau.
+
+------------------------------------------------------------------------
+
+## Comment évaluer les réponses?
+
+Nos données représentent un questionnaire dont les questions ont des réponses correctes ou incorrectes. Cependant, le tableau ne nous donne pas la correction de chaque question. Naturellement, il faut avoir une clé de correction. Voici la clé :
+
+```{r}
+# Notre clé de correction!
+reponses = c("oui", "non", "oui", "non",
+             "oui", "non", "oui", "non",
+             "oui", "non")
+```
+
+Maintenant, on colle les réponses dans notre tableau principal. **Faites attention :** on n'a que 10 réponses, mais notre tableau contient `r 10 * length(levels(long$id))` lignes (nombre de participants = `r length(levels(long$id))`). Donc, il faut **grouper** les données *avant* d'ajouter la nouvelle colonne :
+
+```{r}
+long = long |> 
+  mutate(correction = reponses, .by = id)
+
+glimpse(long, width = 50)
+```
+
+Finalement, on peut corriger les réponses en utilisant la fonction `if_else()`.[^donnees-binaires-2]
+
+[^donnees-binaires-2]: Notez la différence entre les lettres majuscules et minuscules. On utilise la fonction `str_to_lower()` pour s'assurer que les caractères seront minuscules avant l'évaluation.
+
+```{r}
+long = long |> 
+  mutate(bonne_reponse = if_else(
+      str_to_lower(reponse) == correction, 
+      1,  # valeur si TRUE
+      0)) # valeur si FALSE
+  
+# Maintenant, on peut enlever la colonne « correction » :
+long = long |> 
+  select(-correction)
+
+glimpse(long, width = 50)
+```
+
+Le contenu du script `script_10_net.R` termine ici. Le nettoyage des données n'est pas facile, mais c'est une partie essentielle dans notre analyse de données. On ne peut pas visualiser ni analyser les données si notre tableau est complètement chaotique. Les étapes de nettoyage suivies ci-dessus sont importantes n'importe quel le type de variable de réponse qu'on analyse. En plus, si jamais vous utilisez *MS Forms* pour créer un sondage, vous pouvez adapter le script utilisé en classe pour nettoyer vos propres données.
+
+::: {.callout-note title="Bonus"}
+Vu que nos données contiennent les dates de naissance des participants, on pourrait facilement calculer leurs âges. On utilise l'extension `lubridate` pour analyser les dates (il s'agit d'une classe spéciale : `date`). Dans le code ci-dessus, la fonction `mdy()` interprète les dates qui suivent le format `mois-jour-année`. Ensuite, on calcule l'intervalle entre la date de naissance et aujourd'hui avec les fonctions `interval()` et `today()`, ce qui nous donnera le résultat en **jours**. Par conséquent, on divise le résultat par une année, `years(1)`. Finalement, on arrondit le chiffre.
+
+```{r}
+#| eval: false
+#
+long = long |> 
+  mutate(naissance = mdy(naissance),
+         age = (interval(naissance, today())/years(1)) |> round(0))
+
+glimpse(long, width = 50) # Voilà!
+```
+:::
+
+
+
+## {{< fa bullseye size=xs >}} Pratique {-}
+
+Pour les questions ci-dessous, vous aurez besoin d'une clé de réponse.
+
+
+{{< fa question-circle size=xs >}} **Question 1.** Importez et nettoyez le fichier `questionnaire2.csv`. N'oubliez pas d'enlever la colonne qui indique les noms des participants.
+
+{{< fa question-circle size=xs >}} **Question 2.** Quel est le score de chaque participant?
+
+{{< fa question-circle size=xs >}} **Question 3.** Le goût pour la géographie affecte-t-il la précision des réponses?
+
+{{< fa question-circle size=xs >}} **Question 4.** Créez une figure appropriée pour les données en question.
+
+
+
+## Des patrons d'intérêt
+
+On a vu dans les sections précédentes comment nettoyer le fichier `questionnaire.csv`. Dans les sections ci-dessous, on continue notre analyse en examinant quelques questions que l'on peut se poser à propos du fichier `questionnaire2.csv` (pratique à la maison de la dernière séance). En fin de compte, on doit être capable de répondre aux questions pertinentes sur les données qu'on examine. Donc, aujourd'hui on se concentre sur la pratique : on révise le nettoyage du fichier en question (`questionnaire2.csv`) et on répond aux questions explorées en classe. N'oubliez pas qu'on travaille avec des données dont la variable de réponse est **binaire**, ce qui exige quelques ajustements de notre part.
+
+------------------------------------------------------------------------
+
+## Nettoyage enchainé
+
+Bien que la première partie de ce chapitre contienne un script pour nettoyer nos données, on a créé des étapes séparémment. On pourrait pourtant utiliser le *pipe* pour enchainer toutes nos opérations. Retournez au chapitre précédent et enchainez votre code en utilisant `|>`.
+
+
+```{r}
+#| message: false
+#| echo: false
+
+library(tidyverse)
+library(janitor)
+
+# Clé de correction :
+cle = c("le dzongkha",
+        "le catalan",
+        "le néerlandais",
+        "le swati et l'anglais",
+        "le tétum et le portugais")
+
+# Données :
+q2 = read_csv2("donnees/questionnaire2.csv")
+
+# Nettoyage (version enchaînée) :
+q_net = q2 |>
+    clean_names() |>
+    select(-matches("heure|adresse|total|points|feedback|quiz|nom")) |>
+    pivot_longer(names_to = "question",
+                 values_to = "reponse",
+                 cols = 4:8) |>
+    rename("geo" = 2,
+           "langues" = 3) |>
+    mutate(cle = cle, .by = id) |>
+    mutate(correct = if_else(reponse == cle, 1, 0)) |>
+    select(-cle) |>
+    mutate(id = as_factor(id),
+           across(where(is_character), as_factor))
+```
+
+
+::: {.callout-warning title="Le bon ordre?"}
+Il faut s'assurer que le vecteur `cle` et le tableau du questionnaire contiennent **le même ordre** de réponses avant de combiner les deux. Si les ordres sont différents, la méthode utilisée ici ne fonctionnera pas.
+:::
+
+L'avantage d'enchaîner les opérations est clair : c'est beaucoup plus concis. Cependant, ces opérations sont moins transparentes, ce qui rend le code moins lisible. Ne croyez pas que j'ai écrit ce bloc de code d'un seul coup. Au contraire, j'ai exécuté le code au fur et à mesure que je le construisais, afin de pouvoir visualiser le tableau de données au fur et à mesure que je construisais le code. Vous pouvez faire la même chose : sélectionnez une partie du code (sans inclure le pipe à la fin) et l'exécutez. Ensuite, visualisez l'objet `q_net` pour vous familiariser avec le résultat (temporaire).
+
+Voici le résultat que vous devez produire : les données sont nettoyées et prêtes pour l'analyse. On peut continuer avec les questions de l'exercice de pratique ci-dessous.
+
+```{r}
+#| echo: false
+#| message: false
+#| tbl-cap: Les premières lignes du tableau
+library(kableExtra)
+
+q_net |> 
+  mutate(question = str_sub(question, start = 1, end = 5) |> str_c("...")) |> 
+    slice_head(n = 5) |>
+    kbl()
+```
+
+## Questions d'interprétation
+
+Voici les questions discutées en classe. Il est important de noter qu'il n'est pas possible d'y répondre **sans avoir préalablement nettoyé les données**. Même les systèmes d'intelligence artificielle ont des difficultés dans ce type de tâche.
+
+## {{< fa bullseye size=xs >}} Pratique {-}
+
+{{< fa question-circle size=xs >}} **Question 1.** Quelle est la précision moyenne en fonction de la variable `langues`?
+
+
+
+<!-- ```{r} -->
+<!-- #| message: false -->
+<!-- q_net |>  -->
+<!--     summarize(moyenne = mean(correct),  -->
+<!--               .by = langues) -->
+
+<!-- # Problème : il y a une réponse vide (NA) -->
+<!-- # La fonction mean() ne fonctionne pas avec NAs -->
+<!-- # Solution : l'argument na.rm = TRUE -->
+
+<!-- q_net |>  -->
+<!--     summarize(moyenne = mean(correct, na.rm = TRUE),  -->
+<!--               .by = langues) -->
+<!-- ``` -->
+
+
+
+{{< fa question-circle size=xs >}} **Question 2.** Quelle est la précision moyenne en fonction de la variable `geo`?
+
+
+<!-- ```{r} -->
+<!-- #| message: false -->
+<!-- q_net |>  -->
+<!--     summarize(moyenne = mean(correct, na.rm = TRUE),  -->
+<!--               .by = geo) -->
+<!-- ``` -->
+
+
+{{< fa question-circle size=xs >}} **Question 3.** Quelle est la précision moyenne des participants 4, 7, 14, 15 et 17 (ensemble)?
+
+<!-- ```{r} -->
+<!-- #| message: false -->
+<!-- q_net |>  -->
+<!--     filter(id %in% c("4", "7", "14", "15", "17")) |>  -->
+<!--     summarize(Precision = mean(correct, na.rm = TRUE)) -->
+<!-- ``` -->
+
+{{< fa question-circle size=xs >}} **Question 4.** Créez une nouvelle colonne qui classe les participants qui aiment la géographie et qui parlent d'autres langues vs les autres. La précision de ces deux groupes est-elle affectée par la nouvelle classification?
+
+<!-- ```{r} -->
+<!-- #| message: false -->
+<!-- q_net |>  -->
+<!--     mutate(geo_lang = if_else(geo == "Oui" &  -->
+<!--                                   langues == "Oui", 1, 0)) |>  -->
+<!--     summarize(precision = mean(correct, na.rm = TRUE),  -->
+<!--               .by = geo_lang) -->
+
+<!-- # Réponse : non. La différence est minuscule. -->
+<!-- ``` -->
+
+{{< fa question-circle size=xs >}} **Question 5.** Créez quelques figures pour explorer les patrons des données. Quelles figures sont appripriées étant donnée la classe de la variable de réponse? Consultez les commentaires ci-dessous.
+
+::: panel-tabset
+## Nuage des points
+
+Étant donné que la variable `y` est binaire, ce type de figure ne fonctionne pas. Ici, on ne voit que 4 points (il y en a plus, mais les points sont tous superposés). Même dans le cas où la variable `x` serait continue, le problème persisterait.
+
+```{r}
+#| message: false
+#| echo: false
+#| fig-align: center
+#| fig-width: 5
+#| out-width: 80%
+#| fig-height: 3
+#| fig-dpi: 500
+#| warning: false
+
+ggplot(data = q_net, aes(x = langues, y = correct)) + 
+    geom_point() + 
+    labs(x = "Parlez-vous d'autres langues?",
+         y = "Correct",
+         title = "Le nuage des points ne marche pas") +
+    theme_minimal()
+```
+
+Peut-être envisagez-vous l'option `geom_jitter()`. Bien que cette option soit capable de minimiser le problème (en dispersant les points), elle ne le réglera pas étant donnée la classe de la variable `y` en question.
+
+## Boîtes à moustaches
+
+Ici, on observe le même type de problème. Bien que ce type de figure soit fréquemment recommandé (si la variable `x` est catégorielle), la variable `y` doit être continue. Notez que les médianes[^exploration_b-1] sont extrêmes ici (!).
+
+```{r}
+#| message: false
+#| echo: false
+#| fig-align: center
+#| fig-width: 5
+#| out-width: 80%
+#| fig-height: 3
+#| fig-dpi: 500
+#| warning: false
+
+ggplot(data = q_net, aes(x = langues, y = correct)) + 
+    geom_boxplot() +
+    labs(x = "Parlez-vous d'autres langues?",
+         y = "Correct",
+         title = "Les boîtes à moustaches non plus") +
+    theme_minimal()
+```
+
+## Moyennes
+
+Finalement, lorsqu'on utilise des points pour représenter la précision moyenne, on arrive à un graphique informatif. Toutefois, il faut noter qu'ici on n'examine pas les données brutes : on examine plutôt les moyennes (ce qui explique pourquoi la figure fonctionne).
+
+```{r}
+#| message: false
+#| echo: false
+#| fig-align: center
+#| fig-width: 5
+#| out-width: 80%
+#| fig-height: 3
+#| fig-dpi: 500
+#| warning: false
+
+ggplot(data = q_net, aes(x = langues, y = correct)) + 
+    stat_summary() + 
+    labs(x = "Parlez-vous d'autres langues?",
+         y = "Correct",
+         title = "Les précisions moyennes nous conviennent") +
+    theme_minimal()
+```
+:::
+
+[^exploration_b-1]: Valeur centrale d’un caractère séparant une population en deux parties égales (Antidote).
+
+Dans les figures explorées ici, notez que :
+
+-   la variable `y` **semble** continue (`0.00`, ..., `1.00`). Cependant, on sait qu'il s'agit d'une variable binaire. Il faudrait adapter la figure en conséquence (en transformant la classe de la variable `correct` en facteur avec la fonction `as_factor()`);
+-   dans la **troisième figure** (moyennes), l'axe `y` représente un pourcentage. Donc, on pourrait adapter l'échelle utilisée. Plus tard, on va le faire à partir de l'extension `scales`, qui nous permet de changer les échelles dans nos axes.
+
+------------------------------------------------------------------------
+
+::: {.callout-note title="Recoder les variables?" collapse="true"}
+On peut facilement dichotomiser n'importe quelle variable catégorielle en utilisant la fonction `if_else()`.[^exploration_b-2] Par exemple, dans le fichier `villes.csv`, dont la variable `ville` a trois niveaux (`Calgary`, `Montréal`, `Québec`), on pourrait ajouter une nouvelle variable binaire (c'est-à-dire dichotomisée) qui classe les villes en deux groupes : les villes dont le français est la langue officielle vs les villes où il n'est pas (`Calgary`). Cette nouvelle variable pourrait être appelée `langue`.[^exploration_b-3]
+
+```{r}
+#| message: false
+
+villes = read_csv("donnees/villes2.csv")
+
+villes = villes |> 
+    mutate(langue = if_else(ville == "Calgary", 
+                            "anglais", 
+                            "français"))
+
+# Alternative moins concise :
+# villes = villes |> 
+#     mutate(langue = if_else(ville %in% c("Montréal", "Québec"), 
+#     "français", 
+#     "anglais"))
+```
+
+```{r}
+#| echo: false
+set.seed(2)
+villes |>
+    sample_n(size = 5) |> 
+    kbl()
+```
+
+Finalement, la nouvelle colonne nous permet d'évaluer l'effet de la francophonie d'une ville sur la performance des apprenants du français au Canada dans nos données hypothétiques :
+
+```{r}
+#| message: false
+#| echo: false
+#| fig-align: center
+#| fig-width: 5
+#| out-width: 70%
+#| fig-height: 3
+#| fig-dpi: 500
+
+ggplot(data = villes, aes(x = langue, y = note)) + 
+    # stat_summary(geom = "bar", alpha = 0.5, color = "black", fill = "darkorange2") +
+    geom_boxplot() + 
+    stat_summary(color = "darkorange2") + 
+    theme_classic(base_size = 13) + 
+    labs(x = "Langue officielle",
+         y = "Note moyenne") + 
+    coord_cartesian(ylim = c(0, 100))
+```
+:::
+
+[^exploration_b-2]: Cette fonction nous permet d'avoir plusieurs niveaux, naturellement, vu qu'on peut intégrer plusieurs `if_else()` ensemble. Le résultat binaire n'est que l'option standard de la fonction.
+
+[^exploration_b-3]: Effectivement, quand on utilise des modèles statistiques, les variables catégorielles sont automatiquement recodées en utilisant la méthode *dummy coding*, c'est-à-dire `0` ou `1`. Si la variable contient trois niveaux (p. ex., `ville` ici), on aura deux nouvelle colonnes binaires (`Montréal` et `Québec` ici). Dans les données en question, `Calgary` sera automatiquement représentée par la combinaison `0 0`. Voilà pourquoi on interprète notre intercept ici représenterait `Calgary`, vu qu'il s'agit de « la valeur prévue quand toutes les variables sont `0` ».
+
+------------------------------------------------------------------------
+
+## Combiner des scripts?
+
+```{mermaid}
+%%| fig-width: 6.5
+flowchart LR
+A[Nettoyage] --> B[Exploration]
+B --> C{Analyse}
+```
+
+On a révisé ci-dessus comment (a) nettoyer un fichier et (b) créer des graphiques. Vous pouvez certainement compléter (a) et (b) dans un même script. Par contre, comme discuté dans le [chapitre 10](nettoyage.qmd), c'est toujours une bonne idée de séparer les différents éléments dans une analyse pour maximiser l'organisation de notre flux de travail.
+
+Supposez que le nettoyage ci-dessus est dans un script appelé `script_10_net.R`. Dans ce script, un charge nos extensions et on importe notre fichier de données. Naturellement, on nettoie les données dans le même script. Ensuite, créez un script appelé `script_10_exp.R` pour ajouter les codes qui génèrent les graphiques discutés ci-dessus (ainsi que les tableaux pour les moyennes, etc.). Dans ce script, on peut simplement charger le script précédent :
+
+```{r}
+#| code-fold: show
+#| eval: false
+
+# Contenu du fichier script_10_vis.R
+source("script_10_net.R")
+
+# Exemple d'un des graphiques de la question 5 :
+ggplot(data = q_net, aes(x = langues, y = correct)) + 
+    stat_summary() + 
+    labs(x = "Parlez-vous d'autres langues?",
+         y = "Correct",
+         title = "Les précisions moyennes 
+         nous conviennent") +
+    theme_minimal()
+```
+
+La fonction `source()` permet de charger le script, c'est-à-dire qu'elle va exécuter toutes les lignes de code dans le script. C'est une façon simple « d'enchaîner » des scripts différents pour séparer les éléments de notre analyse. En effet, on peut charger plusieurs scripts en même temps.[^exploration_b-4] Comme d'habitude, il faut toujours bien connaître la localisation de vos fichiers.
+
+[^exploration_b-4]: Avant de charger un script, il faut s'assurer qu'il fonctionne correctement!

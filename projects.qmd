@@ -1,0 +1,72 @@
+# Projets {-}
+
+
+```{=html}
+<style>
+img.wrapfig {
+float: right; 
+margin: 10px;
+}
+</style>
+```
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+    collapse = TRUE,
+    comment = "#>",
+    cache = TRUE,
+    fig.retina=TRUE,
+    # fig.width=7,    # Default width
+    # fig.height=5,   # Default height
+    fig.dpi=800     # High resolution
+)
+
+
+```
+
+### Structure des projets
+
+Vos deux projets se concentreront sur l'analyse des données. Le résultat de chaque projet sera un petit article académique en format `PDF` qui suit une structure typique dans la littérature (consultez le modèle). Lisez attentivement les instructions sur monPortail. 
+
+### Les critères
+
+Les critères de correction seront les mêmes pour les deux projets. Par exemple, votre introduction doit résumer le sujet du projet ainsi que les résultats de votre analyse (pas des détails). Dans cette section, il est attendu que vous citerez quelques études que vous jugez utiles. Donc, il faudra chercher quelques textes sur le sujet de chaque projet. Finalement, vous pouvez également citer R [@r_language], `tidyverse` [@tidyverse], @barnier_R, etc.[^projetb-2]
+
+[^projetb-2]: Pour citer une extension spécifique en R, vous pouvez utiliser la fonction `citation(...)`. Par exemple, `citation("tidyverse")`. Cela vous donnera la citation en format `.bib`.
+
+En plus, voici une échelle de complétude pour votre analyse statistique :
+
+1.  vous discutez les coefficients dans le texte et vous expliquez comment les effets du modèle répondent à la question de recherche ci-dessus;
+2.  vous créez un tableau pour les résultats du modèle (ou une figure en utilisant `sjPlot::plot_model(...)`);
+3.  vous démontrez visuellement comment le modèle est capable de prévoir de nouvelles données, et vous expliquez l'interprétation de votre figure en détail.
+
+Bien que les points (1) et (2) soient attendus, le point (3) *peut* vous donner un bonus de 10 points.
+
+### Vos lecteurs
+
+C'est toujours important de considérer notre public avant de produire notre texte scientifique/académique. Pour vos projets, imaginez que votre public comprend les étudiants et les étudiantes comme vous, avant de compléter LNG-1100. Autrement dit, vous écrivez aux futurs étudiants du programme de Sciences du langage à l'Université Laval. Par conséquent, vous devriez expliquer vos méthodes en détail : quel type de modèle utilisez-vous? Pourquoi? Comment interprétez-vous les valeurs $p$? Et les coefficients? Considérer le projet comme un document qui détaille ce que vous avez appris pendant le cours. Votre texte sera donc un peu plus détaillé qu'un texte typique d'analyse de données, qui normalement suppose que les lecteurs sont déjà complètement familiarisés avec les méthodes employées dans l'article.
+
+Veuillez noter que vous n'avez pas besoin d'expliquer votre code dans l'appendice de votre projet, mais le code doit être commenté.
+
+## Suggestions
+
+Bien que le résultat de votre projet soit un fichier `PDF`, commencez toujours avec un script pour importer, explorer et analyser les données. Consultez les matériels du cours pour réviser les fonctions pertinentes. Une fois que vous et votre équipe avez décidé quelle sera votre analyse (vos figures, votre modèle, etc.), vous pouvez commencer votre rapport en utilisant le modèle `Qmd` dans notre dépôt Git. 
+
+-   Vérifiez *attentivement* les espaces dans votre document. Il faut avoir au moins une ligne vide entre la fin du préambule et le début de votre rapport. De même, pour chaque section, il faut ajouter un espace entre le `#` et le titre de votre section : `#Introduction` $\rightarrow$ `# Introduction`. <span style="color:red">Suivez **exactement** le modèle et vous n'aurez pas de problèmes.</span>
+
+-   Le **texte** de votre analyse est **très important**. Votre rapport est une combinaison de code et texte, et vous ne devez pas négliger ce dernier. Expliquez en détail les données, vos figures et les résultats de votre modèle statistique.
+
+-   Suivez **attentivement** les instructions sur monPortail et le modèle.
+
+## Problèmes
+
+Si vous avez des problèmes, assurez-vous que :
+
+-   votre fichier de références bibliographiques existe et que sa localisation est correcte;
+-   votre préambule n'a pas été changé par rapport à celui du modèle;
+-   les extensions nécessaires pour votre analyse sont correctement chargées;[^projeta-1]
+-   chaque bloc de code est correct (trois accents graves avant et après votre code) et caché, vu que vous devez ajouter vos codes dans l'appendice.
+
+[^projeta-1]: Voilà pourquoi votre script doit fonctionner parfaitement **avant** de commencer votre rapport.
+
+  Finalement, **si vous installez des extensions** pour votre analyse, <span style="color:red">n'ajoutez jamais la ligne `install.packages(...)` dans votre fichier `Qmd`</span>. Au lieu de cela, installez votre extension dans la console ou dans votre script. Sinon, chaque fois que le document `Qmd` est compilé, l'extension sera installée. Consultez aussi la [page des problèmes techniques](problemes.qmd).
+

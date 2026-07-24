@@ -1,0 +1,8 @@
+---
+title: "Partie I"
+---
+
+Dans la première partie du cours, on explore le langage R en utilisant RStudio. On visualise et analyse les données **continues** à partir d'une extension puissante appelée `tidyverse`.
+
+Lisez attentivement le [chapitre 1](fichiers.qmd) pour vous assurer que vous avez les fichiers nécessaires pour le cours. 
+

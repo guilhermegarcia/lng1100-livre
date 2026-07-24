@@ -1,0 +1,87 @@
+---
+title: "Bilan du mi-session"
+---
+
+```{=html}
+<style>
+img.wrapfig {
+float: right; 
+margin: 10px;
+}
+</style>
+```
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+    collapse = TRUE,
+    comment = "#>",
+    cache = TRUE,
+    fig.retina=TRUE,
+    # fig.width=7,    # Default width
+    # fig.height=5,   # Default height
+    fig.dpi=800     # High resolution
+)
+
+
+```
+
+Dans cette révision, on pratique l’interprétation des résultats statistiques et, dans la deuxième partie de la révision, on examine les données utilisées dans le deuxième questionnaire. Vous êtes donc déjà familiarisé.e avec les données. L'idée sera de commencer un rapport pour simuler ce que vous devez faire pour le **problème A**.
+
+## Interprétation de résultats
+
+Jusqu'ici on a exploré les ANOVAs, qui sont un type spécifique de régression linéaire, ainsi que les régression linéaires traditionnelles. La pratique ci-dessous révise quelques points importants sur l'interprétation des résultats statistiques.
+
+## {{< fa bullseye size=xs >}} Pratique {.unnumbered}
+
+Examinez les deux tableaux ci-dessous et répondez aux questions suivantes. Les données en question impliquent des auxiliaires en hollandais. Il y en a trois dans l'étude ici : `hebben`, `zijn`, et `zijnheb`. L'objectif ici est de vérifier si la fréquence écrite (`WrittenFrequency`) d'un mot (la variable de réponse ici) est affecté par l'auxiliaire qui l’accompagne.
+
+```{R}
+#| code-fold: false
+#| label: tbl-tbl-lm
+#| tbl-cap: Résultats de l'analyse A (régression traditionnelle)
+#| eval: false
+Coefficients:
+                 Estimate Std. Error t value Pr(>|t|)    
+(Intercept)        6.4943     0.0803  80.881  < 2e-16 ***
+Auxiliaryzijn      1.2434     0.4387   2.834  0.00472 ** 
+Auxiliaryzijnheb   0.3636     0.2063   1.763  0.07840 .  
+```
+
+```{R}
+#| code-fold: false
+#| label: tbl-tbl-anova
+#| tbl-cap: Résultats de l'analyse B (ANOVA)
+#| eval: false
+             Df Sum Sq Mean Sq F value  Pr(>F)   
+Auxiliary     2     39   19.50   5.241 0.00551 **
+Residuals   697   2593    3.72 
+```
+
+{{< fa question-circle size=xs >}} **Question 1.** Les analyses sont-elles comparables? Ses résultats sont en accord par rapport à l'effet de l’auxiliaire?
+
+{{< fa question-circle size=xs >}} **Question 2.** Interprétez et rapportez le résultat de l'ANOVA dans le @tbl-tbl-anova. Effectuez des comparaisons multiples à partir de la méthode Tukey et comparez les résultats à ceux de la régression dans le @tbl-tbl-lm. Qu'est-ce que vous remarquez?
+
+{{< fa question-circle size=xs >}} **Question 3.** L'intercept de la régression est significatif. Qu'est-ce que cela vaut dire? Combien d'observations avons-nous dans les données analysées ici?
+
+{{< fa question-circle size=xs >}} **Question 4.** Parmi les trois auxiliaires dans les données, quelle différence n'est pas explicitement déterminée dans le @tbl-tbl-lm? Comment pourriez-vous générer cette différence?
+
+## `Qmd` ou `R`?
+
+Bien que le format Quarto soit parfait pour composer de différents documents académiques, les scripts R sont toujours importants :
+
+-   **Script** : pour explorer nos données, créer des graphiques, élaborer/exécuter/examiner des modèles statistiques, etc. On peut même avoir plus d'un script (un script pour importer et nettoyer les données, un autre script pour les visualisations, etc.). Après avoir créé notre analyse dans un script, on est prêt à décider quels éléments seront choisis pour l'étape finale : le rapport.
+-   **Quarto** : le document qui communique notre analyse et nos résultats. Vu qu'on a déjà créé nos codes dans le script, on peut simplement copier et coller les blocs de code pertinents et, naturellement, travailler sur notre texte, nos références bibliographiques, etc. Ici, vos codes seront masqués (`#| echo: false`). Pour nos problèmes, on utilise le format `pdf`.
+
+## Le problème 1 {#sec-projetA}
+
+Dans nos deux problèmes (1 et 2), vous soumettrez votre ficher `PDF` seulement. Toutefois, vos problèmes auront des fichiers suivants :
+
+-   un script `R` pour votre analyse
+-   un fichier `bib` pour vos références
+-   un ficher `Qmd` pour vos réponses
+-   un fichier `PDF` (le résultat)
+
+C'est essentiellement la structure simplifiée d'une analyse statistique dans un projet de recherche traditionnel---sauf qu'en réalité on a tendance à utiliser plusieurs scripts. Le script est important car on l'utilise pour l'exploration de données, ce qui nous permettra de choisir les meilleures figures et les meilleurs modèles pour le document final.
+
+Lisez **attentivement** les instructions pour le problème sur monPortail. Téléchargez le modèle (`Qmd` et `pdf`) pour examiner la structure du fichier et posez vos questions sur le forum du monPortail.
+

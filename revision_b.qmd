@@ -1,0 +1,201 @@
+---
+title: "Révision"
+---
+
+```{=html}
+<style>
+img.wrapfig {
+float: right; 
+margin: 10px;
+}
+</style>
+```
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+    collapse = TRUE,
+    comment = "#>",
+    cache = TRUE,
+    fig.retina=TRUE,
+    # fig.width=7,    # Default width
+    # fig.height=5,   # Default height
+    fig.dpi=800     # High resolution
+)
+
+
+```
+
+
+> Ce chapitre doit être lu **avant** la séance 13
+
+
+## Un aperçu de notre cours
+
+Révisons les objectifs de LNG-1100, détaillés sur monPortail :
+
+::: {.callout-important collapse="false"}
+
+-   Formuler et tester des hypothèses de recherche \[en linguistique\] <!-- - proposer des questions de recherche [pertinentes à la linguistique] --> <!-- - contraster des designs expérimentaux appropriés étant donnée une hypothèse spécifique  -->
+-   Se familiariser avec les éléments de base de l’analyse de données quantitatives <!-- - manipuler des données en utilisant le langage R et l’extension tidyverse --> <!-- - décrire des patrons pertinents dans des données linguistiques en utilisant des tableaux et des figures --> <!-- - appliquer des modèles de régression aux données linguistiques -->
+-   Interpréter et synthétiser des résultats statistiques dans un rapport scientifique <!-- - associer des résultats statistiques aux objectifs de recherche  --> <!-- - développer des rapports de recherche en utilisant Markdown et R -->
+
+:::
+
+
+Tous nos objectifs sont concentrés dans nos questionnaires et dans les deux projets du cours, où vous devez compléter une analyse de données complète. Donc, pendant le cours, vous avez :
+
+1.  importé des fichiers de données en format `csv`;
+2.  nettoyé des fichiers générés à partir des sondages du *Microsoft Forms* (Questionnaire 3) et du *Google Forms* (Questionnaire 4);
+3.  exploré des patrons pertinents en utilisant des tableaux résumés ainsi que des graphiques appropriés, effectuant les transformations nécessaires;[^revision_b-1]
+4.  exécuté et interprété des modèles statistiques (linéaire et logistique);
+5.  communiqué vos résultats dans un rapport scientifique/académique en format `PDF`, dans lequel vous avez géré vos références bibliographiques en utilisant un fichier `.bib`;
+6.  développé des compétences en gestion de fichiers afin d'optimiser votre flux de travail.
+
+[^revision_b-1]: Par exemple, une colonne `incorrect/correct` vers `0/1` pour qu'on puisse calculer la précision des participants, c'est-à-dire la proportion des réponses correctes par opposition aux réponses incorrectes.
+
+Les étapes énumérées ci-dessus combinent l'analyse de données quantitatives, la composition de documents académiques et la gestion bibliographique --- tout cela à partir d'un seul outil : RStudio. Même si vous n'utilisez pas des données quantitatives dans un projet, vous pouvez facilement le développer en utilisant Quarto. Donc, pour vos cours futurs dans le bac, vous pouvez facilement continuer à utiliser RStudio ainsi que votre bibliothèque de références.
+
+## Les concepts les plus importants
+
+Voici une liste de concepts statistiques discutés en classe pendant le cours.
+
+::: {.callout-tip title="Les concepts de base" collapse="true"}
+-   **Valeur** $p$ : la probabilité de trouver des données en question étant donné l'hypothèse nulle
+    -   Si l'hypothèse nulle est vraie et on la rejette $\rightarrow$ erreur de type I. Autrement dit, notre effet n'est pas réel, mais notre valeur $p$ est significatif
+    -   Si l'hypothèse nulle est fausse et on ne la rejette pas $\rightarrow$ erreur de type II. Autrement dit, notre effet est réel, mais notre valeur $p$ n'est pas significatif (la [puissance statistique](https://fr.wikipedia.org/wiki/Puissance_statistique#:~:text=La%20puissance%20statistique%20d%27un,réalité%20les%20groupes%20sont%20différents){target="_blank"}.))
+    -   *Le problème* : on ne sait jamais si $H_0$ est vraie
+-   **Intervalle de confiance** : si on répétait la même expérience $n$ fois, la valeur réelle serait dans l'intervalle en question 95 % du temps (mais l'intervalle serait différent pour chaque échantillon!). Simplement dit, l'intervalle de confiance à 95 % vous dit que la moyenne de la population est dans cet intervalle avec une probabilité de 95 % (pas trop intuitif!)
+-   **Hypothèse nulle** : notre point de départ. On n'a que deux options : rejeter l'hypothèse nulle OU ne pas rejeter l'hypothèse nulle. **On ne l'accepte jamais!** Autrement dit, on ne peut pas prouver l'absence d'un effet, logiquement.[^revision_b-2]
+    -   Si on n'examine qu'un groupe, $H_0 : \mu = 0$ (la moyenne est de zéro)
+    -   Si on compare les moyennes de deux groupes, *a* et *b*, $H_0 : \mu_a = \mu_b$ (il n'y a pas de différence entre les deux moyennes; autrement dit, les deux groupes/échantillons viennent de la même population)
+    -   Si on examine des coefficients d'un modèle, $H_0 : \beta = 0$.
+-   **Intercept** ($\beta_0$) : la valeur prévue par le modèle lorsque toutes les autres variables sont `0`
+-   **Slope** ($\beta_n$) : l'effet d'une variable prédictive
+-   **Log-odds** : l'unité standard pour les coefficients d'une régression logistique[^revision_b-3]
+-   **Transformation *wide-to-long*** : processus fréquemment nécessaire si notre tableau n'est pas *tidy*, c'est-à-dire s'il contient plus d'une observation par ligne et/ou plus d'une colonne par variable d'intérêt
+:::
+
+[^revision_b-2]: J'ai mentionné en classe que la statistique bayésienne nous permet de confirmer un effet nul. Dans notre cours, cependant, on utilise la statistique traditionnelle (fréquentiste).
+
+[^revision_b-3]: Notez que la fonction `sjPlot::tab_model()` affiche les *odds* par défaut; consultez les dernières pages supplémentaires.
+
+Lorsqu'on utilise un modèle simple, on veut mesurer l'effet d'une variable prédictive sur une variable de réponse. Normalement, on examine plusieurs variables prédictives en même temps (c.-à-d. un modèle multiple).
+
+-   **Dans une régression linéaire :**
+    -   vérifiez si la variable de réponse est plus ou moins normale/gaussienne;
+    -   interprétez l'intercept seulement si cette interprétation est utile dans votre analyse (normalement, elle n'est pas);
+    -   les coefficients utilisent toujours les mêmes unités utilisées par les variables dans le modèle;
+    -   on peut utiliser la fonction `predict()` pour prévoir des réponses à partir du modèle.
+-   **Dans une régression logistique :**
+    -   les coefficients sont listés en *log-odds* lorsque vous utilisez `summary()` pour imprimer les résultats;
+    -   on évite une interprétation d'un coefficient individuel à partir des probabilités : on utilise *log-odds* ou *odds*;
+    -   si vous voulez parler des probabilités, on peut utiliser la fonction `predict(..., type = "response")` pour prévoir des réponses à partir du modèle. C'est une bonne idée de visualiser les prévisions dans une figure ([page supplémentaire de la séance 13](analysis_d.html)).
+
+## Projet B
+
+Notre premier projet du cours (Projet A) a produit un document `PDF`. Vous serez donc à l'aise avec la structure nécessaire pour notre dernier projet. Si jamais vous avez des questions, consultez le [chapitre](projects.qmd) d'informations sur les projets. La révision qui suit se concentre sur les méthodes statistiques utilisées dans le cours, dont certaines seront essentielles pour vos projets finaux.
+
+<!-- Suivez les étapes suivantes attentivement. Cliquez sur les liens pour visualiser des captures d'écran qui démontrent visuellement chaque étape. -->
+
+<!-- ::: {.callout-note title="Comment publier votre projet" collapse="true"} -->
+<!-- 1.  Visitez [Quarto Pub](http://quartopub.com){target="_blank"} pour créer un compte gratuit. Votre adresse sera `username.quarto.pub`. Donc, choisissez un `username` approprié lorsque vous créez votre compte (j'utilise `lng1100`, mais vous pourriez utilisez votre nom ou vos initiales, par exemple) -->
+
+<!-- 2.  Cliquez sur [*Manage Profile and Tokens*](Figures/quarto-pub/5.png){target="_blank"} et créez un [nouveau jeton](Figures/quarto-pub/5.png){target="_blank"} -->
+
+<!-- 3.  Dans RStudio, cliquer sur l'onglet [*Terminal*](Figures/quarto-pub/7.png){target="_blank"} et exécutez la commande ci-dessous. `VOTRE_FICHIER.qmd` sera votre rapport pour le projet B. Assurez-vous que le nom est **exact** et que vous êtes dans le dossier correct (appuyez sur `Tab` pour naviguer dans vos dossiers)[^revision_b-4] : `quarto publish quarto-pub VOTRE_FICHIER.qmd` -->
+
+<!-- 4.  Choisissez [`Use another account...`](Figures/quarto-pub/8.png){target="_blank"} -->
+
+<!-- 5.  [Autorisez la publication](Figures/quarto-pub/9.png){target="_blank"} et assurez-vous que vous êtes connecté à votre compte Quarto Pub créé ci-dessus. [Votre navigateur vous demandera l'autorisation](Figures/quarto-pub/10.png){target="_blank"} pour connecter votre compte Quarto Pub à RStudio -->
+
+<!-- 6.  Sélectionnez *Use another name...* pour [choisir le nom de votre publication](Figures/quarto-pub/12.png){target="_blank"}. Utilisez le modèle `nom_projet_b_année` -->
+
+<!-- 7.  Voilà! Votre navigateur ouvrira une page avec votre publication : [copiez l'adresse](Figures/quarto-pub/13.png){target="_blank"} et collez-la sur monPortail -->
+
+<!-- 8.  Finalement, vous pouvez définir votre projet comme « [site web par défaut](Figures/quarto-pub/13.png){target="_blank"} ». Par conséquent, vous pourrez y accéder à partir de l'adresse `https://username.quarto.pub`. C'est l'option que j'ai choisie pour la page du modèle pour le projet : `https://lng1100.quarto.pub` (mon `username` ici est `lng1100`). Sinon, vous devrez utiliser `https://username.quarto.pub/nom_projet_b_année` -->
+<!-- ::: -->
+
+<!-- [^revision_b-4]: Par exemple, si votre projet `Qmd` est dans le dossier `Projet B`, il faudra taper `quarto publish quarto-pub Projet\ B/VOTRE_FICHIER.qmd`. Autrement dit, il faut s'assurer que vous utilisez l'adresse correcte par rapport au répertoire actuel de votre Terminal. -->
+
+------------------------------------------------------------------------
+
+## {{< fa bullseye size=xs >}} Pratique finale {-}
+
+
+{{< fa question-circle size=xs >}} **Question 1.** Dans une étude examinant les effets d'une méthode fantastique d’enseignement sur la performance des étudiants, les chercheurs ont exécuté une `M` avec `X` groupes d'apprenants. Les scores de performance des étudiants ont été analysés pour déterminer s’il y avait des différences significatives entre les groupes à la fin de l'étude. Les résultats étaient les suivants :  *F*(2, 57) = 4,32, *p* < 0,038. Répondez aux questions suivantes :
+
+a. Combien de groupes `X` étaient considérés dans l’étude ?
+b. La performance des participants a été calculée à partir d’un questionnaire. Combien de questions ce questionnaire comportait-il ?
+c. Quelles sont l’hypothèse nulle et l’hypothèse alternative de l’étude ?
+d. Quelle méthode statistique `M` a été employée ?
+e. Pouvons-nous rejeter l’hypothèse nulle ?
+f. Si nous rejetons l’hypothèse nulle, pouvons-nous déterminer à partir des informations données où se situent les différences parmi les méthodes d’enseignement considérées ?
+g. Supposons que l'objectif de l'étude est de quantifier l'efficacité de la méthode d'enseignement mentionnée. Quel est d'après vous le principal problème de l'étude?
+
+{{< fa question-circle size=xs >}} **Question 2.** Observez le tableau ci-dessous et rapportez les résultats de l'analyse. Combien de niveaux les facteurs A--B comportent-t-ils? Combien d'observations totales avons-nous dans l'analyse?
+
+| Source de variation | Somme des carrés | Degrés de liberté  | Moyenne des carrés | *F* | *p* |
+|---------------------|-------------------|-------------|-------|-------|----------|
+| Facteur A           | 6.068             | 2           | 3.034 | 9.073 | 0.000253 |
+| Facteur B           | 5.122             | 1           | 5.122 | 15.316| 0.000174 |
+| Residuals           | 30.765            | 92          | 0.334 |       |          |  
+<br>
+
+{{< fa question-circle size=xs >}} **Question 3.** Observez le tableau ci-dessus encore une fois. Vous vous souvenez quelle est la relation entre les valeurs dans les colonnes *Somme des carrés*, ..., *F*? Comment pouvons-nous dériver les valeur *F* des autres colonnes?
+
+{{< fa question-circle size=xs >}} **Question 4.** Téléchargez le fichier `phonetique.RData`. Le format `RData` offre plusieurs avantages. Importez-le en utilisant la fonction `load()`. Vérifiez les classes des variables : qu'est-ce que vous notez? Il s'agit d'une étude sur l'acquisition de contrastes vocaliques en français à partir de trois groupes de participants (trois langues maternelles). Les apprenants ont étudié le français pendant une période de six mois. Les groupes ont été séparés en deux conditions (deux méthodes d'enseignement) : la condition `traditionelle`, où les séances n'avaient pas d'information explicite sur la phonétique du français, et la condition `phonétique`, où les séances avaient un élément dédié à la phonétique du français. Avant de commencer l'expérience, tous les participants on fait un test de français qui se concentrait sur l'identification des voyelles dans la langue. Après la période de six mois, un autre test a été fait. Les scores de chaque test sont dans les données. Explorez le fichier en question et répondez aux questions suivantes.
+
+a. Créer une figure qui résume les patrons dans les données.
+
+b. Modélisez les données et rapportez les résultats. La méthode d'enseignement a-t-elle un effet sur l'apprentissage des contrastes vocaliques?
+
+
+{{< fa question-circle size=xs >}} **Question 5.** Voici les coefficients d'un modèle statistique. Vous pouvez peut-être deviner quelles sont les données modélisées ici. Les valeurs ont été arrondies à trois chiffres (donc les valeurs *p* ne sont pas vraiment zéro). Les données décrivent les passagers à bord du Titanic. Le modèle analyse la survie de ces passagers étant données trois variables, à savoir, la classe, le sexe, et l'âge (dichotomisé : enfant vs adulte) de chaque passager. Observez le résultat ci-dessous et répondez aux questions suivantes :
+
+```{r}
+#| message: false
+#| echo: false
+
+library(tidyverse)
+data(Titanic)
+
+tit = Titanic |> 
+  as_tibble() |> 
+  uncount(n) |> 
+  mutate(Survived = if_else(Survived == "Yes", 1, 0))
+
+fit = glm(Survived ~ Class + Sex + Age, data = tit, family = "binomial")
+
+summary(fit)$coefficients |> round(4)
+```
+
+a. Vous devez savoir déjà quel type de modèle on utilise ici, étant donnée l'information ci-dessus. Si nos données sont dans un objet nommé `Titanic`, quelle serait la formule pour exécuter le modèle en question? Vous pouvez télécharger les données à partir du [dépôt Git](https://github.com/guilhermegarcia/LNG1100){target="_blank"} du cours.
+
+b. Quelle était la probabilité de survie à la catastrophe si vous étiez un homme dans la deuxième classe? Et d'une femme dans la même classe?
+
+c. Considérant les types de passagers analysés ici, quelle était le meilleure scénario possible? Calculez la probabilité de survie pour chaque combinaison possible de passager.
+
+```{r}
+#| echo: false
+#| eval: false
+newdata = expand.grid(Class = c("1st", "2nd", "3rd", "Crew"),
+                              Sex = rep(c("Male", "Female")),
+                              Age = c("Child", "Adult")) |> 
+  as_tibble()
+
+newdata = newdata |> 
+  mutate(pred = predict(fit, newdata, type = "response"))
+
+newdata |> arrange(desc(pred))
+```
+
+
+
+
+
+
+
+
+
+
+
+
