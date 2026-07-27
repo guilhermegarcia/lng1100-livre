@@ -23,6 +23,41 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 /* CSS for citations */
 div.csl-bib-body { }
 div.csl-entry {
@@ -282,18 +317,18 @@ div.csl-indent {
     <h2 id="toc-title">Table des matières</h2>
    
   <ul>
-  <li><a href="#vos-options-pour-le-cours" id="toc-vos-options-pour-le-cours" class="nav-link active" data-scroll-target="#vos-options-pour-le-cours"><span class="header-section-number">1.1</span> Vos options pour le cours</a>
-  <ul class="collapse">
-  <li><a href="#option-a-posit-cloud-en-ligne" id="toc-option-a-posit-cloud-en-ligne" class="nav-link" data-scroll-target="#option-a-posit-cloud-en-ligne"><span class="header-section-number">1.1.1</span> Option A : Posit cloud (en ligne)</a></li>
-  <li><a href="#option-b-installer-r-rstudio-hors-ligne" id="toc-option-b-installer-r-rstudio-hors-ligne" class="nav-link" data-scroll-target="#option-b-installer-r-rstudio-hors-ligne"><span class="header-section-number">1.1.2</span> Option B : installer R + RStudio (hors ligne)</a></li>
-  </ul></li>
-  <li><a href="#ouvrez-rstudio" id="toc-ouvrez-rstudio" class="nav-link" data-scroll-target="#ouvrez-rstudio"><span class="header-section-number">1.2</span> Ouvrez RStudio</a>
-  <ul class="collapse">
-  <li><a href="#comment-télécharger-mettre-à-jour-vos-fichiers" id="toc-comment-télécharger-mettre-à-jour-vos-fichiers" class="nav-link" data-scroll-target="#comment-télécharger-mettre-à-jour-vos-fichiers"><span class="header-section-number">1.2.1</span> Comment télécharger mettre à jour vos fichiers</a></li>
-  </ul></li>
-  <li><a href="#quelques-suggestions" id="toc-quelques-suggestions" class="nav-link" data-scroll-target="#quelques-suggestions"><span class="header-section-number">1.3</span> Quelques suggestions</a></li>
+  <li><a href="#installer-r-et-rstudio" id="toc-installer-r-et-rstudio" class="nav-link active" data-scroll-target="#installer-r-et-rstudio"><span class="header-section-number">1.1</span> Installer R et RStudio</a></li>
+  <li><a href="#télécharger-et-décompresser-le-projet-du-cours" id="toc-télécharger-et-décompresser-le-projet-du-cours" class="nav-link" data-scroll-target="#télécharger-et-décompresser-le-projet-du-cours"><span class="header-section-number">1.2</span> Télécharger et décompresser le projet du cours</a></li>
+  <li><a href="#toujours-ouvrir-le-projet-rstudio" id="toc-toujours-ouvrir-le-projet-rstudio" class="nav-link" data-scroll-target="#toujours-ouvrir-le-projet-rstudio"><span class="header-section-number">1.3</span> Toujours ouvrir le projet RStudio</a></li>
   <li><a href="#installer-tidyverse" id="toc-installer-tidyverse" class="nav-link" data-scroll-target="#installer-tidyverse"><span class="header-section-number">1.4</span> Installer <code>tidyverse</code></a></li>
-  <li><a href="#synthèse" id="toc-synthèse" class="nav-link" data-scroll-target="#synthèse"><span class="header-section-number">1.5</span> Synthèse</a></li>
+  <li><a href="#vérifier-la-racine-du-projet" id="toc-vérifier-la-racine-du-projet" class="nav-link" data-scroll-target="#vérifier-la-racine-du-projet"><span class="header-section-number">1.5</span> Vérifier la racine du projet</a></li>
+  <li><a href="#ajouter-de-nouveaux-fichiers" id="toc-ajouter-de-nouveaux-fichiers" class="nav-link" data-scroll-target="#ajouter-de-nouveaux-fichiers"><span class="header-section-number">1.6</span> Ajouter de nouveaux fichiers</a></li>
+  <li><a href="#quelques-suggestions" id="toc-quelques-suggestions" class="nav-link" data-scroll-target="#quelques-suggestions"><span class="header-section-number">1.7</span> Quelques suggestions</a></li>
+  <li><a href="#sec-cloner" id="toc-sec-cloner" class="nav-link" data-scroll-target="#sec-cloner"><span class="header-section-number">1.8</span> Plan de secours : utiliser Posit Cloud</a>
+  <ul class="collapse">
+  <li><a href="#mettre-à-jour-ou-réinitialiser-le-projet-dans-posit-cloud" id="toc-mettre-à-jour-ou-réinitialiser-le-projet-dans-posit-cloud" class="nav-link" data-scroll-target="#mettre-à-jour-ou-réinitialiser-le-projet-dans-posit-cloud"><span class="header-section-number">1.8.1</span> Mettre à jour ou réinitialiser le projet dans Posit Cloud</a></li>
+  </ul></li>
+  <li><a href="#synthèse" id="toc-synthèse" class="nav-link" data-scroll-target="#synthèse"><span class="header-section-number">1.9</span> Synthèse</a></li>
   </ul>
 </nav>
     </div>
@@ -326,146 +361,177 @@ margin: 10px;
 }
 </style>
 <p><em>Lisez <strong>attentivement</strong> ce chapitre pour vous assurer que vous serez prêt à commencer le cours.</em></p>
-<section id="vos-options-pour-le-cours" class="level2" data-number="1.1">
-<h2 data-number="1.1" data-anchor-id="vos-options-pour-le-cours"><span class="header-section-number">1.1</span> Vos options pour le cours</h2>
-<p>Pendant le cours, on utilisera le langage R. Plus spécifiquement, on utilisera le logiciel RStudio, un <a href="https://fr.wikipedia.org/wiki/Environnement_de_développement">environnement de développement</a> . Les deux outils sont gratuits. Il s’agit donc de deux outils différents : il faut avoir R pour utiliser RStudio.</p>
-<p>Vous avez <strong>deux options</strong> pour vous préparer, et je vous suggère de choisir les deux. Ce sont des options complémentaires.</p>
-<section id="option-a-posit-cloud-en-ligne" class="level3" data-number="1.1.1">
-<h3 data-number="1.1.1" data-anchor-id="option-a-posit-cloud-en-ligne"><span class="header-section-number">1.1.1</span> Option A : Posit cloud (en ligne)</h3>
-<p><strong>L’option la plus facile</strong> pour suivre le cours sera d’utiliser la version en ligne de RStudio. Allez sur <a href="https://posit.cloud" class="uri">https://posit.cloud</a> pour créer votre compte et voilà. L’avantage est claire : vous n’avez pas besoin d’installer ni R ni RStudio; vous n’aurez pas de problèmes techniques dans l’installation des extensions utilisées dans le cours; et vous n’aurez pas de difficultés avec votre système de exploitation. Toutefois, vous avez <a href="https://posit.cloud/plans">une limite de 25 heures par mois</a>, vu que vous utilisez les serveurs de Posit. En plus, c’est en ligne… Par conséquent, si le réseau est instable, vous risquez de rencontrer des problèmes. Voilà pourquoi il est utile de considérer aussi l’option B.</p>
+<section id="installer-r-et-rstudio" class="level2" data-number="1.1">
+<h2 data-number="1.1" data-anchor-id="installer-r-et-rstudio"><span class="header-section-number">1.1</span> Installer R et RStudio</h2>
+<p>Pendant le cours, on utilisera le langage R dans RStudio, un <a href="https://fr.wikipedia.org/wiki/Environnement_de_développement">environnement de développement</a>. Les deux outils sont gratuits, mais ils sont distincts : il faut installer R <strong>avant</strong> d’installer RStudio.</p>
+<p>Téléchargez les deux outils à partir de la <a href="https://posit.co/download/rstudio-desktop/" target="_blank">page d’installation de RStudio Desktop</a>. Si vous utilisez un Mac, assurez-vous d’avoir <a href="https://support.apple.com/fr-ca/guide/mac-help/mh35835/mac" target="_blank">complété correctement l’installation</a>. Si votre système d’exploitation est trop ancien pour les versions actuelles, consultez le <a href="#sec-cloner">plan de secours avec Posit Cloud</a>.</p>
 </section>
-<section id="option-b-installer-r-rstudio-hors-ligne" class="level3" data-number="1.1.2">
-<h3 data-number="1.1.2" data-anchor-id="option-b-installer-r-rstudio-hors-ligne"><span class="header-section-number">1.1.2</span> Option B : installer R + RStudio (hors ligne)</h3>
-<p>Cliquez <a href="https://posit.co/download/rstudio-desktop/" target="_target">ici</a> pour installer R et RStudio. Il faut installer R <strong>avant</strong> d’installer RStudio. Si vous utilisez un Mac, il faut s’assurer que vous avez <a href="https://support.apple.com/fr-ca/guide/mac-help/mh35835/mac" target="_blank">complété correctement l’installation</a>. Veuillez noter que, si votre système d’exploitation est trop ancien, il se peut que vous ne puissiez pas installer les outils (donc, utilisez juste la version en ligne).</p>
-<div class="callout callout-style-default callout-tip callout-titled">
+<section id="télécharger-et-décompresser-le-projet-du-cours" class="level2" data-number="1.2">
+<h2 data-number="1.2" data-anchor-id="télécharger-et-décompresser-le-projet-du-cours"><span class="header-section-number">1.2</span> Télécharger et décompresser le projet du cours</h2>
+<ol type="1">
+<li>Téléchargez <code>LNG1100.zip</code> à partir de Brio.</li>
+<li><strong>Décompressez le fichier ZIP.</strong> Il ne faut pas travailler directement dans le fichier ZIP.</li>
+<li>Déplacez le dossier décompressé <code>LNG1100</code> vers un emplacement permanent et facile à retrouver, par exemple dans votre dossier <code>Documents</code>.</li>
+</ol>
+<p>Évitez de laisser le dossier dans <code>Téléchargements</code> : il sera plus difficile à retrouver et pourrait être supprimé par erreur.</p>
+<p>Les principaux éléments du dossier devraient être organisés ainsi :</p>
+<pre class="text"><code>LNG1100/
+├── LNG1100.Rproj
+├── README.md
+├── donnees/
+├── problemes/
+├── quarto/
+└── scripts/</code></pre>
+</section>
+<section id="toujours-ouvrir-le-projet-rstudio" class="level2" data-number="1.3">
+<h2 data-number="1.3" data-anchor-id="toujours-ouvrir-le-projet-rstudio"><span class="header-section-number">1.3</span> Toujours ouvrir le projet RStudio</h2>
+<p>Dans le dossier <code>LNG1100</code>, double-cliquez sur <code>LNG1100.Rproj</code>. Cette étape ouvre RStudio à la racine du projet, c’est-à-dire au bon endroit pour trouver les scripts et les données du cours.</p>
+<div class="callout callout-style-default callout-important callout-titled">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="true" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Astuce</span>Suggestion
+Important
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
 <div id="callout-1" class="callout-1-contents callout-collapse collapse show">
 <div class="callout-body-container callout-body">
-<p><strong>Utilisez toujours la version en ligne</strong>, mais installez R et RStudio aussi pour pratiquer chez vous et pour ne pas utiliser votre limite de temps en ligne.</p>
+<p>Ne commencez pas en ouvrant simplement RStudio ou en double-cliquant sur un script <code>.R</code>. Commencez toujours par <code>LNG1100.Rproj</code>.</p>
 </div>
 </div>
 </div>
-</section>
-</section>
-<section id="ouvrez-rstudio" class="level2" data-number="1.2">
-<h2 data-number="1.2" data-anchor-id="ouvrez-rstudio"><span class="header-section-number">1.2</span> Ouvrez RStudio</h2>
-<p>Lorsque vous avez créé votre compte sur <a href="http://posit.cloud" class="uri">http://posit.cloud</a>, vous verrez <code>Your Workspace</code> et vous pourrez créer votre premier projet en cliquant sur <code>New Project</code> et <code>New RStudio Project</code>. Dans la version hors ligne, vous n’avez pas besoin de créer un projet pour examiner l’interface du logiciel, qui sera identique dans les deux versions. Voici ce que vous verrez :</p>
+<p>Voici l’interface de RStudio :</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><a href="Figures/rstudio.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1" title="L’interface de RStudio, version en ligne : cliquez pour agrandir"><img src="Figures/rstudio.png" class="img-fluid figure-img" style="width:85.0%" alt="L’interface de RStudio, version en ligne : cliquez pour agrandir"></a></p>
-<figcaption>L’interface de RStudio, version en ligne : cliquez pour agrandir</figcaption>
+<p><a href="Figures/rstudio.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1" title="L’interface de RStudio : cliquez pour agrandir"><img src="Figures/rstudio.png" class="img-fluid figure-img" style="width:85.0%" alt="L’interface de RStudio : cliquez pour agrandir"></a></p>
+<figcaption>L’interface de RStudio : cliquez pour agrandir</figcaption>
 </figure>
 </div>
-<p>Dans la capture d’écran ci-dessus, vous voyez trois grandes zones :</p>
+<p>Dans la capture d’écran ci-dessus, vous voyez les zones principales :</p>
 <ol type="1">
-<li>La <em>Console</em> nous permet d’interagir avec le langage de façon immédiate. Le <strong>Terminal</strong> est dans le deuxième onglet de cette zone</li>
-<li>L’onglet <em>Files</em> est maintenant actif dans la zone 2. Il nous montre les fichiers dans notre répertoire, qui est vide maintenant.</li>
-<li>L’onglet <em>Environment</em> liste les variables et les objets créés.</li>
+<li>La <em>Console</em> permet d’interagir immédiatement avec R. Le <strong>Terminal</strong> se trouve dans un autre onglet de cette zone.</li>
+<li>L’onglet <em>Files</em> montre les fichiers et dossiers du projet.</li>
+<li>L’onglet <em>Environment</em> liste les variables et objets créés.</li>
 </ol>
-<section id="comment-télécharger-mettre-à-jour-vos-fichiers" class="level3" data-number="1.2.1">
-<h3 data-number="1.2.1" data-anchor-id="comment-télécharger-mettre-à-jour-vos-fichiers"><span class="header-section-number">1.2.1</span> Comment télécharger mettre à jour vos fichiers</h3>
-<div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="true" aria-label="Toggle callout">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
+</section>
+<section id="installer-tidyverse" class="level2" data-number="1.4">
+<h2 data-number="1.4" data-anchor-id="installer-tidyverse"><span class="header-section-number">1.4</span> Installer <code>tidyverse</code></h2>
+<p>Le cours utilise l’ensemble de bibliothèques <code>tidyverse</code>. Dans la console de RStudio, exécutez :</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"tidyverse"</span>)</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Attendez la fin de l’installation, puis vérifiez qu’elle a réussi :</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
+<p><code>install.packages("tidyverse")</code> installe les bibliothèques sur l’ordinateur et ne doit normalement être exécuté qu’une seule fois. <code>library(tidyverse)</code> les charge dans une séance de travail et doit être exécuté chaque fois qu’un script en a besoin. Il ne sera pas possible de suivre le cours sans avoir installé <code>tidyverse</code>.</p>
+<p>Si l’installation échoue, consultez le chapitre sur les <a href="./problemes.html">problèmes techniques</a>. Consultez également les matériels sur Brio et le chapitre 6 de <span class="citation" data-cites="barnier_R">Barnier (<a href="references.html#ref-barnier_R" role="doc-biblioref">2023</a>)</span> <a href="https://juba.github.io/tidyverse/06-tidyverse.html" target="_blank">ici</a>.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="Figures/rstudio.gif" class="lightbox" data-gallery="quarto-lightbox-gallery-2" title="Installation de tidyverse"><img src="Figures/rstudio.gif" class="img-fluid figure-img" style="width:95.0%" alt="Installation de tidyverse"></a></p>
+<figcaption>Installation de <code>tidyverse</code></figcaption>
+</figure>
 </div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Astuce</span>VERSION EN LIGNE
-</div>
-<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
-</div>
-<div id="callout-2" class="callout-2-contents callout-collapse collapse show">
-<div class="callout-body-container callout-body">
-<p>Vous devez simplement suivre les étapes suivantes :</p>
-<ol type="1">
-<li>Cliquez sur <code>New Project</code></li>
-<li>Cliquez sur <code>New Project from Git Repository</code> et collez <code>https://github.com/guilhermegarcia/LNG1100.git</code></li>
-<li>Créez un nouveau dossier pour votre travail : <code>mon_travail</code>. C’est dans ce dossier que vous ajouterez vos fichiers et toutes vos annotations.</li>
-</ol>
-<p>Pendant notre cours, je modifierai et j’ajouterai des fichiers dans notre projet. Chaque fois que vous voulez mettre à jour les fichiers, utilisez les commandes suivantes dans le <strong>Terminal</strong> :</p>
+</section>
+<section id="vérifier-la-racine-du-projet" class="level2" data-number="1.5">
+<h2 data-number="1.5" data-anchor-id="vérifier-la-racine-du-projet"><span class="header-section-number">1.5</span> Vérifier la racine du projet</h2>
+<p>Dans la console de RStudio, exécutez :</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">file.exists</span>(<span class="st">"donnees/villes.csv"</span>)</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Si R affiche <code>[1] TRUE</code>, le projet est ouvert correctement. Si R affiche <code>[1] FALSE</code>, fermez RStudio, retrouvez le dossier <code>LNG1100</code> décompressé, puis ouvrez de nouveau <code>LNG1100.Rproj</code>.</p>
+<p>Dans l’onglet <strong>Files</strong>, vous devriez également voir les dossiers <code>donnees</code>, <code>problemes</code>, <code>quarto</code> et <code>scripts</code>.</p>
+</section>
+<section id="ajouter-de-nouveaux-fichiers" class="level2" data-number="1.6">
+<h2 data-number="1.6" data-anchor-id="ajouter-de-nouveaux-fichiers"><span class="header-section-number">1.6</span> Ajouter de nouveaux fichiers</h2>
+<p>Lorsque vous téléchargez un nouveau fichier pour le cours :</p>
 <ul>
-<li><code>git fetch origin</code> <kbd>Entrée</kbd></li>
-<li><code>git reset --hard origin/main</code> <kbd>Entrée</kbd></li>
+<li>placez les fichiers de données (<code>.csv</code>, <code>.RData</code>, etc.) dans <code>donnees</code>;</li>
+<li>placez les scripts R (<code>.R</code>) dans <code>scripts</code>;</li>
+<li>placez les fichiers associés à un problème dans le dossier du problème correspondant.</li>
 </ul>
-<!-- <span style="color:red">**IMPORTANT :** toutes vos annotations et modifications qui ne sont pas dans le dossier `mon_travail` seront effacées!</span> -->
-</div>
-</div>
-</div>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><a href="montravail.png" class="lightbox" data-gallery="quarto-lightbox-gallery-2" title="Création d’un nouveau dossier"><img src="montravail.png" class="img-fluid figure-img" style="width:85.0%" alt="Création d’un nouveau dossier"></a></p>
-<figcaption>Création d’un nouveau dossier</figcaption>
-</figure>
-</div>
-<section id="version-hors-ligne" class="level4" data-number="1.2.1.1">
-<h4 data-number="1.2.1.1" data-anchor-id="version-hors-ligne"><span class="header-section-number">1.2.1.1</span> Version hors ligne</h4>
-<p>Allez sur le dépôt Git du cours et téléchargez tous les fichiers (cliquez sur la figure ci-dessous). Ensuite, placez le dossier téléchargez dans un répertoire logique dans votre ordinateur (peut-être vous avez déjà un grand dossier avec tous les dossiers de vos cours).</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><a href="Figures/git.png" class="lightbox" data-gallery="quarto-lightbox-gallery-3" title="Téléchargez nos fichiers à partir de notre dépôt Git"><img src="Figures/git.png" class="img-fluid figure-img" style="width:85.0%" alt="Téléchargez nos fichiers à partir de notre dépôt Git"></a></p>
-<figcaption>Téléchargez nos fichiers à partir de notre dépôt Git</figcaption>
-</figure>
-</div>
-<p>Explorez le dossier téléchargé pour vous assurez que le fichier <code>project.RProj</code> est là. <span style="color:red"><strong>Cliquez toujours sur ce fichier pour ouvrir RStudio dans ce cours!</strong></span></p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><a href="Figures/fichiers.png" class="lightbox" data-gallery="quarto-lightbox-gallery-4" title="Vérifiez le dossier téléchargé"><img src="Figures/fichiers.png" class="img-fluid figure-img" style="width:85.0%" alt="Vérifiez le dossier téléchargé"></a></p>
-<figcaption>Vérifiez le dossier téléchargé</figcaption>
-</figure>
-</div>
+<p>Déplacez le fichier à l’aide du Finder (macOS) ou de l’Explorateur de fichiers (Windows), puis vérifiez qu’il apparaît dans l’onglet <strong>Files</strong> de RStudio.</p>
+<p>Dans vos scripts, utilisez toujours des chemins relatifs à la racine du projet :</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">read_csv</span>(<span class="st">"donnees/villes.csv"</span>)</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
+<p>N’utilisez pas <code>setwd()</code> et n’écrivez pas le chemin complet propre à votre ordinateur. Les chemins relatifs permettent au même script de fonctionner sur n’importe quel ordinateur.</p>
 </section>
-</section>
-</section>
-<section id="quelques-suggestions" class="level2" data-number="1.3">
-<h2 data-number="1.3" data-anchor-id="quelques-suggestions"><span class="header-section-number">1.3</span> Quelques suggestions</h2>
-<p>Voici quelques modifications suggérées. Vous pouvez cliquer sur les captures d’écran ci-dessous pour les agrandir. On va modifier quelques éléments dans RStudio (peu importe si vous choisissez la version en ligne ou hors ligne). Pour ouvrir les réglages du système, allez à <code>Tools &gt; Global Options...</code>.</p>
+<section id="quelques-suggestions" class="level2" data-number="1.7">
+<h2 data-number="1.7" data-anchor-id="quelques-suggestions"><span class="header-section-number">1.7</span> Quelques suggestions</h2>
+<p>Pour modifier les réglages de RStudio, allez à <code>Tools &gt; Global Options...</code>. Vous pouvez cliquer sur les captures d’écran ci-dessous pour les agrandir.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><a href="Figures/settings1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-5" title="Sélectionnez « Use native pipe operator »"><img src="Figures/settings1.png" class="img-fluid figure-img" style="width:85.0%" alt="Sélectionnez « Use native pipe operator »"></a></p>
+<p><a href="Figures/settings1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-3" title="Sélectionnez « Use native pipe operator »"><img src="Figures/settings1.png" class="img-fluid figure-img" style="width:85.0%" alt="Sélectionnez « Use native pipe operator »"></a></p>
 <figcaption>Sélectionnez « Use native pipe operator »</figcaption>
 </figure>
 </div>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><a href="Figures/settings2.png" class="lightbox" data-gallery="quarto-lightbox-gallery-6" title="Sélectionnez « Use rainbow parentheses »"><img src="Figures/settings2.png" class="img-fluid figure-img" style="width:85.0%" alt="Sélectionnez « Use rainbow parentheses »"></a></p>
+<p><a href="Figures/settings2.png" class="lightbox" data-gallery="quarto-lightbox-gallery-4" title="Sélectionnez « Use rainbow parentheses »"><img src="Figures/settings2.png" class="img-fluid figure-img" style="width:85.0%" alt="Sélectionnez « Use rainbow parentheses »"></a></p>
 <figcaption>Sélectionnez « Use rainbow parentheses »</figcaption>
 </figure>
 </div>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><a href="Figures/settings3.png" class="lightbox" data-gallery="quarto-lightbox-gallery-7" title="Choisissez un thème si vous voulez"><img src="Figures/settings3.png" class="img-fluid figure-img" style="width:85.0%" alt="Choisissez un thème si vous voulez"></a></p>
+<p><a href="Figures/settings3.png" class="lightbox" data-gallery="quarto-lightbox-gallery-5" title="Choisissez un thème si vous voulez"><img src="Figures/settings3.png" class="img-fluid figure-img" style="width:85.0%" alt="Choisissez un thème si vous voulez"></a></p>
 <figcaption>Choisissez un thème si vous voulez</figcaption>
 </figure>
 </div>
 </section>
-<section id="installer-tidyverse" class="level2" data-number="1.4">
-<h2 data-number="1.4" data-anchor-id="installer-tidyverse"><span class="header-section-number">1.4</span> Installer <code>tidyverse</code></h2>
-<p>Après avoir créé votre compte sur <a href="http://posit.cloud" class="uri">http://posit.cloud</a>, et après avoir installé R et RStudio, ouvrez RStudio pour installer l’extension <code>tidyverse</code> : tapez <code>install.packages("tidyverse")</code> <kbd>Entrée</kbd> dans la console. Vous devez suivre la même étape dans la version en ligne et hors ligne, vu que les deux ne sont pas connectées l’une à l’autre. L’installation peut être problématique selon votre système d’exploitation. Si vous avez des problèmes, consultez le chapitre sur des <a href="./problemes.html">problèmes techniques</a>, utilisez Google/GPT/Gemini/etc. Si vous n’êtes pas capable d’installer l’extension, priorisez la version en ligne (où l’installation sera facile). <span style="color:red">Il ne sera pas possible de suivre le cours sans avoir installé <code>tidyverse</code>.</span></p>
-<p>Consultez les matériels sur monPortail et lisez le chapitre 6 de <span class="citation" data-cites="barnier_R">Barnier (<a href="references.html#ref-barnier_R" role="doc-biblioref">2023</a>)</span> <a href="https://juba.github.io/tidyverse/06-tidyverse.html" target="_blank">ici</a> pour plus des détails.</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><a href="Figures/rstudio.gif" class="lightbox" data-gallery="quarto-lightbox-gallery-8" title="Installation de tidyverse"><img src="Figures/rstudio.gif" class="img-fluid figure-img" style="width:95.0%" alt="Installation de tidyverse"></a></p>
-<figcaption>Installation de <code>tidyverse</code></figcaption>
-</figure>
-</div>
-</section>
-<section id="synthèse" class="level2" data-number="1.5">
-<h2 data-number="1.5" data-anchor-id="synthèse"><span class="header-section-number">1.5</span> Synthèse</h2>
-<p>Voici les étapes que vous devriez avoir accomplies jusqu’à présent (et qui seront essentielles pour suivre le cours). <strong>Assurez-vous que toutes ces étapes soient complétées avant de continuer</strong>.</p>
+<section id="sec-cloner" class="level2" data-number="1.8">
+<h2 data-number="1.8" data-anchor-id="sec-cloner"><span class="header-section-number">1.8</span> Plan de secours : utiliser Posit Cloud</h2>
+<p>Si vous rencontrez un problème majeur avec R ou RStudio sur votre ordinateur, vous pouvez temporairement travailler dans <a href="https://posit.cloud">Posit Cloud</a>. Vous aurez besoin d’un compte Posit Cloud, mais vous n’avez pas besoin d’installer R, RStudio ou Git sur votre ordinateur.</p>
+<p>Pour créer une copie du projet du cours :</p>
 <ol type="1">
-<li>Installer R et RStudio et créer un compte sur <a href="https://posit.cloud" class="uri">https://posit.cloud</a></li>
-<li>Ajuster les réglages du RStudio</li>
-<li>Créer un projet RStudio à partir d’un dépôt Git</li>
-<li>Installer <code>tidyverse</code></li>
+<li><p>Connectez-vous à <a href="https://posit.cloud">Posit Cloud</a>.</p></li>
+<li><p>Cliquez sur <strong>New Project</strong>.</p></li>
+<li><p>Choisissez <strong>New Project from Git Repo</strong>.</p></li>
+<li><p>Collez l’adresse du dépôt :</p>
+<pre class="text"><code>https://github.com/guilhermegarcia/LNG1100.git</code></pre></li>
+<li><p>Créez le projet et attendez que RStudio s’ouvre.</p></li>
+<li><p>Vérifiez la racine du projet dans la console :</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">file.exists</span>(<span class="st">"donnees/villes.csv"</span>)</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Le résultat devrait être <code>[1] TRUE</code>.</p></li>
+<li><p>Installez <code>tidyverse</code> dans ce projet Posit Cloud :</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"tidyverse"</span>)</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Attendez la fin de l’installation. Cette étape ne doit normalement être effectuée qu’une seule fois dans ce projet.</p></li>
+<li><p>Chargez ensuite <code>tidyverse</code> :</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div></li>
 </ol>
+<p>Le projet créé dans Posit Cloud contient les fichiers du dépôt Git, mais <strong>pas les fichiers créés ou modifiés uniquement sur votre ordinateur</strong>. Au besoin, utilisez le bouton <strong>Upload</strong> dans l’onglet <strong>Files</strong> pour téléverser une copie de vos scripts ou autres fichiers.</p>
+<section id="mettre-à-jour-ou-réinitialiser-le-projet-dans-posit-cloud" class="level3" data-number="1.8.1">
+<h3 data-number="1.8.1" data-anchor-id="mettre-à-jour-ou-réinitialiser-le-projet-dans-posit-cloud"><span class="header-section-number">1.8.1</span> Mettre à jour ou réinitialiser le projet dans Posit Cloud</h3>
+<p>Si les fichiers du cours dans votre projet Cloud ne sont plus à jour ou ont été modifiés par erreur, ouvrez l’onglet <strong>Terminal</strong> de RStudio et exécutez :</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> fetch origin</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> reset <span class="at">--hard</span> origin/main</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
+<p>La première commande récupère la version la plus récente du dépôt. La seconde remet les fichiers suivis par Git dans exactement le même état que ceux du dépôt du cours.</p>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="true" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Avertissement
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-2" class="callout-2-contents callout-collapse collapse show">
+<div class="callout-body-container callout-body">
+<p>La commande <code>git reset --hard</code> <strong>efface toutes les modifications apportées aux fichiers suivis par Git</strong>. Avant de l’exécuter, téléchargez une copie de tout script ou fichier important que vous avez modifié. Cette commande ne récupère pas les fichiers qui existent uniquement sur votre ordinateur.</p>
+</div>
+</div>
+</div>
+<p>Si vous préférez repartir à neuf, vous pouvez aussi créer un nouveau projet Posit Cloud à partir du dépôt Git en répétant les étapes ci-dessus.</p>
+<p>Posit Cloud constitue un plan de secours. La méthode normale pour le cours demeure le projet local ouvert à partir de <code>LNG1100.Rproj</code>.</p>
+</section>
+</section>
+<section id="synthèse" class="level2" data-number="1.9">
+<h2 data-number="1.9" data-anchor-id="synthèse"><span class="header-section-number">1.9</span> Synthèse</h2>
+<p>Avant de continuer, assurez-vous d’avoir accompli les étapes suivantes :</p>
+<ol type="1">
+<li>Installer R, puis RStudio.</li>
+<li>Télécharger et décompresser <code>LNG1100.zip</code>.</li>
+<li>Déplacer le dossier <code>LNG1100</code> dans un emplacement permanent.</li>
+<li>Ouvrir <code>LNG1100.Rproj</code>.</li>
+<li>Installer <code>tidyverse</code>.</li>
+<li>Vérifier que <code>file.exists("donnees/villes.csv")</code> retourne <code>TRUE</code>.</li>
+</ol>
+<p>La création d’un compte Posit Cloud est facultative et sert uniquement de plan de secours.</p>
 
 
 <div id="refs" class="references csl-bib-body hanging-indent" role="list" style="display: none">

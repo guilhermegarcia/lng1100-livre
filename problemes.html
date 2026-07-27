@@ -287,33 +287,19 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<div class="callout callout-style-default callout-important callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="true" aria-label="Toggle callout">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Important</span>Pour mettre à jour vos fichiers
-</div>
-<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
-</div>
-<div id="callout-1" class="callout-1-contents callout-collapse collapse show">
-<div class="callout-body-container callout-body">
-<p>Allez sur <code>Terminal</code> et exécutez les deux commandes suivantes :</p>
-<ol type="1">
-<li><code>git fetch origin</code></li>
-<li><code>git reset --hard origin/main</code></li>
-</ol>
-<p>Veuillez noter que si vous changez les scripts du projet, ces commandes réinitialiseront les fichier et <strong>les vos modifications seront perdues</strong>. Voilà pourquoi vous devez créer vos propres fichiers/scripts pour ajouter vos notes.</p>
-</div>
-</div>
-</div>
 <section id="problèmes-généraux" class="level2">
 <h2 data-anchor-id="problèmes-généraux">Problèmes généraux</h2>
 <ol type="1">
-<li>Le site de Posit ne marche pas. Vous pouvez consulter le statut de Posit ici sur <a href="http://status.posit.co" class="uri">http://status.posit.co</a>.</li>
-<li><strong>L’installation de <code>tidyverse</code> ne fonctionne pas.</strong> Utilisez la version en ligne et cela n’arrivera pas.</li>
-<li><strong>Je ne peux pas trouver les fichiers de données</strong>. Voilà pourquoi vous devez télécharger les fichiers à partir du dépôt Git, qui vous donnera déjà la structure correcte de dossiers et de données. Le reste dépend de votre propre organisation, d’où vous enregistrez les fichiers que vous créez, etc. Si jamais vous désirez réinitialiser tous les fichiers, vous pouvez simplement répéter les pas dans le <a href="./fichiers.html#sec-cloner">chapitre 1</a>, mais cela supprimera tous les fichiers que vous avez créés vous-même, donc gardez cela à l’esprit.</li>
+<li><strong>Je ne peux pas trouver les fichiers de données.</strong> Vérifiez d’abord :
+<ul>
+<li>que vous travaillez dans le dossier <code>LNG1100</code> <strong>décompressé</strong>, et non dans <code>LNG1100.zip</code>;</li>
+<li>que vous avez ouvert RStudio en double-cliquant sur <code>LNG1100.Rproj</code>;</li>
+<li>que <code>file.exists("donnees/villes.csv")</code> retourne <code>TRUE</code>;</li>
+<li>que le fichier recherché se trouve dans le bon sous-dossier.</li>
+</ul>
+Si le test retourne <code>FALSE</code>, fermez RStudio, retrouvez le dossier <code>LNG1100</code> décompressé, puis ouvrez de nouveau <code>LNG1100.Rproj</code>. Consultez les <a href="./fichiers.html">instructions de préparation</a> pour revoir la structure du projet.</li>
+<li><strong>L’installation de <code>tidyverse</code> ne fonctionne pas.</strong> Vérifiez votre connexion Internet, redémarrez RStudio, puis exécutez de nouveau <code>install.packages("tidyverse")</code> dans la console. Lisez attentivement le message d’erreur si l’installation échoue encore. En cas de problème majeur, utilisez temporairement le <a href="./fichiers.html#sec-cloner">plan de secours avec Posit Cloud</a>; il faudra aussi y exécuter <code>install.packages("tidyverse")</code> avant <code>library(tidyverse)</code>.</li>
+<li><strong>Posit Cloud ne fonctionne pas.</strong> Posit Cloud est seulement un plan de secours : continuez normalement dans le projet local ouvert avec <code>LNG1100.Rproj</code>. Vous pouvez vérifier l’état des serveurs sur <a href="https://status.posit.co" class="uri">https://status.posit.co</a>.</li>
 <li><strong>Le code ne marche pas!</strong> Voici quelques origines de ce type de problème :
 <ul>
 <li>lisez le message d’erreur attentivement et collez-le sur Google/ChatGPT s’il n’est pas clair;</li>
@@ -322,15 +308,15 @@ ul.task-list li input[type="checkbox"] {
 <li>Si vous êtes 100% certain que votre code est correct, vous pouvez essayer de redémarrer R (<code>Session &gt; Restart R</code>);</li>
 <li>vous pouvez certainement coller votre code sur ChatGPT pour trouver le problème. C’est la dernière option : vous devez essayer de trouver les problèmes vous même (c’est une compétence très importante). Il faut également garder à l’esprit que certains types de problèmes dépendent de votre structure de fichiers. Donc, ChatGPT ne sera pas capable de vous aider dans ce type de situation.</li>
 </ul></li>
-<li><strong>Mes références ne sont pas affichées dans le document (Quarto)</strong>. Vérifiez votre préambule et assurez-vous que votre fichier de références <code>bib</code> est correct, notamment sans guillemets, et que sa localisation est correcte aussi. Si vous utilisez le modèle dans notre dépôt Git, vous n’aurez pas ce type de problème.</li>
+<li><strong>Mes références ne sont pas affichées dans le document (Quarto).</strong> Vérifiez votre préambule et assurez-vous que votre fichier de références <code>bib</code> est correct, notamment sans guillemets, et que sa localisation est correcte aussi. Si vous utilisez le modèle dans notre dépôt Git, vous n’aurez pas ce type de problème.</li>
 <li><strong>Une erreur qui n’existait pas auparavant.</strong> Par exemple : <code>Error in select(...)</code>. Si on charge plus d’une extension qui contient des fonctions de noms identiques, on peut arriver à ce type de problème. C’est le cas ici : <code>tidyverse</code> a une fonction appelée <code>select()</code> (c’est une fonction de l’extension <code>dplyr</code>, chargée <em>avec</em> <code>tidyverse</code>). Quand on parle des modèles logistiques, on utilise souvent la fonction <code>invlogit()</code> de l’extension <code>arm</code>. Cette extension contient aussi une fonction <code>select()</code> (!), qui sera priorisée par R. C’est pourquoi vous avez ce type de problème. Pour régler le problème, il y a deux options : déchargez <code>arm</code> en exécutant <code>detach("package:arm", unload = TRUE)</code> ou ajoutez le préfixe <code>dplyr::</code> à la fonction <code>select()</code> : <code>dplyr::select()</code>. Cela clarifie que vous voulez utilisez la fonction <code>select()</code> de l’extension <code>dplyr</code>.</li>
-<li><strong>J’ai un problème pour importer un fichier <code>csv</code></strong>. Si vous avez un fichier <code>csv</code>, il faut vérifier quel type de séparation de colonnes le fichier utilise. S’il utilise une virgule, on utilise la fonction <code>read_csv()</code>; s’il utilise un point-virgule, <code>read_csv2()</code>. <strong>N’utilisez jamais Excel</strong> pour visualiser votre fichier <code>csv</code> avant de l’importer dans RStudio pour éviter des problèmes.</li>
-<li><strong>Mes tableaux ne marchent pas dans le document <code>PDF</code> produit avec Quarto</strong>. Bien que Quarto nous permette de créer plusieurs formats de fichiers, il faut dire que chaque format a ses propres particularités. Un document <code>HTML</code>, par exemple, est dynamique, tandis qu’un document <code>PDF</code> sera toujours statique. Il y a donc des extensions qui ne marcheront pas dans les deux. Des tableaux en sont un exemple : les tableaux utilisés dans un document Quarto <code>HTML</code> peuvent ne pas fonctionner correctement si vous décider de créer un document <code>PDF</code> en changeant le format dans le préambule de votre document. Encore une fois, utilisez le modèle fourni tel quel et vous n’aurez pas de problèmes.</li>
+<li><strong>J’ai un problème pour importer un fichier <code>csv</code>.</strong> Si vous avez un fichier <code>csv</code>, il faut vérifier quel type de séparation de colonnes le fichier utilise. S’il utilise une virgule, on utilise la fonction <code>read_csv()</code>; s’il utilise un point-virgule, <code>read_csv2()</code>. <strong>N’utilisez jamais Excel</strong> pour visualiser votre fichier <code>csv</code> avant de l’importer dans RStudio pour éviter des problèmes.</li>
+<li><strong>Mes tableaux ne marchent pas dans le document <code>PDF</code> produit avec Quarto.</strong> Bien que Quarto nous permette de créer plusieurs formats de fichiers, il faut dire que chaque format a ses propres particularités. Un document <code>HTML</code>, par exemple, est dynamique, tandis qu’un document <code>PDF</code> sera toujours statique. Il y a donc des extensions qui ne marcheront pas dans les deux. Des tableaux en sont un exemple : les tableaux utilisés dans un document Quarto <code>HTML</code> peuvent ne pas fonctionner correctement si vous décider de créer un document <code>PDF</code> en changeant le format dans le préambule de votre document. Encore une fois, utilisez le modèle fourni tel quel et vous n’aurez pas de problèmes.</li>
 </ol>
 </section>
 <section id="évaluations-du-cours" class="level2">
 <h2 data-anchor-id="évaluations-du-cours">Évaluations du cours</h2>
-<p>Vous pouvez consulter la politique du cours par rapport aux problèmes techniques sur monPortail (Évaluation). La politique en question s’applique aussi au <a href="https://posit.cloud" class="uri">https://posit.cloud</a>, naturellement. Vous êtes donc responsable pour régler des problèmes techniques <strong>locaux.</strong> Consulter le statut des serveurs Posit ici : <a href="http://status.posit.co" class="uri">http://status.posit.co</a>. En cas de problème avec les serveurs de Posit, les dates limites de remise seront adaptées au besoin.</p>
+<p>Vous pouvez consulter la politique du cours concernant les problèmes techniques sur Brio (Évaluation). RStudio installé sur votre ordinateur est la méthode normale pour le cours; Posit Cloud est seulement un plan de secours. Vous êtes responsable de préparer et de vérifier votre environnement de travail avant une évaluation. La politique officielle et les consignes applicables sont celles publiées sur Brio.</p>
 <blockquote class="blockquote">
 <p>Si vous éprouvez des difficultés avec un questionnaire sur monPortail, vous pouvez en tout temps fermer et réouvrir la fenêtre ; vos réponses ne seront pas perdues. Cependant, rappelez-vous que vous êtes <strong>responsable</strong> des conditions dans lesquelles vous faites votre évaluation. En cas de perte de connexion avec le serveur, une reprise pourra être organisée <strong>seulement si le problème provient des serveurs du Portail</strong>. Assurez-vous donc de ne pas surcharger votre bande passante lors de la passation de vos évaluations.</p>
 </blockquote>
