@@ -25,78 +25,135 @@ knitr::opts_chunk$set(
 ```
 *Lisez **attentivement** ce chapitre pour vous assurer que vous serez prêt à commencer le cours.*
 
-## Vos options pour le cours
+## Installer R et RStudio
 
-Pendant le cours, on utilisera le langage R. Plus spécifiquement, on utilisera le logiciel RStudio, un [environnement de développement](https://fr.wikipedia.org/wiki/Environnement_de_développement) . Les deux outils sont gratuits. Il s'agit donc de deux outils différents : il faut avoir R pour utiliser RStudio. 
+Pendant le cours, on utilisera le langage R dans RStudio, un
+[environnement de développement](https://fr.wikipedia.org/wiki/Environnement_de_développement).
+Les deux outils sont gratuits, mais ils sont distincts : il faut installer R
+**avant** d'installer RStudio.
 
-Vous avez **deux options** pour vous préparer, et je vous suggère de choisir les deux. Ce sont des options complémentaires.
+Téléchargez les deux outils à partir de la
+[page d'installation de RStudio Desktop](https://posit.co/download/rstudio-desktop/){target="_blank"}.
+Si vous utilisez un Mac, assurez-vous d'avoir
+[complété correctement l'installation](https://support.apple.com/fr-ca/guide/mac-help/mh35835/mac){target="_blank"}.
+Si votre système d'exploitation est trop ancien pour les versions actuelles,
+consultez le [plan de secours avec Posit Cloud](#sec-cloner).
 
-### Option A : Posit cloud (en ligne)
+## Télécharger et décompresser le projet du cours
 
-**L'option la plus facile** pour suivre le cours sera d'utiliser la version en ligne de RStudio. Allez sur <https://posit.cloud> pour créer votre compte et voilà. L'avantage est claire : vous n'avez pas besoin d'installer ni R ni RStudio; vous n'aurez pas de problèmes techniques dans l'installation des extensions utilisées dans le cours; et vous n'aurez pas de difficultés avec votre système de exploitation. Toutefois, vous avez [une limite de 25 heures par mois](https://posit.cloud/plans), vu que vous utilisez les serveurs de Posit. En plus, c'est en ligne... Par conséquent, si le réseau est instable, vous risquez de rencontrer des problèmes. Voilà pourquoi il est utile de considérer aussi l'option B.
+1. Téléchargez `LNG1100.zip` à partir de Brio.
+2. **Décompressez le fichier ZIP.** Il ne faut pas travailler directement dans
+   le fichier ZIP.
+3. Déplacez le dossier décompressé `LNG1100` vers un emplacement permanent et
+   facile à retrouver, par exemple dans votre dossier `Documents`.
 
-### Option B : installer R + RStudio (hors ligne)
+Évitez de laisser le dossier dans `Téléchargements` : il sera plus difficile à
+retrouver et pourrait être supprimé par erreur.
 
-Cliquez [ici](https://posit.co/download/rstudio-desktop/){target="_target"} pour installer R et RStudio. Il faut installer R **avant** d'installer RStudio. Si vous utilisez un Mac, il faut s'assurer que vous avez [complété correctement l'installation](https://support.apple.com/fr-ca/guide/mac-help/mh35835/mac){target="_blank"}. Veuillez noter que, si votre système d'exploitation est trop ancien, il se peut que vous ne puissiez pas installer les outils (donc, utilisez juste la version en ligne).
+Les principaux éléments du dossier devraient être organisés ainsi :
 
-::: {.callout-tip collapse="false"}
-## Suggestion
+```text
+LNG1100/
+├── LNG1100.Rproj
+├── README.md
+├── donnees/
+├── problemes/
+├── quarto/
+└── scripts/
+```
 
-**Utilisez toujours la version en ligne**, mais installez R et RStudio aussi pour pratiquer chez vous et pour ne pas utiliser votre limite de temps en ligne.
+## Toujours ouvrir le projet RStudio
 
-:::  
+Dans le dossier `LNG1100`, double-cliquez sur `LNG1100.Rproj`. Cette étape ouvre
+RStudio à la racine du projet, c'est-à-dire au bon endroit pour trouver les
+scripts et les données du cours.
 
-## Ouvrez RStudio
-
-Lorsque vous avez créé votre compte sur <http://posit.cloud>, vous verrez `Your Workspace` et vous pourrez créer votre premier projet en cliquant sur `New Project` et `New RStudio Project`. Dans la version hors ligne, vous n'avez pas besoin de créer un projet pour examiner l'interface du logiciel, qui sera identique dans les deux versions. Voici ce que vous verrez :
-
-![L'interface de RStudio, version en ligne : cliquez pour agrandir](Figures/rstudio.png){width="85%"}
-
-Dans la capture d'écran ci-dessus, vous voyez trois grandes zones :
-
-1. La *Console* nous permet d'interagir avec le langage de façon immédiate. Le **Terminal** est dans le deuxième onglet de cette zone
-2. L'onglet *Files* est maintenant actif dans la zone 2. Il nous montre les fichiers dans notre répertoire, qui est vide maintenant.
-3. L'onglet *Environment* liste les variables et les objets créés. 
-
-
-### Comment télécharger mettre à jour vos fichiers
-
-::: {.callout-tip collapse="false"}
-
-## VERSION EN LIGNE {#sec-cloner}
-
-Vous devez simplement suivre les étapes suivantes :
-
-1. Cliquez sur `New Project` 
-2. Cliquez sur `New Project from Git Repository` et collez `https://github.com/guilhermegarcia/LNG1100.git`
-3. Créez un nouveau dossier pour votre travail : `mon_travail`. C'est dans ce dossier que vous ajouterez vos fichiers et toutes vos annotations.
-
-Pendant notre cours, je modifierai et j'ajouterai des fichiers dans notre projet. Chaque fois que vous voulez mettre à jour les fichiers, utilisez les commandes suivantes dans le **Terminal** :
-
-- `git fetch origin` <kbd>Entrée</kbd>
-- `git reset --hard origin/main` <kbd>Entrée</kbd>
-
-<!-- <span style="color:red">**IMPORTANT :** toutes vos annotations et modifications qui ne sont pas dans le dossier `mon_travail` seront effacées!</span> -->
+::: {.callout-important collapse="false"}
+Ne commencez pas en ouvrant simplement RStudio ou en double-cliquant sur un
+script `.R`. Commencez toujours par `LNG1100.Rproj`.
 :::
 
-![Création d'un nouveau dossier](montravail.png){width="85%"}
+Voici l'interface de RStudio :
 
+![L'interface de RStudio : cliquez pour agrandir](Figures/rstudio.png){width="85%"}
 
-#### Version hors ligne
+Dans la capture d'écran ci-dessus, vous voyez les zones principales :
 
-Allez sur le dépôt Git du cours et téléchargez tous les fichiers (cliquez sur la figure ci-dessous). Ensuite, placez le dossier téléchargez dans un répertoire logique dans votre ordinateur (peut-être vous avez déjà un grand dossier avec tous les dossiers de vos cours).
+1. La *Console* permet d'interagir immédiatement avec R. Le **Terminal** se
+   trouve dans un autre onglet de cette zone.
+2. L'onglet *Files* montre les fichiers et dossiers du projet.
+3. L'onglet *Environment* liste les variables et objets créés.
 
-![Téléchargez nos fichiers à partir de notre dépôt Git](Figures/git.png){width="85%"}
+## Installer `tidyverse`
 
-Explorez le dossier téléchargé pour vous assurez que le fichier `project.RProj` est là. <span style="color:red">**Cliquez toujours sur ce fichier pour ouvrir RStudio dans ce cours!**</span>
+Le cours utilise l'ensemble de bibliothèques `tidyverse`. Dans la console de
+RStudio, exécutez :
 
+```r
+install.packages("tidyverse")
+```
 
-![Vérifiez le dossier téléchargé](Figures/fichiers.png){width="85%"}
+Attendez la fin de l'installation, puis vérifiez qu'elle a réussi :
 
+```r
+library(tidyverse)
+```
+
+`install.packages("tidyverse")` installe les bibliothèques sur l'ordinateur et
+ne doit normalement être exécuté qu'une seule fois. `library(tidyverse)` les
+charge dans une séance de travail et doit être exécuté chaque fois qu'un script
+en a besoin. Il ne sera pas possible de suivre le cours sans avoir installé
+`tidyverse`.
+
+Si l'installation échoue, consultez le chapitre sur les
+[problèmes techniques](problemes.qmd). Consultez également les matériels sur
+Brio et le chapitre 6 de @barnier_R
+[ici](https://juba.github.io/tidyverse/06-tidyverse.html){target="_blank"}.
+
+![Installation de `tidyverse`](Figures/rstudio.gif){width="95%"}
+
+## Vérifier la racine du projet
+
+Dans la console de RStudio, exécutez :
+
+```r
+file.exists("donnees/villes.csv")
+```
+
+Si R affiche `[1] TRUE`, le projet est ouvert correctement. Si R affiche
+`[1] FALSE`, fermez RStudio, retrouvez le dossier `LNG1100` décompressé, puis
+ouvrez de nouveau `LNG1100.Rproj`.
+
+Dans l'onglet **Files**, vous devriez également voir les dossiers `donnees`,
+`problemes`, `quarto` et `scripts`.
+
+## Ajouter de nouveaux fichiers
+
+Lorsque vous téléchargez un nouveau fichier pour le cours :
+
+- placez les fichiers de données (`.csv`, `.RData`, etc.) dans `donnees`;
+- placez les scripts R (`.R`) dans `scripts`;
+- placez les fichiers associés à un problème dans le dossier du problème
+  correspondant.
+
+Déplacez le fichier à l'aide du Finder (macOS) ou de l'Explorateur de fichiers
+(Windows), puis vérifiez qu'il apparaît dans l'onglet **Files** de RStudio.
+
+Dans vos scripts, utilisez toujours des chemins relatifs à la racine du projet :
+
+```r
+read_csv("donnees/villes.csv")
+```
+
+N'utilisez pas `setwd()` et n'écrivez pas le chemin complet propre à votre
+ordinateur. Les chemins relatifs permettent au même script de fonctionner sur
+n'importe quel ordinateur.
 
 ## Quelques suggestions
 
-Voici quelques modifications suggérées. Vous pouvez cliquer sur les captures d'écran ci-dessous pour les agrandir. On va modifier quelques éléments dans RStudio (peu importe si vous choisissez la version en ligne ou hors ligne). Pour ouvrir les réglages du système, allez à `Tools > Global Options...`. 
+Pour modifier les réglages de RStudio, allez à
+`Tools > Global Options...`. Vous pouvez cliquer sur les captures d'écran
+ci-dessous pour les agrandir.
 
 ![Sélectionnez « Use native pipe operator »](Figures/settings1.png){width="85%"}
 
@@ -104,21 +161,88 @@ Voici quelques modifications suggérées. Vous pouvez cliquer sur les captures d
 
 ![Choisissez un thème si vous voulez](Figures/settings3.png){width="85%"}
 
+## Plan de secours : utiliser Posit Cloud {#sec-cloner}
 
-## Installer `tidyverse`
+Si vous rencontrez un problème majeur avec R ou RStudio sur votre ordinateur,
+vous pouvez temporairement travailler dans
+[Posit Cloud](https://posit.cloud). Vous aurez besoin d'un compte Posit Cloud,
+mais vous n'avez pas besoin d'installer R, RStudio ou Git sur votre ordinateur.
 
-Après avoir créé votre compte sur <http://posit.cloud>, et après avoir installé R et RStudio, ouvrez RStudio pour installer l'extension `tidyverse` : tapez `install.packages("tidyverse")` <kbd>Entrée</kbd> dans la console. Vous devez suivre la même étape dans la version en ligne et hors ligne, vu que les deux ne sont pas connectées l'une à l'autre. L'installation peut être problématique selon votre système d'exploitation. Si vous avez des problèmes, consultez le chapitre sur des [problèmes techniques](problemes.qmd), utilisez Google/GPT/Gemini/etc. Si vous n'êtes pas capable d'installer l'extension, priorisez la version en ligne (où l'installation sera facile). <span style="color:red">Il ne sera pas possible de suivre le cours sans avoir installé `tidyverse`.</span>
+Pour créer une copie du projet du cours :
 
+1. Connectez-vous à [Posit Cloud](https://posit.cloud).
+2. Cliquez sur **New Project**.
+3. Choisissez **New Project from Git Repo**.
+4. Collez l'adresse du dépôt :
 
-Consultez les matériels sur monPortail et lisez le chapitre 6 de @barnier_R [ici](https://juba.github.io/tidyverse/06-tidyverse.html){target="_blank"} pour plus des détails.
+   ```text
+   https://github.com/guilhermegarcia/LNG1100.git
+   ```
 
-![Installation de `tidyverse`](Figures/rstudio.gif){width="95%"}
+5. Créez le projet et attendez que RStudio s'ouvre.
+6. Vérifiez la racine du projet dans la console :
+
+   ```r
+   file.exists("donnees/villes.csv")
+   ```
+
+   Le résultat devrait être `[1] TRUE`.
+7. Installez `tidyverse` dans ce projet Posit Cloud :
+
+   ```r
+   install.packages("tidyverse")
+   ```
+
+   Attendez la fin de l'installation. Cette étape ne doit normalement être
+   effectuée qu'une seule fois dans ce projet.
+8. Chargez ensuite `tidyverse` :
+
+   ```r
+   library(tidyverse)
+   ```
+
+Le projet créé dans Posit Cloud contient les fichiers du dépôt Git, mais **pas
+les fichiers créés ou modifiés uniquement sur votre ordinateur**. Au besoin,
+utilisez le bouton **Upload** dans l'onglet **Files** pour téléverser une copie
+de vos scripts ou autres fichiers.
+
+### Mettre à jour ou réinitialiser le projet dans Posit Cloud
+
+Si les fichiers du cours dans votre projet Cloud ne sont plus à jour ou ont été
+modifiés par erreur, ouvrez l'onglet **Terminal** de RStudio et exécutez :
+
+```bash
+git fetch origin
+git reset --hard origin/main
+```
+
+La première commande récupère la version la plus récente du dépôt. La seconde
+remet les fichiers suivis par Git dans exactement le même état que ceux du
+dépôt du cours.
+
+::: {.callout-warning collapse="false"}
+La commande `git reset --hard` **efface toutes les modifications apportées aux
+fichiers suivis par Git**. Avant de l'exécuter, téléchargez une copie de tout
+script ou fichier important que vous avez modifié. Cette commande ne récupère
+pas les fichiers qui existent uniquement sur votre ordinateur.
+:::
+
+Si vous préférez repartir à neuf, vous pouvez aussi créer un nouveau projet
+Posit Cloud à partir du dépôt Git en répétant les étapes ci-dessus.
+
+Posit Cloud constitue un plan de secours. La méthode normale pour le cours
+demeure le projet local ouvert à partir de `LNG1100.Rproj`.
 
 ## Synthèse
 
-Voici les étapes que vous devriez avoir accomplies jusqu'à présent (et qui seront essentielles pour suivre le cours). **Assurez-vous que toutes ces étapes soient complétées avant de continuer**.
+Avant de continuer, assurez-vous d'avoir accompli les étapes suivantes :
 
-1. Installer R et RStudio et créer un compte sur <https://posit.cloud>
-2. Ajuster les réglages du RStudio
-3. Créer un projet RStudio à partir d'un dépôt Git
-4. Installer `tidyverse`
+1. Installer R, puis RStudio.
+2. Télécharger et décompresser `LNG1100.zip`.
+3. Déplacer le dossier `LNG1100` dans un emplacement permanent.
+4. Ouvrir `LNG1100.Rproj`.
+5. Installer `tidyverse`.
+6. Vérifier que `file.exists("donnees/villes.csv")` retourne `TRUE`.
+
+La création d'un compte Posit Cloud est facultative et sert uniquement de plan
+de secours.

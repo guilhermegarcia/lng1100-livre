@@ -273,10 +273,19 @@ long |>
 
 
 {{< fa question-circle size=xs >}} **Question 15.** 
-Importer le fichier `sampleData.csv`. Donnez-lui le nom `donnees`. Examinez les données attentivement pour comprendre leur structure.
+Importez le fichier `donnees/sampleData.csv`. Donnez-lui le nom `donnees`.
+Examinez les données attentivement pour comprendre leur structure.
 
 ::: {.callout-warning title="Où est mon fichier...?" collapse="true"}
-Heureusement, RStudio vous aide à trouver des fichier si vous appuyez sur le <kbd>Tab</kbd>. Il est pourtant très utile de bien connaître la structure des fichiers dans notre projet. Si vous avez téléchargé les fichiers du cours comme indiqué, les chemins des fichiers seront plus faciles et logiques, étant données l'organisation de nos dossiers. Heureusement, RStudio effectue une **recherche récursive** dans les fichiers de votre projet. Donc, vous n'avez pas besoin d'ajouter `donnees/mon_fichier.csv`. Il suffit d'écrire `mon_fichier.csv` et <kbd>Tab</kbd> et RStudio listera le fichier même s'il est dans un dossier ou sous-dossier, ce qui sera très pratique dans notre cours!
+RStudio vous aide à compléter un chemin si vous appuyez sur <kbd>Tab</kbd>.
+Il faut néanmoins indiquer le chemin du fichier à partir de la racine du projet.
+Par exemple, pour importer `sampleData.csv`, écrivez
+`read_csv("donnees/sampleData.csv")`.
+
+Si ce chemin ne fonctionne pas, vérifiez que vous avez ouvert
+`LNG1100.Rproj` et que `file.exists("donnees/sampleData.csv")` retourne `TRUE`.
+N'utilisez pas `setwd()` et n'écrivez pas un chemin complet propre à votre
+ordinateur.
 
 <!-- ![Parcourir les fichier à l'aide de la touche Tab](Figures/tabtab.gif){width=80%} -->
 
@@ -301,4 +310,3 @@ Les neuf extensions dans `tidyverse` sont très utiles pour les différents él�
 ![Les extensions de `tidyverse` utilisées dans une analyse de donées](Figures/tidyverse_structure.png){width="100%"}
 
 ------------------------------------------------------------------------
-
