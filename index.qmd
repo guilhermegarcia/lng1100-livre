@@ -14,11 +14,12 @@ Bienvenue au livre numérique du cours ***Méthodes expérimentales et analyse d
 
 ## {{< fa gear size=xs >}} Structure du cours
 
-Le cours contient **trois éléments** :
+Le cours contient **quatre éléments** :
 
-1. `monPortail` = évaluations + informations administratives
-2. Ce site web = notre livre numérique
-3. [Dépôt Git](https://github.com/guilhermegarcia/LNG1100) = tous les fichiers du cours
+1. Brio = évaluations + informations administratives
+2. Teams = forum/questions générales
+3. Ce site web = notre livre numérique
+4. [Dépôt Git](https://github.com/guilhermegarcia/LNG1100) = tous les fichiers du cours
 
 
 ## Appli pour les concepts de base
