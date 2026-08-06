@@ -24,7 +24,7 @@
     "href": "index.html#b58fc729-690b-4000-b19f-365a4093b2ff7b7b3c20666120676561722073697a653d7873203e7d7d-structure-du-cours",
     "title": "LNG-1100",
     "section": " Structure du cours",
-    "text": "Structure du cours\nLe cours contient trois éléments :\n\nmonPortail = évaluations + informations administratives\nCe site web = notre livre numérique\nDépôt Git = tous les fichiers du cours",
+    "text": "Structure du cours\nLe cours contient quatre éléments :\n\nBrio = évaluations + informations administratives\nTeams = forum/questions générales\nCe site web = notre livre numérique\nDépôt Git = tous les fichiers du cours",
     "crumbs": [
       "Bienvenue!"
     ]
