@@ -295,14 +295,14 @@ ul.task-list li input[type="checkbox"] {
 <ol type="1">
 <li><strong>Je ne peux pas trouver les fichiers de données.</strong> Vérifiez d’abord :
 <ul>
-<li>que vous travaillez dans le dossier <code>LNG1100</code> <strong>décompressé</strong>, et non dans <code>LNG1100.zip</code>;</li>
-<li>que vous avez ouvert RStudio en double-cliquant sur <code>LNG1100.Rproj</code>;</li>
+<li>que votre projet Posit Cloud a été créé à partir du dépôt Git du cours;</li>
+<li>que vous travaillez à la racine de ce projet;</li>
 <li>que <code>file.exists("donnees/villes.csv")</code> retourne <code>TRUE</code>;</li>
 <li>que le fichier recherché se trouve dans le bon sous-dossier.</li>
 </ul>
-Si le test retourne <code>FALSE</code>, fermez RStudio, retrouvez le dossier <code>LNG1100</code> décompressé, puis ouvrez de nouveau <code>LNG1100.Rproj</code>. Consultez les <a href="./fichiers.html">instructions de préparation</a> pour revoir la structure du projet.</li>
-<li><strong>L’installation de <code>tidyverse</code> ne fonctionne pas.</strong> Vérifiez votre connexion Internet, redémarrez RStudio, puis exécutez de nouveau <code>install.packages("tidyverse")</code> dans la console. Lisez attentivement le message d’erreur si l’installation échoue encore. En cas de problème majeur, utilisez temporairement le <a href="./fichiers.html#sec-cloner">plan de secours avec Posit Cloud</a>; il faudra aussi y exécuter <code>install.packages("tidyverse")</code> avant <code>library(tidyverse)</code>.</li>
-<li><strong>Posit Cloud ne fonctionne pas.</strong> Posit Cloud est seulement un plan de secours : continuez normalement dans le projet local ouvert avec <code>LNG1100.Rproj</code>. Vous pouvez vérifier l’état des serveurs sur <a href="https://status.posit.co" class="uri">https://status.posit.co</a>.</li>
+Si le test retourne <code>FALSE</code>, consultez les <a href="./fichiers.html">instructions de préparation</a> et créez au besoin un nouveau projet Posit Cloud à partir du dépôt Git. Si vous utilisez la copie locale de secours, ouvrez-la toujours avec <code>LNG1100.Rproj</code>.</li>
+<li><strong>L’installation de <code>tidyverse</code> ne fonctionne pas.</strong> Vérifiez votre connexion Internet, redémarrez RStudio, puis exécutez de nouveau <code>install.packages("tidyverse")</code> dans la console. Lisez attentivement le message d’erreur si l’installation échoue encore.</li>
+<li><strong>Posit Cloud ne fonctionne pas.</strong> Vous pouvez vérifier l’état des serveurs sur <a href="https://status.posit.co" class="uri">https://status.posit.co</a>. Si le service est temporairement indisponible, utilisez la <a href="./fichiers.html">copie locale de secours</a> ouverte avec <code>LNG1100.Rproj</code>.</li>
 <li><strong>Le code ne marche pas!</strong> Voici quelques origines de ce type de problème :
 <ul>
 <li>lisez le message d’erreur attentivement et collez-le sur Google/ChatGPT s’il n’est pas clair;</li>
@@ -319,7 +319,7 @@ Si le test retourne <code>FALSE</code>, fermez RStudio, retrouvez le dossier <co
 </section>
 <section id="évaluations-du-cours" class="level2">
 <h2 data-anchor-id="évaluations-du-cours">Évaluations du cours</h2>
-<p>Vous pouvez consulter la politique du cours concernant les problèmes techniques sur Brio (Évaluation). RStudio installé sur votre ordinateur est la méthode normale pour le cours; Posit Cloud est seulement un plan de secours. Vous êtes responsable de préparer et de vérifier votre environnement de travail avant une évaluation. La politique officielle et les consignes applicables sont celles publiées sur Brio.</p>
+<p>Vous pouvez consulter la politique du cours concernant les problèmes techniques sur Brio (Évaluation). Posit Cloud est la méthode normale pour le cours; l’installation locale de RStudio constitue le plan de secours. Vous êtes responsable de préparer et de vérifier votre environnement de travail avant une évaluation. La politique officielle et les consignes applicables sont celles publiées sur Brio.</p>
 <blockquote class="blockquote">
 <p>Si vous éprouvez des difficultés avec un questionnaire sur monPortail, vous pouvez en tout temps fermer et réouvrir la fenêtre ; vos réponses ne seront pas perdues. Cependant, rappelez-vous que vous êtes <strong>responsable</strong> des conditions dans lesquelles vous faites votre évaluation. En cas de perte de connexion avec le serveur, une reprise pourra être organisée <strong>seulement si le problème provient des serveurs du Portail</strong>. Assurez-vous donc de ne pas surcharger votre bande passante lors de la passation de vos évaluations.</p>
 </blockquote>

@@ -320,17 +320,17 @@ div.csl-indent {
     <h2 id="toc-title">Table des matières</h2>
    
   <ul>
-  <li><a href="#installer-r-et-rstudio" id="toc-installer-r-et-rstudio" class="nav-link active" data-scroll-target="#installer-r-et-rstudio"><span class="header-section-number">1.1</span> Installer R et RStudio</a></li>
-  <li><a href="#télécharger-et-décompresser-le-projet-du-cours" id="toc-télécharger-et-décompresser-le-projet-du-cours" class="nav-link" data-scroll-target="#télécharger-et-décompresser-le-projet-du-cours"><span class="header-section-number">1.2</span> Télécharger et décompresser le projet du cours</a></li>
-  <li><a href="#toujours-ouvrir-le-projet-rstudio" id="toc-toujours-ouvrir-le-projet-rstudio" class="nav-link" data-scroll-target="#toujours-ouvrir-le-projet-rstudio"><span class="header-section-number">1.3</span> Toujours ouvrir le projet RStudio</a></li>
-  <li><a href="#installer-tidyverse" id="toc-installer-tidyverse" class="nav-link" data-scroll-target="#installer-tidyverse"><span class="header-section-number">1.4</span> Installer <code>tidyverse</code></a></li>
-  <li><a href="#vérifier-la-racine-du-projet" id="toc-vérifier-la-racine-du-projet" class="nav-link" data-scroll-target="#vérifier-la-racine-du-projet"><span class="header-section-number">1.5</span> Vérifier la racine du projet</a></li>
-  <li><a href="#ajouter-de-nouveaux-fichiers" id="toc-ajouter-de-nouveaux-fichiers" class="nav-link" data-scroll-target="#ajouter-de-nouveaux-fichiers"><span class="header-section-number">1.6</span> Ajouter de nouveaux fichiers</a></li>
-  <li><a href="#quelques-suggestions" id="toc-quelques-suggestions" class="nav-link" data-scroll-target="#quelques-suggestions"><span class="header-section-number">1.7</span> Quelques suggestions</a></li>
-  <li><a href="#sec-cloner" id="toc-sec-cloner" class="nav-link" data-scroll-target="#sec-cloner"><span class="header-section-number">1.8</span> Plan de secours : utiliser Posit Cloud</a>
+  <li><a href="#sec-cloner" id="toc-sec-cloner" class="nav-link active" data-scroll-target="#sec-cloner"><span class="header-section-number">1.1</span> Créer le projet du cours dans Posit Cloud</a></li>
+  <li><a href="#se-repérer-dans-rstudio" id="toc-se-repérer-dans-rstudio" class="nav-link" data-scroll-target="#se-repérer-dans-rstudio"><span class="header-section-number">1.2</span> Se repérer dans RStudio</a></li>
+  <li><a href="#installer-tidyverse" id="toc-installer-tidyverse" class="nav-link" data-scroll-target="#installer-tidyverse"><span class="header-section-number">1.3</span> Installer <code>tidyverse</code></a></li>
+  <li><a href="#vérifier-la-racine-du-projet" id="toc-vérifier-la-racine-du-projet" class="nav-link" data-scroll-target="#vérifier-la-racine-du-projet"><span class="header-section-number">1.4</span> Vérifier la racine du projet</a></li>
+  <li><a href="#ajouter-de-nouveaux-fichiers" id="toc-ajouter-de-nouveaux-fichiers" class="nav-link" data-scroll-target="#ajouter-de-nouveaux-fichiers"><span class="header-section-number">1.5</span> Ajouter de nouveaux fichiers</a></li>
+  <li><a href="#sauvegarder-son-travail" id="toc-sauvegarder-son-travail" class="nav-link" data-scroll-target="#sauvegarder-son-travail"><span class="header-section-number">1.6</span> Sauvegarder son travail</a>
   <ul class="collapse">
-  <li><a href="#mettre-à-jour-ou-réinitialiser-le-projet-dans-posit-cloud" id="toc-mettre-à-jour-ou-réinitialiser-le-projet-dans-posit-cloud" class="nav-link" data-scroll-target="#mettre-à-jour-ou-réinitialiser-le-projet-dans-posit-cloud"><span class="header-section-number">1.8.1</span> Mettre à jour ou réinitialiser le projet dans Posit Cloud</a></li>
+  <li><a href="#mettre-à-jour-ou-réinitialiser-le-projet-dans-posit-cloud" id="toc-mettre-à-jour-ou-réinitialiser-le-projet-dans-posit-cloud" class="nav-link" data-scroll-target="#mettre-à-jour-ou-réinitialiser-le-projet-dans-posit-cloud"><span class="header-section-number">1.6.1</span> Mettre à jour ou réinitialiser le projet dans Posit Cloud</a></li>
   </ul></li>
+  <li><a href="#plan-de-secours-travailler-localement" id="toc-plan-de-secours-travailler-localement" class="nav-link" data-scroll-target="#plan-de-secours-travailler-localement"><span class="header-section-number">1.7</span> Plan de secours : travailler localement</a></li>
+  <li><a href="#quelques-suggestions" id="toc-quelques-suggestions" class="nav-link" data-scroll-target="#quelques-suggestions"><span class="header-section-number">1.8</span> Quelques suggestions</a></li>
   <li><a href="#synthèse" id="toc-synthèse" class="nav-link" data-scroll-target="#synthèse"><span class="header-section-number">1.9</span> Synthèse</a></li>
   </ul>
 </nav>
@@ -364,20 +364,19 @@ margin: 10px;
 }
 </style>
 <p><em>Lisez <strong>attentivement</strong> ce chapitre pour vous assurer que vous serez prêt à commencer le cours.</em></p>
-<section id="installer-r-et-rstudio" class="level2" data-number="1.1">
-<h2 data-number="1.1" data-anchor-id="installer-r-et-rstudio"><span class="header-section-number">1.1</span> Installer R et RStudio</h2>
-<p>Pendant le cours, on utilisera le langage R dans RStudio, un <a href="https://fr.wikipedia.org/wiki/Environnement_de_développement">environnement de développement</a>. Les deux outils sont gratuits, mais ils sont distincts : il faut installer R <strong>avant</strong> d’installer RStudio.</p>
-<p>Téléchargez les deux outils à partir de la <a href="https://posit.co/download/rstudio-desktop/" target="_blank">page d’installation de RStudio Desktop</a>. Si vous utilisez un Mac, assurez-vous d’avoir <a href="https://support.apple.com/fr-ca/guide/mac-help/mh35835/mac" target="_blank">complété correctement l’installation</a>. Si votre système d’exploitation est trop ancien pour les versions actuelles, consultez le <a href="#sec-cloner">plan de secours avec Posit Cloud</a>.</p>
-</section>
-<section id="télécharger-et-décompresser-le-projet-du-cours" class="level2" data-number="1.2">
-<h2 data-number="1.2" data-anchor-id="télécharger-et-décompresser-le-projet-du-cours"><span class="header-section-number">1.2</span> Télécharger et décompresser le projet du cours</h2>
+<section id="sec-cloner" class="level2" data-number="1.1">
+<h2 data-number="1.1" data-anchor-id="sec-cloner"><span class="header-section-number">1.1</span> Créer le projet du cours dans Posit Cloud</h2>
+<p>Pendant le cours, on utilisera le langage R dans RStudio, un <a href="https://fr.wikipedia.org/wiki/Environnement_de_développement">environnement de développement</a>. La méthode normale pour le cours consiste à utiliser RStudio dans <a href="https://posit.cloud">Posit Cloud</a>. Vous aurez besoin d’un compte Posit Cloud, mais vous n’avez pas besoin d’installer R, RStudio ou Git sur votre ordinateur.</p>
+<p>Pour créer votre projet à partir du dépôt Git du cours :</p>
 <ol type="1">
-<li>Téléchargez <code>LNG1100.zip</code> à partir de Brio.</li>
-<li><strong>Décompressez le fichier ZIP.</strong> Il ne faut pas travailler directement dans le fichier ZIP.</li>
-<li>Déplacez le dossier décompressé <code>LNG1100</code> vers un emplacement permanent et facile à retrouver, par exemple dans votre dossier <code>Documents</code>.</li>
+<li><p>Connectez-vous à <a href="https://posit.cloud">Posit Cloud</a>.</p></li>
+<li><p>Cliquez sur <strong>New Project</strong>.</p></li>
+<li><p>Choisissez <strong>New Project from Git Repo</strong>.</p></li>
+<li><p>Collez l’adresse du dépôt :</p>
+<pre class="text"><code>https://github.com/guilhermegarcia/LNG1100.git</code></pre></li>
+<li><p>Créez le projet et attendez que RStudio s’ouvre.</p></li>
 </ol>
-<p>Évitez de laisser le dossier dans <code>Téléchargements</code> : il sera plus difficile à retrouver et pourrait être supprimé par erreur.</p>
-<p>Les principaux éléments du dossier devraient être organisés ainsi :</p>
+<p>Les principaux éléments du projet devraient être organisés ainsi :</p>
 <pre class="text"><code>LNG1100/
 ├── LNG1100.Rproj
 ├── README.md
@@ -385,26 +384,10 @@ margin: 10px;
 ├── problemes/
 ├── quarto/
 └── scripts/</code></pre>
+<p>Le projet créé dans Posit Cloud contient les fichiers du dépôt Git. Il ne contient toutefois pas les fichiers qui existent uniquement sur votre ordinateur.</p>
 </section>
-<section id="toujours-ouvrir-le-projet-rstudio" class="level2" data-number="1.3">
-<h2 data-number="1.3" data-anchor-id="toujours-ouvrir-le-projet-rstudio"><span class="header-section-number">1.3</span> Toujours ouvrir le projet RStudio</h2>
-<p>Dans le dossier <code>LNG1100</code>, double-cliquez sur <code>LNG1100.Rproj</code>. Cette étape ouvre RStudio à la racine du projet, c’est-à-dire au bon endroit pour trouver les scripts et les données du cours.</p>
-<div class="callout callout-style-default callout-important callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="true" aria-label="Toggle callout">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Important
-</div>
-<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
-</div>
-<div id="callout-1" class="callout-1-contents callout-collapse collapse show">
-<div class="callout-body-container callout-body">
-<p>Ne commencez pas en ouvrant simplement RStudio ou en double-cliquant sur un script <code>.R</code>. Commencez toujours par <code>LNG1100.Rproj</code>.</p>
-</div>
-</div>
-</div>
+<section id="se-repérer-dans-rstudio" class="level2" data-number="1.2">
+<h2 data-number="1.2" data-anchor-id="se-repérer-dans-rstudio"><span class="header-section-number">1.2</span> Se repérer dans RStudio</h2>
 <p>Voici l’interface de RStudio :</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
@@ -419,13 +402,13 @@ Important
 <li>L’onglet <em>Environment</em> liste les variables et objets créés.</li>
 </ol>
 </section>
-<section id="installer-tidyverse" class="level2" data-number="1.4">
-<h2 data-number="1.4" data-anchor-id="installer-tidyverse"><span class="header-section-number">1.4</span> Installer <code>tidyverse</code></h2>
+<section id="installer-tidyverse" class="level2" data-number="1.3">
+<h2 data-number="1.3" data-anchor-id="installer-tidyverse"><span class="header-section-number">1.3</span> Installer <code>tidyverse</code></h2>
 <p>Le cours utilise l’ensemble de bibliothèques <code>tidyverse</code>. Dans la console de RStudio, exécutez :</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"tidyverse"</span>)</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"tidyverse"</span>)</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Attendez la fin de l’installation, puis vérifiez qu’elle a réussi :</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
-<p><code>install.packages("tidyverse")</code> installe les bibliothèques sur l’ordinateur et ne doit normalement être exécuté qu’une seule fois. <code>library(tidyverse)</code> les charge dans une séance de travail et doit être exécuté chaque fois qu’un script en a besoin. Il ne sera pas possible de suivre le cours sans avoir installé <code>tidyverse</code>.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
+<p><code>install.packages("tidyverse")</code> installe les bibliothèques dans votre projet Posit Cloud et ne doit normalement être exécuté qu’une seule fois dans ce projet. <code>library(tidyverse)</code> les charge dans une séance de travail et doit être exécuté chaque fois qu’un script en a besoin. Il ne sera pas possible de suivre le cours sans avoir installé <code>tidyverse</code>.</p>
 <p>Si l’installation échoue, consultez le chapitre sur les <a href="./problemes.html">problèmes techniques</a>. Consultez également les matériels sur Brio et le chapitre 6 de <span class="citation" data-cites="barnier_R">Barnier (<a href="references.html#ref-barnier_R" role="doc-biblioref">2023</a>)</span> <a href="https://juba.github.io/tidyverse/06-tidyverse.html" target="_blank">ici</a>.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
@@ -434,28 +417,84 @@ Important
 </figure>
 </div>
 </section>
-<section id="vérifier-la-racine-du-projet" class="level2" data-number="1.5">
-<h2 data-number="1.5" data-anchor-id="vérifier-la-racine-du-projet"><span class="header-section-number">1.5</span> Vérifier la racine du projet</h2>
+<section id="vérifier-la-racine-du-projet" class="level2" data-number="1.4">
+<h2 data-number="1.4" data-anchor-id="vérifier-la-racine-du-projet"><span class="header-section-number">1.4</span> Vérifier la racine du projet</h2>
 <p>Dans la console de RStudio, exécutez :</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">file.exists</span>(<span class="st">"donnees/villes.csv"</span>)</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
-<p>Si R affiche <code>[1] TRUE</code>, le projet est ouvert correctement. Si R affiche <code>[1] FALSE</code>, fermez RStudio, retrouvez le dossier <code>LNG1100</code> décompressé, puis ouvrez de nouveau <code>LNG1100.Rproj</code>.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">file.exists</span>(<span class="st">"donnees/villes.csv"</span>)</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Si R affiche <code>[1] TRUE</code>, le projet est ouvert correctement. Si R affiche <code>[1] FALSE</code>, vérifiez que vous avez bien créé le projet à partir du dépôt Git du cours. Au besoin, créez un nouveau projet en répétant les étapes de la <a href="#sec-cloner">première section</a>.</p>
 <p>Dans l’onglet <strong>Files</strong>, vous devriez également voir les dossiers <code>donnees</code>, <code>problemes</code>, <code>quarto</code> et <code>scripts</code>.</p>
 </section>
-<section id="ajouter-de-nouveaux-fichiers" class="level2" data-number="1.6">
-<h2 data-number="1.6" data-anchor-id="ajouter-de-nouveaux-fichiers"><span class="header-section-number">1.6</span> Ajouter de nouveaux fichiers</h2>
+<section id="ajouter-de-nouveaux-fichiers" class="level2" data-number="1.5">
+<h2 data-number="1.5" data-anchor-id="ajouter-de-nouveaux-fichiers"><span class="header-section-number">1.5</span> Ajouter de nouveaux fichiers</h2>
 <p>Lorsque vous téléchargez un nouveau fichier pour le cours :</p>
 <ul>
 <li>placez les fichiers de données (<code>.csv</code>, <code>.RData</code>, etc.) dans <code>donnees</code>;</li>
 <li>placez les scripts R (<code>.R</code>) dans <code>scripts</code>;</li>
 <li>placez les fichiers associés à un problème dans le dossier du problème correspondant.</li>
 </ul>
-<p>Déplacez le fichier à l’aide du Finder (macOS) ou de l’Explorateur de fichiers (Windows), puis vérifiez qu’il apparaît dans l’onglet <strong>Files</strong> de RStudio.</p>
+<p>Ouvrez le sous-dossier approprié dans l’onglet <strong>Files</strong>, puis utilisez le bouton <strong>Upload</strong> pour téléverser le fichier. Vérifiez ensuite qu’il apparaît au bon endroit dans le projet.</p>
 <p>Dans vos scripts, utilisez toujours des chemins relatifs à la racine du projet :</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">read_csv</span>(<span class="st">"donnees/villes.csv"</span>)</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">read_csv</span>(<span class="st">"donnees/villes.csv"</span>)</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
 <p>N’utilisez pas <code>setwd()</code> et n’écrivez pas le chemin complet propre à votre ordinateur. Les chemins relatifs permettent au même script de fonctionner sur n’importe quel ordinateur.</p>
 </section>
-<section id="quelques-suggestions" class="level2" data-number="1.7">
-<h2 data-number="1.7" data-anchor-id="quelques-suggestions"><span class="header-section-number">1.7</span> Quelques suggestions</h2>
+<section id="sauvegarder-son-travail" class="level2" data-number="1.6">
+<h2 data-number="1.6" data-anchor-id="sauvegarder-son-travail"><span class="header-section-number">1.6</span> Sauvegarder son travail</h2>
+<p>Votre projet Posit Cloud conserve normalement vos modifications entre les séances. Le dépôt Git du cours ne sauvegarde toutefois pas automatiquement les fichiers que vous créez ou modifiez. Téléchargez régulièrement une copie de vos scripts, rapports et autres fichiers importants sur votre ordinateur.</p>
+<section id="mettre-à-jour-ou-réinitialiser-le-projet-dans-posit-cloud" class="level3" data-number="1.6.1">
+<h3 data-number="1.6.1" data-anchor-id="mettre-à-jour-ou-réinitialiser-le-projet-dans-posit-cloud"><span class="header-section-number">1.6.1</span> Mettre à jour ou réinitialiser le projet dans Posit Cloud</h3>
+<p>Si les fichiers du cours dans votre projet Cloud ne sont plus à jour ou ont été modifiés par erreur, ouvrez l’onglet <strong>Terminal</strong> de RStudio et exécutez :</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> fetch origin</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> reset <span class="at">--hard</span> origin/main</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
+<p>La première commande récupère la version la plus récente du dépôt. La seconde remet les fichiers suivis par Git dans exactement le même état que ceux du dépôt du cours.</p>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="true" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Avertissement
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-1" class="callout-1-contents callout-collapse collapse show">
+<div class="callout-body-container callout-body">
+<p>La commande <code>git reset --hard</code> <strong>efface toutes les modifications apportées aux fichiers suivis par Git</strong>. Avant de l’exécuter, téléchargez une copie de tout script ou fichier important que vous avez modifié. Cette commande ne récupère pas les fichiers qui existent uniquement sur votre ordinateur.</p>
+</div>
+</div>
+</div>
+<p>Si vous préférez repartir à neuf, vous pouvez aussi créer un nouveau projet Posit Cloud à partir du dépôt Git en répétant les étapes de la <a href="#sec-cloner">première section</a>.</p>
+</section>
+</section>
+<section id="plan-de-secours-travailler-localement" class="level2" data-number="1.7">
+<h2 data-number="1.7" data-anchor-id="plan-de-secours-travailler-localement"><span class="header-section-number">1.7</span> Plan de secours : travailler localement</h2>
+<p>Si Posit Cloud est temporairement indisponible, vous pouvez travailler dans une installation locale de RStudio. R et RStudio sont deux outils distincts : il faut installer R <strong>avant</strong> d’installer RStudio. Vous pouvez télécharger les deux outils à partir de la <a href="https://posit.co/download/rstudio-desktop/" target="_blank">page d’installation de RStudio Desktop</a>.</p>
+<p>Pour préparer une copie locale du projet :</p>
+<ol type="1">
+<li>Téléchargez <code>LNG1100.zip</code> à partir de Brio.</li>
+<li>Décompressez le fichier ZIP.</li>
+<li>Déplacez le dossier <code>LNG1100</code> dans un emplacement permanent.</li>
+<li>Double-cliquez sur <code>LNG1100.Rproj</code> pour ouvrir RStudio à la racine du projet.</li>
+<li>Installez <code>tidyverse</code> et vérifiez la racine du projet comme indiqué plus haut.</li>
+</ol>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="true" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Important
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-2" class="callout-2-contents callout-collapse collapse show">
+<div class="callout-body-container callout-body">
+<p>Dans la copie locale, ne commencez pas en ouvrant simplement RStudio ou en double-cliquant sur un script <code>.R</code>. Commencez toujours par <code>LNG1100.Rproj</code>.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="quelques-suggestions" class="level2" data-number="1.8">
+<h2 data-number="1.8" data-anchor-id="quelques-suggestions"><span class="header-section-number">1.8</span> Quelques suggestions</h2>
 <p>Pour modifier les réglages de RStudio, allez à <code>Tools &gt; Global Options...</code>. Vous pouvez cliquer sur les captures d’écran ci-dessous pour les agrandir.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
@@ -476,65 +515,18 @@ Important
 </figure>
 </div>
 </section>
-<section id="sec-cloner" class="level2" data-number="1.8">
-<h2 data-number="1.8" data-anchor-id="sec-cloner"><span class="header-section-number">1.8</span> Plan de secours : utiliser Posit Cloud</h2>
-<p>Si vous rencontrez un problème majeur avec R ou RStudio sur votre ordinateur, vous pouvez temporairement travailler dans <a href="https://posit.cloud">Posit Cloud</a>. Vous aurez besoin d’un compte Posit Cloud, mais vous n’avez pas besoin d’installer R, RStudio ou Git sur votre ordinateur.</p>
-<p>Pour créer une copie du projet du cours :</p>
-<ol type="1">
-<li><p>Connectez-vous à <a href="https://posit.cloud">Posit Cloud</a>.</p></li>
-<li><p>Cliquez sur <strong>New Project</strong>.</p></li>
-<li><p>Choisissez <strong>New Project from Git Repo</strong>.</p></li>
-<li><p>Collez l’adresse du dépôt :</p>
-<pre class="text"><code>https://github.com/guilhermegarcia/LNG1100.git</code></pre></li>
-<li><p>Créez le projet et attendez que RStudio s’ouvre.</p></li>
-<li><p>Vérifiez la racine du projet dans la console :</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">file.exists</span>(<span class="st">"donnees/villes.csv"</span>)</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
-<p>Le résultat devrait être <code>[1] TRUE</code>.</p></li>
-<li><p>Installez <code>tidyverse</code> dans ce projet Posit Cloud :</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"tidyverse"</span>)</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
-<p>Attendez la fin de l’installation. Cette étape ne doit normalement être effectuée qu’une seule fois dans ce projet.</p></li>
-<li><p>Chargez ensuite <code>tidyverse</code> :</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div></li>
-</ol>
-<p>Le projet créé dans Posit Cloud contient les fichiers du dépôt Git, mais <strong>pas les fichiers créés ou modifiés uniquement sur votre ordinateur</strong>. Au besoin, utilisez le bouton <strong>Upload</strong> dans l’onglet <strong>Files</strong> pour téléverser une copie de vos scripts ou autres fichiers.</p>
-<section id="mettre-à-jour-ou-réinitialiser-le-projet-dans-posit-cloud" class="level3" data-number="1.8.1">
-<h3 data-number="1.8.1" data-anchor-id="mettre-à-jour-ou-réinitialiser-le-projet-dans-posit-cloud"><span class="header-section-number">1.8.1</span> Mettre à jour ou réinitialiser le projet dans Posit Cloud</h3>
-<p>Si les fichiers du cours dans votre projet Cloud ne sont plus à jour ou ont été modifiés par erreur, ouvrez l’onglet <strong>Terminal</strong> de RStudio et exécutez :</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> fetch origin</span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> reset <span class="at">--hard</span> origin/main</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
-<p>La première commande récupère la version la plus récente du dépôt. La seconde remet les fichiers suivis par Git dans exactement le même état que ceux du dépôt du cours.</p>
-<div class="callout callout-style-default callout-warning callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="true" aria-label="Toggle callout">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Avertissement
-</div>
-<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
-</div>
-<div id="callout-2" class="callout-2-contents callout-collapse collapse show">
-<div class="callout-body-container callout-body">
-<p>La commande <code>git reset --hard</code> <strong>efface toutes les modifications apportées aux fichiers suivis par Git</strong>. Avant de l’exécuter, téléchargez une copie de tout script ou fichier important que vous avez modifié. Cette commande ne récupère pas les fichiers qui existent uniquement sur votre ordinateur.</p>
-</div>
-</div>
-</div>
-<p>Si vous préférez repartir à neuf, vous pouvez aussi créer un nouveau projet Posit Cloud à partir du dépôt Git en répétant les étapes ci-dessus.</p>
-<p>Posit Cloud constitue un plan de secours. La méthode normale pour le cours demeure le projet local ouvert à partir de <code>LNG1100.Rproj</code>.</p>
-</section>
-</section>
 <section id="synthèse" class="level2" data-number="1.9">
 <h2 data-number="1.9" data-anchor-id="synthèse"><span class="header-section-number">1.9</span> Synthèse</h2>
 <p>Avant de continuer, assurez-vous d’avoir accompli les étapes suivantes :</p>
 <ol type="1">
-<li>Installer R, puis RStudio.</li>
-<li>Télécharger et décompresser <code>LNG1100.zip</code>.</li>
-<li>Déplacer le dossier <code>LNG1100</code> dans un emplacement permanent.</li>
-<li>Ouvrir <code>LNG1100.Rproj</code>.</li>
-<li>Installer <code>tidyverse</code>.</li>
+<li>Créer un compte Posit Cloud.</li>
+<li>Créer un projet à partir du dépôt Git du cours.</li>
 <li>Vérifier que <code>file.exists("donnees/villes.csv")</code> retourne <code>TRUE</code>.</li>
+<li>Installer et charger <code>tidyverse</code>.</li>
+<li>Utiliser des chemins relatifs et ranger les nouveaux fichiers dans les bons sous-dossiers.</li>
+<li>Télécharger régulièrement une copie de vos fichiers importants.</li>
 </ol>
-<p>La création d’un compte Posit Cloud est facultative et sert uniquement de plan de secours.</p>
+<p>L’installation locale de R et de RStudio constitue le plan de secours.</p>
 
 
 <div id="refs" class="references csl-bib-body hanging-indent" role="list" style="display: none">
