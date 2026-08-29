@@ -45,7 +45,7 @@ L'idée principale du `ggplot2` implique l'utilisation des « couches » d'infor
 # ggplot(data = ..., aes(x = ..., y = ...)) + 
 # 
 library(tidyverse)
-donnees = read_csv("donnees/sampleData.csv")
+donnees = read_csv("donnees/base/sampleData.csv")
 
 # la première couche de la figure :
 ggplot(data = donnees, aes(x = group, y = testA)) 
@@ -258,7 +258,7 @@ Ici, le code n'a pas du sens, vu que la fonction `stat_summary(geom = "bar")` pe
 #| fig-height: 3
 #| message: false
 #| warning: false
-fb = read_csv("donnees/feedbackData.csv")
+fb = read_csv("donnees/base/feedbackData.csv")
 
 fb = fb |> 
     select(-c(task_B1:task_B5)) |> 

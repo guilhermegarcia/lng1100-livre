@@ -104,6 +104,6 @@ ggplot(data = d, aes(x = Compétence, y = Post-Pre)) +
 
 phon = d |> select(-diff)
 
-save(phon, file = "donnees/phonetique.RData")
+save(phon, file = "donnees/base/phonetique.RData")
 
 

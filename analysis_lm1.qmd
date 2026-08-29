@@ -36,7 +36,7 @@ Ici, on estime l'effet de la variable `ville` sur la réponse (`note`). Effectiv
 #| fig-cap: "Les apprenants de Montréal vs Québec"
 library(tidyverse)
 
-villes = read_csv("donnees/villes.csv")
+villes = read_csv("donnees/base/villes.csv")
 
 ggplot(data = villes, aes(x = ville, 
                           y = note)) + 
@@ -134,7 +134,7 @@ L'avantage de créer la figure de la question 2 est que c'est plus facile de con
 
 # Choisir quelques couleurs pour les villes et les nommer :
 library(tidyverse)
-villes = read_csv("donnees/villes2.csv")
+villes = read_csv("donnees/base/villes2.csv")
 couleurs = c("darkorange2", "darkviolet", "steelblue")
 names(couleurs) = c("Montréal", "Québec", "Calgary")
 

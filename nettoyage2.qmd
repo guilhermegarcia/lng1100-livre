@@ -45,7 +45,7 @@ cle = c("le dzongkha",
         "le tétum et le portugais")
 
 # Données :
-q2 = read_csv2("donnees/questionnaire2.csv")
+q2 = read_csv2("donnees/supplementaires/questionnaire2.csv")
 
 # Nettoyage (version enchaînée) :
 q_net = q2 |>
@@ -231,7 +231,7 @@ On peut facilement dichotomiser n'importe quelle variable catégorielle en utili
 ```{r}
 #| message: false
 
-villes = read_csv("donnees/villes2.csv")
+villes = read_csv("donnees/base/villes2.csv")
 
 villes = villes |> 
     mutate(langue = if_else(ville == "Calgary", 

@@ -73,7 +73,7 @@ library(tidyverse)
 library(janitor)
 
 # Importer les données :
-q = read_csv2("donnees/questionnaire.csv")
+q = read_csv2("donnees/supplementaires/questionnaire.csv")
 ```
 
 Si vous visualisez les données avec `glimpse(d)`, vous verrez que le fichier n'est pas *tidy* : il y a plusieurs colonnes qui ne sont pas nécessaires. En plus, les questions sont distribuées à travers les colonnes, et les noms des colonnes sont immenses. Simplement dit, le fichier est chaotique.
@@ -250,7 +250,7 @@ cle = c("le dzongkha",
         "le tétum et le portugais")
 
 # Données :
-q2 = read_csv2("donnees/questionnaire2.csv")
+q2 = read_csv2("donnees/supplementaires/questionnaire2.csv")
 
 # Nettoyage (version enchaînée) :
 q_net = q2 |>
@@ -436,7 +436,7 @@ On peut facilement dichotomiser n'importe quelle variable catégorielle en utili
 ```{r}
 #| message: false
 
-villes = read_csv("donnees/villes2.csv")
+villes = read_csv("donnees/base/villes2.csv")
 
 villes = villes |> 
     mutate(langue = if_else(ville == "Calgary", 

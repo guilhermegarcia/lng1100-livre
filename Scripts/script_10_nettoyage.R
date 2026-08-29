@@ -4,7 +4,7 @@ library(janitor) # pour simplifier les noms des colonnes
 
 # Vérifier si le fichier csv est importé
 # correctement :
-q2 = read_csv2("Donnees/questionnaire2.csv")
+q2 = read_csv2("donnees/supplementaires/questionnaire2.csv")
 
 # 1. Simplifier les noms des colonnes
 q2 = q2 |> 

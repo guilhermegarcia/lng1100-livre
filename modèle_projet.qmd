@@ -59,7 +59,7 @@ Voici un exemple de figure ne Quarto. Pour se référer à la figure, utilisez l
 #| label: fig-fig1
 library(tidyverse)
 
-d = read_csv("donnees/anglais.csv")
+d = read_csv("donnees/base/anglais.csv")
 ggplot(data = d, aes(x = Familiarite, y = TR)) + 
   geom_point(alpha = 0.3) +
   stat_smooth(method = "lm") +

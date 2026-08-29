@@ -22,7 +22,7 @@ en
 #   geom_point(aes(color = Age))
 
 
-# write_csv(en, file = "donnees/anglais.csv")
+# write_csv(en, file = "donnees/base/anglais.csv")
 # 
 
 en = en |> 

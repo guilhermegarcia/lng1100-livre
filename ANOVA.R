@@ -1,7 +1,7 @@
 rm(list = ls())
 
 library(tidyverse)
-villes = read_csv("donnees/villes2.csv")
+villes = read_csv("donnees/base/villes2.csv")
 
 # Nombre d'observations :
 N = nrow(villes) # = le nombre de lignes dans le tableau

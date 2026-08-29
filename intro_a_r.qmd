@@ -273,17 +273,17 @@ long |>
 
 
 {{< fa question-circle size=xs >}} **Question 15.** 
-Importez le fichier `donnees/sampleData.csv`. Donnez-lui le nom `donnees`.
+Importez le fichier `donnees/base/sampleData.csv`. Donnez-lui le nom `donnees`.
 Examinez les données attentivement pour comprendre leur structure.
 
 ::: {.callout-warning title="Où est mon fichier...?" collapse="true"}
 RStudio vous aide à compléter un chemin si vous appuyez sur <kbd>Tab</kbd>.
 Il faut néanmoins indiquer le chemin du fichier à partir de la racine du projet.
 Par exemple, pour importer `sampleData.csv`, écrivez
-`read_csv("donnees/sampleData.csv")`.
+`read_csv("donnees/base/sampleData.csv")`.
 
 Si ce chemin ne fonctionne pas, vérifiez que vous avez ouvert
-`LNG1100.Rproj` et que `file.exists("donnees/sampleData.csv")` retourne `TRUE`.
+`LNG1100.Rproj` et que `file.exists("donnees/base/sampleData.csv")` retourne `TRUE`.
 N'utilisez pas `setwd()` et n'écrivez pas un chemin complet propre à votre
 ordinateur.
 

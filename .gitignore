@@ -1,4 +1,5 @@
 /.quarto/
 /_book/
+/.evaluation/
 
 **/*.quarto_ipynb

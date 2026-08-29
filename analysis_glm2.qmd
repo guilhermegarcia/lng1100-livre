@@ -101,7 +101,7 @@ a.  Enlevez les éléments de remplissage (*fillers*) et changez les classes des
 <!-- #| message: false -->
 <!-- library(tidyverse) -->
 
-<!-- rc = read_csv("donnees/rClauseData.csv") -->
+<!-- rc = read_csv("donnees/base/rClauseData.csv") -->
 <!-- rc = rc |>  -->
 <!--     filter(Type != "Filler") |>  -->
 <!--     mutate(across(where(is_character), as_factor)) -->
@@ -349,7 +349,7 @@ a.  Chargez le fichier `feedbackData.csv`
 <!-- ```{r} -->
 <!-- #| message: false -->
 <!-- #| echo: false -->
-<!-- fb = read_csv("donnees/feedbackData.csv") -->
+<!-- fb = read_csv("donnees/base/feedbackData.csv") -->
 <!-- ``` -->
 
 b.  Est-ce qu'on peut prévoir la rétroaction à partir de la note dans la tâche A? Si oui, quelle est la probabilité qu'un participant soit dans le groupe `Recast` si sa note est de 90?

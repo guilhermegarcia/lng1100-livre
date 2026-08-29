@@ -3,27 +3,23 @@
 ## Problèmes généraux
 
 1. **Je ne peux pas trouver les fichiers de données.** Vérifiez d'abord :
-   - que vous travaillez dans le dossier `LNG1100` **décompressé**, et non dans
-     `LNG1100.zip`;
-   - que vous avez ouvert RStudio en double-cliquant sur `LNG1100.Rproj`;
-   - que `file.exists("donnees/villes.csv")` retourne `TRUE`;
+   - que votre projet Posit Cloud a été créé à partir du dépôt Git du cours;
+   - que vous travaillez à la racine de ce projet;
+   - que `file.exists("donnees/base/villes.csv")` retourne `TRUE`;
    - que le fichier recherché se trouve dans le bon sous-dossier.
 
-   Si le test retourne `FALSE`, fermez RStudio, retrouvez le dossier `LNG1100`
-   décompressé, puis ouvrez de nouveau `LNG1100.Rproj`. Consultez les
-   [instructions de préparation](fichiers.qmd) pour revoir la structure du
-   projet.
+   Si le test retourne `FALSE`, consultez les
+   [instructions de préparation](fichiers.qmd) et créez au besoin un nouveau
+   projet Posit Cloud à partir du dépôt Git. Si vous utilisez la copie locale de
+   secours, ouvrez-la toujours avec `LNG1100.Rproj`.
 2. **L'installation de `tidyverse` ne fonctionne pas.** Vérifiez votre connexion
    Internet, redémarrez RStudio, puis exécutez de nouveau
    `install.packages("tidyverse")` dans la console. Lisez attentivement le
-   message d'erreur si l'installation échoue encore. En cas de problème majeur,
-   utilisez temporairement le
-   [plan de secours avec Posit Cloud](fichiers.qmd#sec-cloner); il faudra aussi
-   y exécuter `install.packages("tidyverse")` avant `library(tidyverse)`.
-3. **Posit Cloud ne fonctionne pas.** Posit Cloud est seulement un plan de
-   secours : continuez normalement dans le projet local ouvert avec
-   `LNG1100.Rproj`. Vous pouvez vérifier l'état des serveurs sur
-   <https://status.posit.co>.
+   message d'erreur si l'installation échoue encore.
+3. **Posit Cloud ne fonctionne pas.** Vous pouvez vérifier l'état des serveurs
+   sur <https://status.posit.co>. Si le service est temporairement indisponible,
+   utilisez la [copie locale de secours](fichiers.qmd) ouverte avec
+   `LNG1100.Rproj`.
 4. **Le code ne marche pas!** Voici quelques origines de ce type de problème :
     -   lisez le message d'erreur attentivement et collez-le sur Google/ChatGPT s'il n'est pas clair;
     -   R n'est pas capable de trouver les objets ou les fichiers que votre code utilise. Dans ce cas-là, il faut s'assurer que vous avez créé l'objet pertinent *avant* de l'utiliser dans votre code;
@@ -39,11 +35,10 @@
 ## Évaluations du cours
 
 Vous pouvez consulter la politique du cours concernant les problèmes techniques
-sur Brio (Évaluation). RStudio installé sur votre ordinateur est la méthode
-normale pour le cours; Posit Cloud est seulement un plan de secours. Vous êtes
+sur Brio (Évaluation). Posit Cloud est la méthode normale pour le cours;
+l'installation locale de RStudio constitue le plan de secours. Vous êtes
 responsable de préparer et de vérifier votre environnement de travail avant une
 évaluation. La politique officielle et les consignes applicables sont celles
 publiées sur Brio.
 
 > Si vous éprouvez des difficultés avec un questionnaire sur monPortail, vous pouvez en tout temps fermer et réouvrir la fenêtre ; vos réponses ne seront pas perdues. Cependant, rappelez-vous que vous êtes **responsable** des conditions dans lesquelles vous faites votre évaluation. En cas de perte de connexion avec le serveur, une reprise pourra être organisée **seulement si le problème provient des serveurs du Portail**. Assurez-vous donc de ne pas surcharger votre bande passante lors de la passation de vos évaluations.
-

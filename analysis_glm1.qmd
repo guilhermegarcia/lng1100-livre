@@ -90,7 +90,7 @@ library(tidyverse)
 library(arm)
 
 # Importer les données
-villes = read_csv("donnees/villes2.csv")
+villes = read_csv("donnees/base/villes2.csv")
 
 # Créer la nouvelle colonne : 0/1
 villes = villes |> 
