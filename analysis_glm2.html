@@ -560,7 +560,7 @@ Figure&nbsp;12.1. L’influence de parler une autre langue sur la précision d�
 <!-- ```{r} -->
 <!-- #| message: false -->
 <!-- library(tidyverse) -->
-<!-- rc = read_csv("donnees/rClauseData.csv") -->
+<!-- rc = read_csv("donnees/base/rClauseData.csv") -->
 <!-- rc = rc |>  -->
 <!--     filter(Type != "Filler") |>  -->
 <!--     mutate(across(where(is_character), as_factor)) -->
@@ -762,7 +762,7 @@ Figure&nbsp;12.1. L’influence de parler une autre langue sur la précision d�
 <!-- ```{r} -->
 <!-- #| message: false -->
 <!-- #| echo: false -->
-<!-- fb = read_csv("donnees/feedbackData.csv") -->
+<!-- fb = read_csv("donnees/base/feedbackData.csv") -->
 <!-- ``` -->
 <ol start="2" type="a">
 <li>Est-ce qu’on peut prévoir la rétroaction à partir de la note dans la tâche A? Si oui, quelle est la probabilité qu’un participant soit dans le groupe <code>Recast</code> si sa note est de 90?</li>

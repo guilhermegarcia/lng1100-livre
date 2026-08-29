@@ -514,7 +514,7 @@ F = \frac{\text{Variabilité entre les groupes}}{\text{Variabilité à l'intéri
 <p>On profite du calcul manuel pour réviser quelques fonctions de <code>dplyr</code> déjà explorées dans le <a href="./intro_a_r.html">chapitre d’introduction à R</a> (ainsi que dans <span class="citation" data-cites="barnier_R">Barnier (<a href="references.html#ref-barnier_R" role="doc-biblioref">2023</a>)</span>). Dans le code ci-dessous, on charge l’extension et les données. Ensuite, on créé des variables importantes pour le calcul manuel de la valeur <em>F</em> pour l’ANOVA.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-label="1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-label="2"></a>villes <span class="ot">=</span> <span class="fu">read_csv</span>(<span class="st">"donnees/villes2.csv"</span>)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-label="2"></a>villes <span class="ot">=</span> <span class="fu">read_csv</span>(<span class="st">"donnees/base/villes2.csv"</span>)</span>
 <span id="cb1-3"><a href="#cb1-3" aria-label="3"></a></span>
 <span id="cb1-4"><a href="#cb1-4" aria-label="4"></a><span class="co"># Nombre d'observations :</span></span>
 <span id="cb1-5"><a href="#cb1-5" aria-label="5"></a>N <span class="ot">=</span> <span class="fu">nrow</span>(villes) <span class="co"># = le nombre de lignes dans le tableau</span></span>
@@ -620,7 +620,7 @@ F = \frac{\text{Variabilité entre les groupes}}{\text{Variabilité à l'intéri
 <h3 class="unnumbered" data-anchor-id="chargez-les-données">1. Chargez les données</h3>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-label="1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb6-2"><a href="#cb6-2" aria-label="2"></a>villes <span class="ot">=</span> <span class="fu">read_csv</span>(<span class="st">"donnees/villes2.csv"</span>)</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb6-2"><a href="#cb6-2" aria-label="2"></a>villes <span class="ot">=</span> <span class="fu">read_csv</span>(<span class="st">"donnees/base/villes2.csv"</span>)</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
 <section id="vérifier-les-premières-lignes" class="level3 unnumbered">

@@ -420,7 +420,7 @@ margin: 10px;
 <section id="vérifier-la-racine-du-projet" class="level2" data-number="1.4">
 <h2 data-number="1.4" data-anchor-id="vérifier-la-racine-du-projet"><span class="header-section-number">1.4</span> Vérifier la racine du projet</h2>
 <p>Dans la console de RStudio, exécutez :</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">file.exists</span>(<span class="st">"donnees/villes.csv"</span>)</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">file.exists</span>(<span class="st">"donnees/base/villes.csv"</span>)</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Si R affiche <code>[1] TRUE</code>, le projet est ouvert correctement. Si R affiche <code>[1] FALSE</code>, vérifiez que vous avez bien créé le projet à partir du dépôt Git du cours. Au besoin, créez un nouveau projet en répétant les étapes de la <a href="#sec-cloner">première section</a>.</p>
 <p>Dans l’onglet <strong>Files</strong>, vous devriez également voir les dossiers <code>donnees</code>, <code>problemes</code>, <code>quarto</code> et <code>scripts</code>.</p>
 </section>
@@ -434,7 +434,7 @@ margin: 10px;
 </ul>
 <p>Ouvrez le sous-dossier approprié dans l’onglet <strong>Files</strong>, puis utilisez le bouton <strong>Upload</strong> pour téléverser le fichier. Vérifiez ensuite qu’il apparaît au bon endroit dans le projet.</p>
 <p>Dans vos scripts, utilisez toujours des chemins relatifs à la racine du projet :</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">read_csv</span>(<span class="st">"donnees/villes.csv"</span>)</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">read_csv</span>(<span class="st">"donnees/base/villes.csv"</span>)</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
 <p>N’utilisez pas <code>setwd()</code> et n’écrivez pas le chemin complet propre à votre ordinateur. Les chemins relatifs permettent au même script de fonctionner sur n’importe quel ordinateur.</p>
 </section>
 <section id="sauvegarder-son-travail" class="level2" data-number="1.6">
@@ -521,7 +521,7 @@ Important
 <ol type="1">
 <li>Créer un compte Posit Cloud.</li>
 <li>Créer un projet à partir du dépôt Git du cours.</li>
-<li>Vérifier que <code>file.exists("donnees/villes.csv")</code> retourne <code>TRUE</code>.</li>
+<li>Vérifier que <code>file.exists("donnees/base/villes.csv")</code> retourne <code>TRUE</code>.</li>
 <li>Installer et charger <code>tidyverse</code>.</li>
 <li>Utiliser des chemins relatifs et ranger les nouveaux fichiers dans les bons sous-dossiers.</li>
 <li>Télécharger régulièrement une copie de vos fichiers importants.</li>
