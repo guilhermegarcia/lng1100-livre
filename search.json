@@ -581,7 +581,7 @@
     "href": "revision_a.html",
     "title": "8  Bilan du mi-session",
     "section": "",
-    "text": "8.1 Interprétation de résultats\nDans cette révision, on pratique l’interprétation des résultats statistiques et, dans la deuxième partie de la révision, on examine les données utilisées dans le deuxième questionnaire. Vous êtes donc déjà familiarisé.e avec les données. L’idée sera de commencer un rapport pour simuler ce que vous devez faire pour le problème A.\nJusqu’ici on a exploré les ANOVAs, qui sont un type spécifique de régression linéaire, ainsi que les régression linéaires traditionnelles. La pratique ci-dessous révise quelques points importants sur l’interprétation des résultats statistiques.",
+    "text": "8.1 Interprétation de résultats\nDans cette révision, on pratique l’interprétation des résultats statistiques et, dans la deuxième partie de la révision, on examine les données utilisées dans le deuxième questionnaire. Vous êtes donc déjà familiarisé.e avec les données. L’idée sera de commencer un rapport pour simuler ce que vous devez faire pour le problème 1.\nJusqu’ici on a exploré les ANOVAs, qui sont un type spécifique de régression linéaire, ainsi que les régression linéaires traditionnelles. La pratique ci-dessous révise quelques points importants sur l’interprétation des résultats statistiques.",
     "crumbs": [
       "Partie I",
       "<span class='chapter-number'>8</span>  <span class='chapter-title'>Bilan du mi-session</span>"
@@ -961,11 +961,11 @@
     ]
   },
   {
-    "objectID": "analysis_glm2.html#problème-b",
-    "href": "analysis_glm2.html#problème-b",
+    "objectID": "analysis_glm2.html#problème-2",
+    "href": "analysis_glm2.html#problème-2",
     "title": "12  Régression logistique (b)",
-    "section": "12.4 Problème B",
-    "text": "12.4 Problème B\nNotre premier problème du cours (Problème A) a produit un document PDF. Vous serez donc à l’aise avec la structure nécessaire pour notre dernier problème. La révision qui suit se concentre sur les méthodes statistiques utilisées dans le cours, dont certaines seront essentielles pour vos évaluations finales.",
+    "section": "12.4 Problème 2",
+    "text": "12.4 Problème 2\nNotre premier problème du cours (Problème 1) a produit un document PDF. Vous serez donc à l’aise avec la structure nécessaire pour notre dernier problème. La révision qui suit se concentre sur les méthodes statistiques utilisées dans le cours, dont certaines seront essentielles pour vos évaluations finales.",
     "crumbs": [
       "Partie II",
       "<span class='chapter-number'>12</span>  <span class='chapter-title'>Régression logistique (b)</span>"
