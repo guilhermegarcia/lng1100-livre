@@ -2,7 +2,7 @@ library(tidyverse)
 library(languageR)
 
 # Data for LM question (q4)
-d = read_csv("donnees/prepost.csv")
+d = read_csv("donnees/base/prepost.csv")
 
 d |> glimpse()
 

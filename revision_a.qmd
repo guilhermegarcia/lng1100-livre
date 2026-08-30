@@ -25,7 +25,7 @@ knitr::opts_chunk$set(
 
 ```
 
-Dans cette révision, on pratique l’interprétation des résultats statistiques et, dans la deuxième partie de la révision, on examine les données utilisées dans le deuxième questionnaire. Vous êtes donc déjà familiarisé.e avec les données. L'idée sera de commencer un rapport pour simuler ce que vous devez faire pour le **problème A**.
+Dans cette révision, on pratique l’interprétation des résultats statistiques et, dans la deuxième partie de la révision, on examine les données utilisées dans le deuxième questionnaire. Vous êtes donc déjà familiarisé.e avec les données. L'idée sera de commencer un rapport pour simuler ce que vous devez faire pour le **problème 1**.
 
 ## Interprétation de résultats
 

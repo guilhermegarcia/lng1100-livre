@@ -469,9 +469,9 @@ Lorsqu'on utilise un modèle simple, on veut mesurer l'effet d'une variable pré
     -   on évite une interprétation d'un coefficient individuel à partir des probabilités : on utilise *log-odds* ou *odds*;
     -   si vous voulez parler des probabilités, on peut utiliser la fonction `predict(..., type = "response")` pour prévoir des réponses à partir du modèle. C'est une bonne idée de visualiser les prévisions dans une figure ([page supplémentaire de la séance 13](analysis_d.html)).
 
-## Problème B
+## Problème 2
 
-Notre premier problème du cours (Problème A) a produit un document `PDF`. Vous serez donc à l'aise avec la structure nécessaire pour notre dernier problème. La révision qui suit se concentre sur les méthodes statistiques utilisées dans le cours, dont certaines seront essentielles pour vos évaluations finales.
+Notre premier problème du cours (Problème 1) a produit un document `PDF`. Vous serez donc à l'aise avec la structure nécessaire pour notre dernier problème. La révision qui suit se concentre sur les méthodes statistiques utilisées dans le cours, dont certaines seront essentielles pour vos évaluations finales.
 
 <!-- Suivez les étapes suivantes attentivement. Cliquez sur les liens pour visualiser des captures d'écran qui démontrent visuellement chaque étape. -->
 
