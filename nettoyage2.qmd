@@ -27,7 +27,7 @@ knitr::opts_chunk$set(
 
 ## Nettoyage enchainé
 
-Bien que la première partie de ce chapitre contienne un script pour nettoyer nos données, on a créé des étapes séparémment. On pourrait pourtant utiliser le *pipe* pour enchainer toutes nos opérations. Retournez au chapitre précédent et enchainez votre code en utilisant `|>`.
+Bien que le chapitre précédent contienne un script pour nettoyer nos données, on y a créé des étapes séparément. On pourrait pourtant utiliser le *pipe* pour enchainer toutes nos opérations. Retournez au chapitre précédent et enchainez votre code en utilisant `|>`.
 
 
 ```{r}
@@ -290,7 +290,7 @@ A[Nettoyage] --> B[Exploration]
 B --> C{Analyse}
 ```
 
-On a révisé ci-dessus comment (a) nettoyer un fichier et (b) créer des graphiques. Vous pouvez certainement compléter (a) et (b) dans un même script. Par contre, comme discuté dans le [chapitre 10](nettoyage.qmd), c'est toujours une bonne idée de séparer les différents éléments dans une analyse pour maximiser l'organisation de notre flux de travail.
+On a révisé ci-dessus comment (a) nettoyer un fichier et (b) créer des graphiques. Vous pouvez certainement compléter (a) et (b) dans un même script. Par contre, comme discuté dans le [chapitre 9](nettoyage.qmd), c'est toujours une bonne idée de séparer les différents éléments dans une analyse pour maximiser l'organisation de notre flux de travail.
 
 Supposez que le nettoyage ci-dessus est dans un script appelé `script_10_net.R`. Dans ce script, un charge nos extensions et on importe notre fichier de données. Naturellement, on nettoie les données dans le même script. Ensuite, créez un script appelé `script_10_exp.R` pour ajouter les codes qui génèrent les graphiques discutés ci-dessus (ainsi que les tableaux pour les moyennes, etc.). Dans ce script, on peut simplement charger le script précédent :
 
