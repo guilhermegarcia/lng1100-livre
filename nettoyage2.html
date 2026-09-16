@@ -345,7 +345,7 @@ margin: 10px;
 </style>
 <section id="nettoyage-enchainé" class="level2" data-number="10.1">
 <h2 data-number="10.1" data-anchor-id="nettoyage-enchainé"><span class="header-section-number">10.1</span> Nettoyage enchainé</h2>
-<p>Bien que la première partie de ce chapitre contienne un script pour nettoyer nos données, on a créé des étapes séparémment. On pourrait pourtant utiliser le <em>pipe</em> pour enchainer toutes nos opérations. Retournez au chapitre précédent et enchainez votre code en utilisant <code>|&gt;</code>.</p>
+<p>Bien que le chapitre précédent contienne un script pour nettoyer nos données, on y a créé des étapes séparément. On pourrait pourtant utiliser le <em>pipe</em> pour enchainer toutes nos opérations. Retournez au chapitre précédent et enchainez votre code en utilisant <code>|&gt;</code>.</p>
 <div class="callout callout-style-default callout-warning callout-titled" title="Le bon ordre?">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -620,7 +620,7 @@ B --&gt; C{Analyse}
 </div>
 </div>
 </div>
-<p>On a révisé ci-dessus comment (a) nettoyer un fichier et (b) créer des graphiques. Vous pouvez certainement compléter (a) et (b) dans un même script. Par contre, comme discuté dans le <a href="./nettoyage.html">chapitre 10</a>, c’est toujours une bonne idée de séparer les différents éléments dans une analyse pour maximiser l’organisation de notre flux de travail.</p>
+<p>On a révisé ci-dessus comment (a) nettoyer un fichier et (b) créer des graphiques. Vous pouvez certainement compléter (a) et (b) dans un même script. Par contre, comme discuté dans le <a href="./nettoyage.html">chapitre 9</a>, c’est toujours une bonne idée de séparer les différents éléments dans une analyse pour maximiser l’organisation de notre flux de travail.</p>
 <p>Supposez que le nettoyage ci-dessus est dans un script appelé <code>script_10_net.R</code>. Dans ce script, un charge nos extensions et on importe notre fichier de données. Naturellement, on nettoie les données dans le même script. Ensuite, créez un script appelé <code>script_10_exp.R</code> pour ajouter les codes qui génèrent les graphiques discutés ci-dessus (ainsi que les tableaux pour les moyennes, etc.). Dans ce script, on peut simplement charger le script précédent :</p>
 <div class="cell">
 <details open="" class="code-fold">
