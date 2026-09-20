@@ -316,6 +316,12 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="./glossaire.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Glossaire</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="./references.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">References</span></a>
   </div>
@@ -334,7 +340,9 @@ window.Quarto = {
   <ul>
   <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction"><span class="header-section-number">4.1</span> Introduction</a></li>
   <li><a href="#le-test-t" id="toc-le-test-t" class="nav-link" data-scroll-target="#le-test-t"><span class="header-section-number">4.2</span> Le test <em>t</em></a></li>
-  <li><a href="#la-valeur-p" id="toc-la-valeur-p" class="nav-link" data-scroll-target="#la-valeur-p"><span class="header-section-number">4.3</span> La valeur <em>p</em></a></li>
+  <li><a href="#lintuition-signal-et-bruit" id="toc-lintuition-signal-et-bruit" class="nav-link" data-scroll-target="#lintuition-signal-et-bruit"><span class="header-section-number">4.3</span> L’intuition : signal et bruit</a></li>
+  <li><a href="#la-distribution-t" id="toc-la-distribution-t" class="nav-link" data-scroll-target="#la-distribution-t"><span class="header-section-number">4.4</span> La distribution <em>t</em></a></li>
+  <li><a href="#la-valeur-p" id="toc-la-valeur-p" class="nav-link" data-scroll-target="#la-valeur-p"><span class="header-section-number">4.5</span> La valeur <em>p</em></a></li>
   <li><a href="#b58fc729-690b-4000-b19f-365a4093b2ff7b7b3c2066612062756c6c736579652073697a653d7873203e7d7d-pratique" id="toc-b58fc729-690b-4000-b19f-365a4093b2ff7b7b3c2066612062756c6c736579652073697a653d7873203e7d7d-pratique" class="nav-link" data-scroll-target="#b58fc729-690b-4000-b19f-365a4093b2ff7b7b3c2066612062756c6c736579652073697a653d7873203e7d7d-pratique"><i class="fa-solid fa-bullseye fa-xs" aria-label="bullseye"></i> Pratique</a></li>
   </ul>
 </nav>
@@ -532,8 +540,102 @@ img.wrapfig {
 </div>
 <p>Quand on exécute la fonction <code>t.test()</code>, R nous donne une valeur <span class="math inline">\(t\)</span>. Dans le passé, lorsque les gens calculaient tout manuellement, on utilisait un tableau physique pour décider si l’hypothèse nulle serait rejetée ou non (consultez les diapos de la séance 4). Il y a plusieurs vidéos sur YouTube qui révisent le calcul si vous êtes intéressé·e. Heureusement, c’est beaucoup plus facile aujourd’hui d’exécuter ce type de test. Par contre, quand il est <em>trop</em> facile, on a tendance à négliger ce qui se passe réellement derrière la fonction. On ne va pas utiliser le test <span class="math inline">\(t\)</span> dans notre cours, mais il s’agit d’un test utile pour réviser les notions de base de la statistique.</p>
 </section>
-<section id="la-valeur-p" class="level2" data-number="4.3">
-<h2 data-number="4.3" data-anchor-id="la-valeur-p"><span class="header-section-number">4.3</span> La valeur <em>p</em></h2>
+<section id="lintuition-signal-et-bruit" class="level2" data-number="4.3">
+<h2 data-number="4.3" data-anchor-id="lintuition-signal-et-bruit"><span class="header-section-number">4.3</span> L’intuition : signal et bruit</h2>
+<p>La formule ci-dessus est plus simple qu’elle en a l’air si on la lit comme une simple division entre deux choses : <strong>ce qu’on a observé</strong> (en haut) et <strong>ce que le hasard produit normalement</strong> (en bas).</p>
+<p>Reprenons nos données. Les apprenants de Québec ont une moyenne de 74,2 et ceux de Montréal, une moyenne de 69,6 : un écart de 4,6 points. Est-ce beaucoup? <strong>Pris isolément, ce nombre ne veut rien dire.</strong> Tout dépend de la <em>variation</em> des notes, comme le montre la figure ci-dessous. Les deux panneaux présentent exactement le même écart de 4,6 points entre les moyennes : seule la variation change.</p>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="analysis_testt_files/figure-html/unnamed-chunk-5-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-2"><img src="analysis_testt_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:95.0%"></a></p>
+</figure>
+</div>
+</div>
+</div>
+<p>À gauche, les notes varient peu : les deux groupes se superposent à peine, et un écart de 4,6 points est énorme. À droite, les notes varient beaucoup : les deux distributions se recouvrent presque entièrement, et le même écart de 4,6 points devient banal. C’est exactement ce que la formule encode :</p>
+<ul>
+<li>le <strong>numérateur</strong> (<span class="math inline">\(\bar{x}_1 - \bar{x}_2\)</span>) est le <em>signal</em> : l’écart qu’on a observé;</li>
+<li>le <strong>dénominateur</strong> (<span class="math inline">\(\sqrt{\frac{s^2}{n_1} + \frac{s^2}{n_2}}\)</span>) est le <em>bruit</em> : l’écart que le hasard produit d’habitude, compte tenu de la variation (<span class="math inline">\(s^2\)</span>) et de la taille des échantillons (<span class="math inline">\(n\)</span>).</li>
+</ul>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Pourquoi la taille de l’échantillon compte
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Remarquez que <span class="math inline">\(n_1\)</span> et <span class="math inline">\(n_2\)</span> se trouvent au <strong>dénominateur</strong> du dénominateur. Plus les échantillons sont grands, plus le bruit attendu est petit, et donc plus <span class="math inline">\(t\)</span> est grand. Un même écart de 4,6 points est une rumeur avec 5 participants par groupe et une évidence avec 500.</p>
+</div>
+</div>
+<p>La statistique <span class="math inline">\(t\)</span> exprime donc l’écart <strong>en unités de bruit</strong>. Une valeur de <span class="math inline">\(t = 1\)</span> signifie que notre écart correspond exactement à ce que le hasard produit couramment : rien de remarquable. Notre valeur de <span class="math inline">\(t = -4,10\)</span> signifie que l’écart observé est environ <strong>quatre fois plus grand</strong> que ce que le hasard produit d’habitude.</p>
+</section>
+<section id="la-distribution-t" class="level2" data-number="4.4">
+<h2 data-number="4.4" data-anchor-id="la-distribution-t"><span class="header-section-number">4.4</span> La distribution <em>t</em></h2>
+<p>On a maintenant un nombre, <span class="math inline">\(t = -4,10\)</span>. Mais <em>quatre fois plus grand que le hasard</em>, est-ce suffisant pour rejeter l’hypothèse nulle? Il nous faut un point de comparaison : <strong>à quoi ressemble <span class="math inline">\(t\)</span> quand il n’y a réellement aucune différence?</strong></p>
+<p>On peut répondre à cette question par simulation. Supposons que H<span class="math inline">\(_0\)</span> soit vraie : Québec et Montréal ne forment alors qu’<strong>une seule population</strong>, et la ville inscrite à côté de chaque note n’est qu’une étiquette arbitraire. Dans ce cas, on peut mélanger les 100 notes, refaire deux groupes de 50 au hasard, et recalculer <span class="math inline">\(t\)</span>. Puis recommencer. Dix mille fois.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># La statistique t réellement observée :</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>t_obs <span class="ot">&lt;-</span> <span class="fu">t.test</span>(note <span class="sc">~</span> ville, <span class="at">data =</span> villes)<span class="sc">$</span>statistic <span class="sc">|&gt;</span> <span class="fu">as.numeric</span>()</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>notes <span class="ot">&lt;-</span> villes<span class="sc">$</span>note</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>n_mtl <span class="ot">&lt;-</span> <span class="fu">sum</span>(villes<span class="sc">$</span>ville <span class="sc">==</span> <span class="st">"Montréal"</span>)</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="co"># 10 000 fois : on remélange les notes, on refait deux groupes, on recalcule t</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>simulations <span class="ot">&lt;-</span> <span class="fu">replicate</span>(<span class="dv">10000</span>, {</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>  groupe <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="fu">length</span>(notes), n_mtl)</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">t.test</span>(notes[groupe], notes[<span class="sc">-</span>groupe])<span class="sc">$</span>statistic</span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>}) <span class="sc">|&gt;</span> <span class="fu">as.numeric</span>()</span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Combien de ces simulations atteignent notre valeur observée?</span></span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(<span class="fu">abs</span>(simulations) <span class="sc">&gt;=</span> <span class="fu">abs</span>(t_obs))</span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 3</span></span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+<p>Chacune de ces 10 000 valeurs est un <span class="math inline">\(t\)</span> produit par le <strong>pur hasard</strong>, puisqu’on a détruit toute différence réelle entre les groupes en mélangeant les notes. Si on trace l’histogramme de ces valeurs, on obtient ceci :</p>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="analysis_testt_files/figure-html/unnamed-chunk-7-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-3"><img src="analysis_testt_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:95.0%"></a></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Cet amas de valeurs, c’est la <strong>distribution <span class="math inline">\(t\)</span></strong> : le catalogue de tout ce que le hasard peut produire quand il n’y a <em>aucune</em> différence réelle. La courbe noire superposée à l’histogramme est la distribution <span class="math inline">\(t\)</span> théorique (celle que R utilise), et on voit qu’elle décrit très bien nos simulations.</p>
+<p>Deux observations importantes :</p>
+<ol type="1">
+<li><strong>Elle est centrée sur 0.</strong> S’il n’y a pas d’effet réel, le résultat le plus courant est l’absence d’écart. Les écarts modestes restent fréquents, mais les grands écarts deviennent de plus en plus rares, dans les deux directions.</li>
+<li><strong>Notre <span class="math inline">\(t\)</span> observé tombe tout au bout de la courbe.</strong> Sur 10 000 simulations, seulement 3 ont atteint <span class="math inline">\(|t| \geq 4{,}10\)</span>. Autrement dit, si l’hypothèse nulle était vraie, il serait extrêmement improbable d’observer l’écart qu’on a observé.</li>
+</ol>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Astuce</span>Pourquoi <em>t</em> et non la loi normale?
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>La distribution <span class="math inline">\(t\)</span> ressemble beaucoup à la loi normale, mais ses <strong>queues sont plus épaisses</strong>. La raison est simple : on ne connaît pas la variation réelle de la population, on l’<strong>estime</strong> à partir du même petit échantillon. Cette estimation est elle-même incertaine—il arrive qu’on tombe sur un échantillon peu dispersé, qu’on sous-estime le bruit, et qu’on obtienne un <span class="math inline">\(t\)</span> gonflé sans raison valable.</p>
+<p>Les queues plus épaisses sont la correction honnête de ce problème : elles reconnaissent que les valeurs extrêmes sont plus fréquentes qu’on ne le croirait, et exigent donc un <span class="math inline">\(t\)</span> plus grand avant de rejeter H<span class="math inline">\(_0\)</span>. C’est le rôle des <strong>degrés de liberté</strong> (<span class="math inline">\(\approx n - 2\)</span> ici, d’où le <code>df = 97.919</code> dans les résultats) :</p>
+<ul>
+<li><strong>petit échantillon</strong> <span class="math inline">\(\rightarrow\)</span> estimation peu fiable <span class="math inline">\(\rightarrow\)</span> queues très épaisses <span class="math inline">\(\rightarrow\)</span> il faut un grand <span class="math inline">\(t\)</span>;</li>
+<li><strong>grand échantillon</strong> <span class="math inline">\(\rightarrow\)</span> estimation fiable <span class="math inline">\(\rightarrow\)</span> les queues s’amincissent et la distribution <span class="math inline">\(t\)</span> se confond avec la loi normale.</li>
+</ul>
+</div>
+</div>
+<p>Cette rareté de notre valeur observée—3 fois sur dix mille—est précisément ce que la valeur <span class="math inline">\(p\)</span> quantifie.</p>
+</section>
+<section id="la-valeur-p" class="level2" data-number="4.5">
+<h2 data-number="4.5" data-anchor-id="la-valeur-p"><span class="header-section-number">4.5</span> La valeur <em>p</em></h2>
 <p>La <strong>p-value</strong>, ou “valeur p”, est une mesure utilisée en statistique pour répondre à une question fondamentale : <em>“Les résultats observés sont-ils dus au hasard, ou indiquent-ils quelque chose de significatif?”</em></p>
 <p>Dans le contexte examiné ici, la valeur <em>p</em> nous donne essentiellement la</p>
 <blockquote class="blockquote">

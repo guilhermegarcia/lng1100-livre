@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>References – LNG-1100</title>
+<title>Glossaire – LNG-1100</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -26,26 +26,7 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-/* CSS for citations */
-div.csl-bib-body { }
-div.csl-entry {
-  clear: both;
-}
-.hanging-indent div.csl-entry {
-  margin-left:2em;
-  text-indent:-2em;
-}
-div.csl-left-margin {
-  min-width:2em;
-  float:left;
-}
-div.csl-right-inline {
-  margin-left:2em;
-  padding-left:1em;
-}
-div.csl-indent {
-  margin-left: 2em;
-}</style>
+</style>
 
 
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
@@ -55,7 +36,8 @@ div.csl-indent {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./glossaire.html" rel="prev">
+<link href="./references.html" rel="next">
+<link href="./reussir.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
@@ -93,6 +75,35 @@ div.csl-indent {
   }
 }</script>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-chtml.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 </head>
 
@@ -105,7 +116,7 @@ div.csl-indent {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Basculer la barre latérale" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./extras.html">Extras</a></li><li class="breadcrumb-item"><a href="./references.html">References</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./extras.html">Extras</a></li><li class="breadcrumb-item"><a href="./glossaire.html">Glossaire</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Basculer la barre latérale" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Recherche" onclick="window.quartoOpenSearch();">
@@ -265,13 +276,13 @@ div.csl-indent {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./glossaire.html" class="sidebar-item-text sidebar-link">
+  <a href="./glossaire.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">Glossaire</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./references.html" class="sidebar-item-text sidebar-link active">
+  <a href="./references.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">References</span></a>
   </div>
 </li>
@@ -282,15 +293,37 @@ div.csl-indent {
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table des matières</h2>
+   
+  <ul>
+  <li><a href="#fonctions" id="toc-fonctions" class="nav-link active" data-scroll-target="#fonctions">Fonctions</a>
+  <ul class="collapse">
+  <li><a href="#notation" id="toc-notation" class="nav-link" data-scroll-target="#notation">Notation</a></li>
+  <li><a href="#fonctions-principales" id="toc-fonctions-principales" class="nav-link" data-scroll-target="#fonctions-principales">Fonctions principales</a></li>
+  <li><a href="#importer-et-inspecter" id="toc-importer-et-inspecter" class="nav-link" data-scroll-target="#importer-et-inspecter">Importer et inspecter</a></li>
+  <li><a href="#autres-fonctions-de-manipulation" id="toc-autres-fonctions-de-manipulation" class="nav-link" data-scroll-target="#autres-fonctions-de-manipulation">Autres fonctions de manipulation</a></li>
+  <li><a href="#résumer-et-grouper" id="toc-résumer-et-grouper" class="nav-link" data-scroll-target="#résumer-et-grouper">Résumer et grouper</a></li>
+  <li><a href="#changer-la-forme-du-tableau" id="toc-changer-la-forme-du-tableau" class="nav-link" data-scroll-target="#changer-la-forme-du-tableau">Changer la forme du tableau</a></li>
+  <li><a href="#visualiser" id="toc-visualiser" class="nav-link" data-scroll-target="#visualiser">Visualiser</a></li>
+  <li><a href="#analyser" id="toc-analyser" class="nav-link" data-scroll-target="#analyser">Analyser</a></li>
+  </ul></li>
+  <li><a href="#termes-statistiques" id="toc-termes-statistiques" class="nav-link" data-scroll-target="#termes-statistiques">Termes statistiques</a>
+  <ul class="collapse">
+  <li><a href="#échantillonnage-et-inférence" id="toc-échantillonnage-et-inférence" class="nav-link" data-scroll-target="#échantillonnage-et-inférence">Échantillonnage et inférence</a></li>
+  <li><a href="#test-dhypothèses" id="toc-test-dhypothèses" class="nav-link" data-scroll-target="#test-dhypothèses">Test d’hypothèses</a></li>
+  <li><a href="#modèles-de-régression" id="toc-modèles-de-régression" class="nav-link" data-scroll-target="#modèles-de-régression">Modèles de régression</a></li>
+  </ul></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./extras.html">Extras</a></li><li class="breadcrumb-item"><a href="./references.html">References</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./extras.html">Extras</a></li><li class="breadcrumb-item"><a href="./glossaire.html">Glossaire</a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">References</h1>
+<h1 class="title">Glossaire</h1>
 </div>
 
 
@@ -307,32 +340,180 @@ div.csl-indent {
 </header>
 
 
-<div id="refs" class="references csl-bib-body hanging-indent" role="list">
-<div id="ref-barnier_R" class="csl-entry" role="listitem">
-Barnier, Julien. 2023. <em>Introduction à <span>R</span> Et Au
-<code>tidyverse</code></em>.
-</div>
-<div id="ref-garcia_2021_dvaslr" class="csl-entry" role="listitem">
-Garcia, Guilherme Duarte. 2021. <em>Data Visualization and Analysis in
-Second Language Research</em>. Routledge.
-</div>
-<div id="ref-larmarange2023" class="csl-entry" role="listitem">
-Larmarange, Joseph. 2023. <em>Introduction à l’analyse d’enquêtes Avec r
-Et RStudio</em>.
-</div>
-<div id="ref-tjur" class="csl-entry" role="listitem">
-Tjur, Tue. 2009. <span>“Coefficients of Determination in Logistic
-Regression Models—a New Proposal: The Coefficient of
-Discrimination.”</span> <em>The American Statistician</em> 63 (4):
-366–72. <a href="http://www.jstor.org/stable/25652317">http://www.jstor.org/stable/25652317</a>.
-</div>
-<div id="ref-wickham_rdata2023" class="csl-entry" role="listitem">
-Wickham, Hadley, Mine Çetinkaya-Rundel, and Garrett Grolemund. 2023.
-<em>R for Data Science</em>. O’Reilly Media, Inc.
-</div>
-</div>
+<p>Voici une liste des fonctions et des termes utilisés dans le livre. Les définitions sont volontairement courtes : elles servent de repères pour la lecture des chapitres et des exercices. Consultez les chapitres pour les explications détaillées et les exemples.</p>
+<section id="fonctions" class="level2">
+<h2 data-anchor-id="fonctions">Fonctions</h2>
+<section id="notation" class="level3">
+<h3 data-anchor-id="notation">Notation</h3>
+<ul>
+<li><strong><code>|&gt;</code></strong> — L’opérateur <em>pipe</em>. Il passe le résultat de gauche comme premier argument de la fonction de droite. <code>d |&gt; filter(note &gt; 60)</code> équivaut à <code>filter(d, note &gt; 60)</code>.</li>
+<li><strong><code>~</code></strong> — Le tilde signifie « en fonction de » dans une formule. <code>note ~ ville</code> se lit « la note en fonction de la ville ». À gauche, la variable de réponse; à droite, la ou les variables prédictives.</li>
+<li><strong><code>&lt;-</code> et <code>=</code></strong> — Deux façons d’assigner une valeur à un objet. <code>d &lt;- read_csv("villes.csv")</code> crée l’objet <code>d</code>. Le signe <code>=</code> sert aussi à nommer les arguments d’une fonction, comme dans <code>mean(x = notes)</code>.</li>
+<li><strong><code>$</code></strong> — Extrait une colonne d’un tableau sous forme de vecteur. <code>villes$note</code> donne toutes les notes.</li>
+<li><strong><code>::</code></strong> — Précise l’extension d’où vient une fonction, sans avoir à la charger entièrement. <code>janitor::clean_names()</code>.</li>
+<li><strong><code>#|</code></strong> — Préfixe des options d’un bloc de code dans un document Quarto, comme <code>#| echo: false</code>.</li>
+</ul>
+</section>
+<section id="fonctions-principales" class="level3">
+<h3 data-anchor-id="fonctions-principales">Fonctions principales</h3>
+<p>Ces six fonctions du <em>tidyverse</em> couvrent la grande majorité du travail sur un tableau de données. Les autres sous-sections regroupent les fonctions complémentaires.</p>
+<ul>
+<li><strong><code>select()</code></strong> — Garde ou enlève des <strong>colonnes</strong>. <code>select(d, note, ville)</code> garde ces deux colonnes; <code>select(d, -duree)</code> enlève <code>duree</code>.</li>
+<li><strong><code>filter()</code></strong> — Garde les <strong>lignes</strong> qui respectent une condition. <code>filter(d, note &gt; 60)</code> garde les notes supérieures à 60. Attention : <code>select()</code> agit sur les colonnes, <code>filter()</code> sur les lignes.</li>
+<li><strong><code>mutate()</code></strong> — Crée une nouvelle colonne ou modifie une colonne existante, sans changer le nombre de lignes. <code>mutate(d, note10 = note / 10)</code>.</li>
+<li><strong><code>summarize()</code></strong> — Réduit un tableau à une ou quelques lignes de statistiques. <code>summarize(d, m = mean(note), .by = ville)</code> donne une moyenne par ville. Contrairement à <code>mutate()</code>, le tableau obtenu est plus court.</li>
+<li><strong><code>arrange()</code></strong> — Ordonne les lignes selon une ou plusieurs colonnes, en ordre croissant par défaut. <code>arrange(d, desc(note))</code> donne l’ordre décroissant.</li>
+<li><strong><code>pivot_longer()</code></strong> — Transforme un tableau <strong>large</strong> en tableau <strong>long</strong> : plusieurs colonnes deviennent deux colonnes, l’une pour les noms, l’autre pour les valeurs. Nécessaire pour la plupart des figures de <code>ggplot2</code>.</li>
+</ul>
+</section>
+<section id="importer-et-inspecter" class="level3">
+<h3 data-anchor-id="importer-et-inspecter">Importer et inspecter</h3>
+<ul>
+<li><strong><code>library()</code></strong> — Charge une extension déjà installée dans la session. À répéter à chaque nouvelle session. Exemple : <code>library(tidyverse)</code>.</li>
+<li><strong><code>install.packages()</code></strong> — Installe une extension sur l’ordinateur. Une seule fois par extension, contrairement à <code>library()</code>.</li>
+<li><strong><code>read_csv()</code></strong> — Importe un fichier <code>.csv</code> dont le séparateur est la virgule. Produit un tableau (<em>tibble</em>).</li>
+<li><strong><code>read_csv2()</code></strong> — Version pour les fichiers <code>.csv</code> dont le séparateur est le point-virgule et dont les décimales sont marquées par une virgule, format fréquent en français.</li>
+<li><strong><code>glimpse()</code></strong> — Affiche un aperçu compact du tableau : nombre de lignes, de colonnes, type de chaque variable et premières valeurs.</li>
+<li><strong><code>summary()</code></strong> — Résumé statistique d’un objet. Sur un tableau, donne minimum, médiane, moyenne et maximum de chaque colonne; sur un modèle, donne les coefficients et les tests.</li>
+<li><strong><code>names()</code></strong> — Donne les noms des colonnes d’un tableau.</li>
+<li><strong><code>clean_names()</code></strong> — Normalise les noms de colonnes (minuscules, sans accents ni espaces). Vient de l’extension <code>janitor</code>.</li>
+</ul>
+</section>
+<section id="autres-fonctions-de-manipulation" class="level3">
+<h3 data-anchor-id="autres-fonctions-de-manipulation">Autres fonctions de manipulation</h3>
+<ul>
+<li><strong><code>if_else()</code></strong> — Renvoie une valeur si une condition est vraie, une autre si elle est fausse. Sert souvent à créer une variable binaire dans <code>mutate()</code>.</li>
+<li><strong><code>rename()</code></strong> — Change le nom d’une colonne, sous la forme <code>nouveau = ancien</code>.</li>
+<li><strong><code>desc()</code></strong> — S’utilise dans <code>arrange()</code> pour inverser l’ordre : <code>arrange(d, desc(note))</code> donne l’ordre décroissant.</li>
+<li><strong><code>pull()</code></strong> — Extrait une colonne sous forme de vecteur, comme <code>$</code>, mais utilisable dans une chaîne de <em>pipes</em>.</li>
+<li><strong><code>across()</code></strong> — Applique la même opération à plusieurs colonnes à la fois, à l’intérieur de <code>mutate()</code> ou de <code>summarize()</code>.</li>
+<li><strong><code>as_factor()</code></strong> — Convertit une variable en facteur, c’est-à-dire en variable catégorique dont les niveaux ont un ordre.</li>
+</ul>
+</section>
+<section id="résumer-et-grouper" class="level3">
+<h3 data-anchor-id="résumer-et-grouper">Résumer et grouper</h3>
+<ul>
+<li><strong><code>.by =</code></strong> — Argument de <code>summarize()</code> et de <code>mutate()</code> qui effectue le calcul séparément pour chaque groupe. <code>summarize(d, m = mean(note), .by = ville)</code> donne une moyenne par ville.</li>
+<li><strong><code>group_by()</code></strong> — Ancienne façon de grouper les données avant un calcul. Demande normalement <code>ungroup()</code> par la suite; ce livre privilégie <code>.by =</code>.</li>
+<li><strong><code>n()</code></strong> — Donne le nombre d’observations, à utiliser à l’intérieur de <code>summarize()</code> ou de <code>mutate()</code>.</li>
+<li><strong><code>mean()</code>, <code>median()</code></strong> — Moyenne et médiane d’un vecteur numérique.</li>
+<li><strong><code>sd()</code>, <code>var()</code></strong> — Écart type et variance d’un vecteur numérique.</li>
+<li><strong><code>round()</code></strong> — Arrondit une valeur au nombre de décimales demandé : <code>round(3.14159, 2)</code> donne <code>3.14</code>.</li>
+</ul>
+</section>
+<section id="changer-la-forme-du-tableau" class="level3">
+<h3 data-anchor-id="changer-la-forme-du-tableau">Changer la forme du tableau</h3>
+<ul>
+<li><strong><code>pivot_wider()</code></strong> — L’opération inverse : transforme un tableau long en tableau large.</li>
+<li><strong><code>tibble()</code>, <code>tribble()</code></strong> — Créent un tableau à la main, la seconde ligne par ligne, ce qui est utile pour de petits exemples.</li>
+</ul>
+</section>
+<section id="visualiser" class="level3">
+<h3 data-anchor-id="visualiser">Visualiser</h3>
+<ul>
+<li><strong><code>ggplot()</code></strong> — Ouvre un graphique et reçoit les données. Les couches suivantes s’ajoutent avec <code>+</code>, et non avec le <em>pipe</em>.</li>
+<li><strong><code>aes()</code></strong> — Définit les correspondances entre les variables et les propriétés visuelles : axes <code>x</code> et <code>y</code>, couleur, remplissage, forme.</li>
+<li><strong><code>geom_boxplot()</code></strong> — Boîtes à moustaches : médiane, quartiles et valeurs extrêmes pour chaque groupe.</li>
+<li><strong><code>geom_point()</code></strong> — Nuage de points, une marque par observation.</li>
+<li><strong><code>geom_jitter()</code></strong> — Comme <code>geom_point()</code>, mais décale légèrement les points au hasard pour éviter qu’ils se superposent.</li>
+<li><strong><code>geom_histogram()</code></strong> — Histogramme : distribution d’une variable continue découpée en intervalles.</li>
+<li><strong><code>geom_density()</code></strong> — Courbe de densité, version lissée de l’histogramme.</li>
+<li><strong><code>geom_vline()</code>, <code>geom_hline()</code></strong> — Ajoutent une ligne verticale ou horizontale de référence, souvent une moyenne ou un seuil.</li>
+<li><strong><code>stat_summary()</code></strong> — Calcule et trace un résumé des données, typiquement la moyenne avec des barres d’erreur.</li>
+<li><strong><code>stat_smooth()</code></strong> — Ajoute une droite ou une courbe de tendance au graphique.</li>
+<li><strong><code>labs()</code></strong> — Définit les titres et les étiquettes des axes et des légendes.</li>
+<li><strong><code>theme_minimal()</code>, <code>theme_classic()</code></strong> — Thèmes visuels qui remplacent l’apparence par défaut de <code>ggplot2</code>.</li>
+<li><strong><code>coord_cartesian()</code></strong> — Ajuste les limites visibles des axes sans supprimer de données du calcul.</li>
+<li><strong><code>scale_fill_manual()</code>, <code>scale_color_manual()</code></strong> — Imposent des couleurs choisies à la main plutôt que les couleurs par défaut.</li>
+<li><strong><code>ggsave()</code></strong> — Enregistre une figure dans un fichier, avec des dimensions et une résolution données.</li>
+</ul>
+</section>
+<section id="analyser" class="level3">
+<h3 data-anchor-id="analyser">Analyser</h3>
+<ul>
+<li><strong><code>t.test()</code></strong> — Exécute un test <span class="math inline">\(t\)</span> (celui de Welch par défaut). S’écrit <code>t.test(note ~ ville, data = villes)</code>.</li>
+<li><strong><code>aov()</code></strong> — Ajuste une ANOVA, qui compare les moyennes de plus de deux groupes.</li>
+<li><strong><code>TukeyHSD()</code></strong> — Test post hoc appliqué à une ANOVA pour savoir <strong>quelles</strong> paires de groupes diffèrent.</li>
+<li><strong><code>lm()</code></strong> — Ajuste un modèle linéaire (régression linéaire).</li>
+<li><strong><code>glm()</code></strong> — Ajuste un modèle linéaire généralisé. Avec <code>family = binomial</code>, il s’agit d’une régression logistique.</li>
+<li><strong><code>predict()</code></strong> — Calcule les valeurs prédites par un modèle, pour les données d’origine ou pour de nouvelles données.</li>
+<li><strong><code>invlogit()</code></strong> — Convertit une valeur en <em>log-odds</em> en probabilité. Vient de l’extension <code>arm</code>.</li>
+<li><strong><code>exp()</code></strong> — Fonction exponentielle. Appliquée à un coefficient logistique, elle donne le rapport de cotes.</li>
+<li><strong><code>tab_model()</code></strong> — Produit un tableau lisible des résultats d’un modèle. Vient de l’extension <code>sjPlot</code>.</li>
+<li><strong><code>emmeans()</code></strong> — Calcule les moyennes estimées par un modèle et compare les groupes deux à deux.</li>
+<li><strong><code>set.seed()</code></strong> — Fixe le point de départ du générateur de nombres aléatoires, ce qui rend une simulation reproductible.</li>
+<li><strong><code>sample()</code></strong> — Prélève un échantillon au hasard dans un ensemble de valeurs.</li>
+</ul>
+</section>
+</section>
+<section id="termes-statistiques" class="level2">
+<h2 data-anchor-id="termes-statistiques">Termes statistiques</h2>
+<section id="échantillonnage-et-inférence" class="level3">
+<h3 data-anchor-id="échantillonnage-et-inférence">Échantillonnage et inférence</h3>
+<ul>
+<li><strong>population</strong> — Ensemble complet des individus ou des observations qui nous intéressent. On y a rarement accès directement.</li>
+<li><strong>échantillon</strong> — Sous-ensemble de la population, effectivement observé et analysé.</li>
+<li><strong>inférence statistique</strong> — Démarche qui consiste à estimer une propriété de la population à partir d’un échantillon : on estime le tout à partir de la partie.</li>
+<li><strong>paramètre</strong> — Valeur qui décrit la <strong>population</strong>, notée par une lettre grecque. Elle est normalement inconnue.</li>
+<li><strong>statistique</strong> — Valeur calculée à partir de l’<strong>échantillon</strong>, notée par une lettre latine. Elle sert à estimer un paramètre.</li>
+<li><strong><span class="math inline">\(\mu\)</span>, <span class="math inline">\(\sigma\)</span></strong> — Moyenne et écart type de la population.</li>
+<li><strong><span class="math inline">\(\bar{x}\)</span>, <span class="math inline">\(s\)</span></strong> — Moyenne et écart type de l’échantillon.</li>
+<li><strong>moyenne</strong> — Somme des valeurs divisée par leur nombre. Sensible aux valeurs extrêmes.</li>
+<li><strong>médiane</strong> — Valeur qui sépare les données en deux moitiés égales. Moins sensible aux valeurs extrêmes que la moyenne.</li>
+<li><strong>variance</strong> — Mesure de la dispersion : moyenne des écarts au carré par rapport à la moyenne.</li>
+<li><strong>écart type</strong> — Racine carrée de la variance, exprimée dans l’unité d’origine de la variable, donc plus facile à interpréter.</li>
+<li><strong>loi normale</strong> — Distribution symétrique en forme de cloche. Plusieurs tests, dont le test <span class="math inline">\(t\)</span>, la supposent pour les données.</li>
+<li><strong>test paramétrique</strong> — Test qui suppose une distribution particulière des données, typiquement la loi normale.</li>
+<li><strong>variable de réponse</strong> — Variable qu’on cherche à expliquer, à gauche du <code>~</code> dans une formule. Aussi appelée « variable dépendante ».</li>
+<li><strong>variable prédictive</strong> — Variable qui sert à expliquer la réponse, à droite du <code>~</code>. Aussi appelée « variable indépendante ».</li>
+<li><strong>variable continue</strong> — Variable numérique qui peut prendre une infinité de valeurs dans un intervalle, comme une note ou une durée.</li>
+<li><strong>variable catégorique</strong> — Variable dont les valeurs sont des catégories, comme la ville. En R, souvent un facteur.</li>
+<li><strong>tableau <em>tidy</em></strong> — Tableau où chaque ligne est une observation et chaque colonne une variable. Format attendu par le <em>tidyverse</em>.</li>
+</ul>
+</section>
+<section id="test-dhypothèses" class="level3">
+<h3 data-anchor-id="test-dhypothèses">Test d’hypothèses</h3>
+<ul>
+<li><strong>NHST</strong> — <em>Null Hypothesis Significance Testing</em>, la démarche classique des tests d’hypothèses : on formule une hypothèse nulle, on mesure à quel point les données s’en écartent, puis on décide de la rejeter ou non.</li>
+<li><strong>hypothèse nulle (H<span class="math inline">\(_0\)</span>)</strong> — Hypothèse selon laquelle il n’y a aucune différence réelle entre les groupes, c’est-à-dire qu’ils proviennent de la même population sous-jacente.</li>
+<li><strong>hypothèse alternative</strong> — Hypothèse selon laquelle une différence réelle existe entre les groupes.</li>
+<li><strong>hypothèse bilatérale</strong> — Hypothèse qui n’indique pas de direction : l’un ou l’autre des groupes pourrait avoir la moyenne la plus élevée. C’est le comportement par défaut de <code>t.test()</code>.</li>
+<li><strong>hypothèse unilatérale</strong> — Hypothèse qui indique une direction précise, par exemple que le groupe A dépasse le groupe B.</li>
+<li><strong>valeur <span class="math inline">\(p\)</span></strong> — Probabilité d’observer des résultats aussi extrêmes que les nôtres, <strong>si l’hypothèse nulle était vraie</strong>. Une valeur <span class="math inline">\(p\)</span> faible indique que le hasard seul explique mal les données.</li>
+<li><strong>seuil <span class="math inline">\(\alpha\)</span></strong> — Seuil de décision fixé d’avance, normalement 0,05 en sciences sociales. Si <span class="math inline">\(p &lt; \alpha\)</span>, on rejette l’hypothèse nulle.</li>
+<li><strong>significatif</strong> — Se dit d’un résultat dont la valeur <span class="math inline">\(p\)</span> est inférieure au seuil. Le terme concerne la décision statistique, pas l’importance réelle de l’effet.</li>
+<li><strong>test <span class="math inline">\(t\)</span></strong> — Test qui compare les moyennes de <strong>deux</strong> groupes. La version de Welch, utilisée par défaut dans R, ne suppose pas des variances égales.</li>
+<li><strong>statistique <span class="math inline">\(t\)</span></strong> — Rapport entre l’écart observé et l’écart attendu par le hasard : l’écart des moyennes divisé par le bruit. Une valeur de 4 signifie que l’écart est quatre fois plus grand que ce que le hasard produit d’habitude.</li>
+<li><strong>distribution <span class="math inline">\(t\)</span></strong> — Distribution de toutes les valeurs de <span class="math inline">\(t\)</span> que le hasard produit quand l’hypothèse nulle est vraie. Centrée sur zéro, elle ressemble à la loi normale, mais avec des queues plus épaisses.</li>
+<li><strong>degrés de liberté</strong> — Quantité d’information disponible pour estimer la variation. Ils déterminent l’épaisseur des queues de la distribution <span class="math inline">\(t\)</span> : plus l’échantillon est grand, plus la distribution s’approche de la loi normale.</li>
+<li><strong>valeur critique</strong> — Valeur de <span class="math inline">\(t\)</span> qui marque la frontière de la région critique. Pour <span class="math inline">\(\alpha = 0{,}05\)</span> et une hypothèse bilatérale avec de grands échantillons, elle est d’environ <span class="math inline">\(|1{,}98|\)</span>.</li>
+<li><strong>région critique</strong> — Zone aux extrémités de la distribution qui représente 5 % des valeurs. Une statistique qui y tombe mène au rejet de l’hypothèse nulle.</li>
+<li><strong>intervalle de confiance</strong> — Intervalle de valeurs plausibles pour le paramètre estimé. Un intervalle à 95 % qui ne contient pas zéro correspond à un résultat significatif au seuil de 0,05.</li>
+<li><strong>ANOVA</strong> — Analyse de variance : compare les moyennes de <strong>plus de deux</strong> groupes à l’aide de la statistique <span class="math inline">\(F\)</span>, sans multiplier les tests <span class="math inline">\(t\)</span>.</li>
+<li><strong>statistique <span class="math inline">\(F\)</span></strong> — Rapport entre la variation <strong>entre</strong> les groupes et la variation <strong>à l’intérieur</strong> des groupes. Plus elle est grande, plus les groupes se distinguent.</li>
+<li><strong>test post hoc</strong> — Test effectué après une ANOVA significative pour déterminer quelles paires de groupes diffèrent réellement, par exemple le test de Tukey.</li>
+</ul>
+</section>
+<section id="modèles-de-régression" class="level3">
+<h3 data-anchor-id="modèles-de-régression">Modèles de régression</h3>
+<ul>
+<li><strong>régression linéaire</strong> — Modèle qui décrit une variable de réponse <strong>continue</strong> en fonction d’une ou plusieurs variables prédictives. S’ajuste avec <code>lm()</code>.</li>
+<li><strong>coefficient (<span class="math inline">\(\hat\beta\)</span>)</strong> — Estimation de l’effet d’une variable prédictive : de combien la réponse change quand cette variable augmente d’une unité.</li>
+<li><strong>intercept</strong> — Valeur prédite par le modèle quand toutes les variables prédictives valent zéro ou, pour une variable catégorique, quand on se trouve au niveau de référence.</li>
+<li><strong>niveau de référence</strong> — Catégorie à laquelle les autres catégories sont comparées dans un modèle. Par défaut, R choisit la première par ordre alphabétique.</li>
+<li><strong>résidu</strong> — Écart entre une valeur observée et la valeur prédite par le modèle. Ce qui reste inexpliqué.</li>
+<li><strong>interaction</strong> — Situation où l’effet d’une variable prédictive dépend de la valeur d’une autre.</li>
+<li><strong>régression logistique</strong> — Modèle dont la variable de réponse est <strong>binaire</strong> (0 ou 1, oui ou non). S’ajuste avec <code>glm()</code> et <code>family = binomial</code>.</li>
+<li><strong>variable binaire</strong> — Variable qui ne prend que deux valeurs, typiquement codées <code>0</code> et <code>1</code>.</li>
+<li><strong>cote (<em>odds</em>)</strong> — Rapport entre la probabilité qu’un événement se produise et celle qu’il ne se produise pas. Une cote de 2,9 signifie qu’il est 2,9 fois plus probable que l’événement arrive.</li>
+<li><strong><em>log-odds</em> (logit)</strong> — Logarithme de la cote. Cette échelle est symétrique et centrée sur zéro, ce qui la rend utilisable dans un modèle linéaire. C’est l’unité des coefficients d’une régression logistique.</li>
+<li><strong>rapport de cotes (<em>odds ratio</em>)</strong> — Résultat de <code>exp()</code> appliqué à un coefficient logistique. Il indique par quel facteur les chances sont multipliées.</li>
+<li><strong>probabilité prédite</strong> — Valeur entre 0 et 1 obtenue en reconvertissant des <em>log-odds</em>, par exemple avec <code>invlogit()</code>. Plus facile à interpréter que les coefficients bruts.</li>
+</ul>
 
 
+</section>
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -730,11 +911,14 @@ Wickham, Hadley, Mine Çetinkaya-Rundel, and Garrett Grolemund. 2023.
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./glossaire.html" class="pagination-link" aria-label="Glossaire">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Glossaire</span>
+      <a href="./reussir.html" class="pagination-link" aria-label="Suggestions">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Suggestions</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
+      <a href="./references.html" class="pagination-link" aria-label="References">
+        <span class="nav-page-text">References</span> <i class="bi bi-arrow-right-short"></i>
+      </a>
   </div>
 </nav>
 </div> <!-- /content -->
