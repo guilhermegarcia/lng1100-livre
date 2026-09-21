@@ -23,7 +23,6 @@ knitr::opts_chunk$set(
 
 ```
 
-
 ## Introduction
 
 ![](Figures/echant.png){.wrapfig width="35%"}Jusqu'ici, on a [importé](intro_a_r.html), [exploré et visualisé des données](exploration_a.html). Maintenant, on commence la partie de l'**analyse statistique**. Dans notre séance, on a examiné quelques concepts importants :
@@ -192,6 +191,170 @@ Quand on exécute la fonction `t.test()`, R nous donne une valeur $t$. Dans le p
 
 
 
+
+## L'intuition : signal et bruit
+
+La formule ci-dessus est plus simple qu'elle en a l'air si on la lit comme une simple division entre deux choses : **ce qu'on a observé** (en haut) et **ce que le hasard produit normalement** (en bas).
+
+Reprenons nos données. Les apprenants de Québec ont une moyenne de 74,2 et ceux de Montréal, une moyenne de 69,6 : un écart de 4,6 points. Est-ce beaucoup? **Pris isolément, ce nombre ne veut rien dire.** Tout dépend de la *variation* des notes, comme le montre la figure ci-dessous. Les deux panneaux présentent exactement le même écart de 4,6 points entre les moyennes : seule la variation change.
+
+```{r}
+#| eval: true
+#| echo: false
+#| fig-align: center
+#| fig-width: 7
+#| fig-height: 3.2
+#| out-width: 95%
+#| message: false
+#| warning: false
+
+moyennes <- villes |>
+  summarize(m = mean(note), .by = ville)
+
+mtl <- moyennes$m[moyennes$ville == "Montréal"]
+qbc <- moyennes$m[moyennes$ville == "Québec"]
+
+courbes <- expand_grid(
+  note = seq(40, 105, length.out = 800),
+  ville = c("Montréal", "Québec"),
+  sd = c(2.5, 9)
+) |>
+  mutate(
+    moyenne = if_else(ville == "Montréal", mtl, qbc),
+    densite = dnorm(note, mean = moyenne, sd = sd),
+    panneau = factor(
+      if_else(sd == 2.5, "Peu de variation : t élevé", "Beaucoup de variation : t faible"),
+      levels = c("Peu de variation : t élevé", "Beaucoup de variation : t faible")
+    )
+  )
+
+ggplot(courbes, aes(x = note, y = densite)) +
+  geom_area(aes(fill = ville), color = "black", alpha = 0.3, position = "identity") +
+  geom_vline(xintercept = mtl, linetype = "dashed", color = "darkorange2", linewidth = 0.8) +
+  geom_vline(xintercept = qbc, linetype = "dashed", color = "steelblue2", linewidth = 0.8) +
+  facet_wrap(~panneau, scales = "free_y") +
+  scale_fill_manual(values = c("darkorange2", "steelblue2")) +
+  scale_x_continuous(breaks = seq(50, 95, 10)) +
+  coord_cartesian(xlim = c(44, 101)) +
+  labs(x = "Note", y = NULL, fill = "Ville :") +
+  theme_classic(base_family = "Futura", base_size = 12) +
+  theme(
+    legend.position = "top",
+    axis.text.y = element_blank(),
+    axis.ticks.y = element_blank(),
+    axis.line.y = element_blank(),
+    strip.background = element_blank(),
+    strip.text = element_text(face = "bold")
+  )
+```
+
+À gauche, les notes varient peu : les deux groupes se superposent à peine, et un écart de 4,6 points est énorme. À droite, les notes varient beaucoup : les deux distributions se recouvrent presque entièrement, et le même écart de 4,6 points devient banal. C'est exactement ce que la formule encode :
+
+- le **numérateur** ($\bar{x}_1 - \bar{x}_2$) est le *signal* : l'écart qu'on a observé;
+- le **dénominateur** ($\sqrt{\frac{s^2}{n_1} + \frac{s^2}{n_2}}$) est le *bruit* : l'écart que le hasard produit d'habitude, compte tenu de la variation ($s^2$) et de la taille des échantillons ($n$).
+
+:::{.callout-note}
+## Pourquoi la taille de l'échantillon compte
+
+Remarquez que $n_1$ et $n_2$ se trouvent au **dénominateur** du dénominateur. Plus les échantillons sont grands, plus le bruit attendu est petit, et donc plus $t$ est grand. Un même écart de 4,6 points est une rumeur avec 5 participants par groupe et une évidence avec 500.
+:::
+
+La statistique $t$ exprime donc l'écart **en unités de bruit**. Une valeur de $t = 1$ signifie que notre écart correspond exactement à ce que le hasard produit couramment : rien de remarquable. Notre valeur de $t = -4,10$ signifie que l'écart observé est environ **quatre fois plus grand** que ce que le hasard produit d'habitude.
+
+## La distribution *t*
+
+On a maintenant un nombre, $t = -4,10$. Mais *quatre fois plus grand que le hasard*, est-ce suffisant pour rejeter l'hypothèse nulle? Il nous faut un point de comparaison : **à quoi ressemble $t$ quand il n'y a réellement aucune différence?**
+
+On peut répondre à cette question par simulation. Supposons que H$_0$ soit vraie : Québec et Montréal ne forment alors qu'**une seule population**, et la ville inscrite à côté de chaque note n'est qu'une étiquette arbitraire. Dans ce cas, on peut mélanger les 100 notes, refaire deux groupes de 50 au hasard, et recalculer $t$. Puis recommencer. Dix mille fois.
+
+```{r}
+#| eval: true
+#| echo: true
+#| message: false
+#| warning: false
+
+# La statistique t réellement observée :
+t_obs <- t.test(note ~ ville, data = villes)$statistic |> as.numeric()
+
+notes <- villes$note
+n_mtl <- sum(villes$ville == "Montréal")
+
+# 10 000 fois : on remélange les notes, on refait deux groupes, on recalcule t
+set.seed(1)
+simulations <- replicate(10000, {
+  groupe <- sample(length(notes), n_mtl)
+  t.test(notes[groupe], notes[-groupe])$statistic
+}) |> as.numeric()
+
+# Combien de ces simulations atteignent notre valeur observée?
+sum(abs(simulations) >= abs(t_obs))
+```
+
+Chacune de ces 10 000 valeurs est un $t$ produit par le **pur hasard**, puisqu'on a détruit toute différence réelle entre les groupes en mélangeant les notes. Si on trace l'histogramme de ces valeurs, on obtient ceci :
+
+```{r}
+#| eval: true
+#| echo: false
+#| fig-align: center
+#| fig-width: 7
+#| fig-height: 3.2
+#| out-width: 95%
+#| message: false
+#| warning: false
+
+n_extremes <- sum(abs(simulations) >= abs(t_obs))
+
+virgule <- function(x, chiffres = 2) {
+  formatC(x, format = "f", digits = chiffres, decimal.mark = ",")
+}
+
+sous_titre <- sprintf(
+  "10 000 simulations sous H0 — %s atteignent |t| ≥ %s",
+  if (n_extremes == 0) "aucune ne" else paste(n_extremes, "d'entre elles"),
+  virgule(abs(t_obs))
+)
+
+ggplot(tibble(t = simulations), aes(x = t)) +
+  geom_histogram(aes(y = after_stat(density)),
+    bins = 60, fill = "grey80", color = "white", linewidth = 0.2
+  ) +
+  stat_function(fun = dt, args = list(df = 98), color = "black", linewidth = 1) +
+  geom_vline(xintercept = t_obs, linetype = "dashed", linewidth = 1) +
+  annotate("label",
+    x = t_obs + 0.2, y = 0.28, family = "Futura", size = 3.4, hjust = 0,
+    label = paste0("notre t = ", virgule(t_obs))
+  ) +
+  scale_x_continuous(breaks = seq(-5, 5, 1)) +
+  coord_cartesian(xlim = c(-5, 5)) +
+  labs(x = "Valeur t", y = NULL, subtitle = sous_titre) +
+  theme_classic(base_family = "Futura", base_size = 12) +
+  theme(
+    axis.text.y = element_blank(),
+    axis.ticks.y = element_blank(),
+    axis.line.y = element_blank(),
+    plot.subtitle = element_text(size = 10, color = "grey30")
+  )
+```
+
+Cet amas de valeurs, c'est la **distribution $t$** : le catalogue de tout ce que le hasard peut produire quand il n'y a *aucune* différence réelle. La courbe noire superposée à l'histogramme est la distribution $t$ théorique (celle que R utilise), et on voit qu'elle décrit très bien nos simulations.
+
+Deux observations importantes :
+
+1.  **Elle est centrée sur 0.** S'il n'y a pas d'effet réel, le résultat le plus courant est l'absence d'écart. Les écarts modestes restent fréquents, mais les grands écarts deviennent de plus en plus rares, dans les deux directions.
+2.  **Notre $t$ observé tombe tout au bout de la courbe.** Sur 10 000 simulations, seulement `r n_extremes` ont atteint $|t| \geq 4{,}10$. Autrement dit, si l'hypothèse nulle était vraie, il serait extrêmement improbable d'observer l'écart qu'on a observé.
+
+::: {.callout-tip}
+## Pourquoi *t* et non la loi normale?
+
+La distribution $t$ ressemble beaucoup à la loi normale, mais ses **queues sont plus épaisses**. La raison est simple : on ne connaît pas la variation réelle de la population, on l'**estime** à partir du même petit échantillon. Cette estimation est elle-même incertaine---il arrive qu'on tombe sur un échantillon peu dispersé, qu'on sous-estime le bruit, et qu'on obtienne un $t$ gonflé sans raison valable.
+
+Les queues plus épaisses sont la correction honnête de ce problème : elles reconnaissent que les valeurs extrêmes sont plus fréquentes qu'on ne le croirait, et exigent donc un $t$ plus grand avant de rejeter H$_0$. C'est le rôle des **degrés de liberté** ($\approx n - 2$ ici, d'où le `df = 97.919` dans les résultats) :
+
+- **petit échantillon** $\rightarrow$ estimation peu fiable $\rightarrow$ queues très épaisses $\rightarrow$ il faut un grand $t$;
+- **grand échantillon** $\rightarrow$ estimation fiable $\rightarrow$ les queues s'amincissent et la distribution $t$ se confond avec la loi normale.
+:::
+
+Cette rareté de notre valeur observée---`r n_extremes` fois sur dix mille---est précisément ce que la valeur $p$ quantifie.
 
 ## La valeur *p*
 

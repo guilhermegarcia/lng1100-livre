@@ -1,0 +1,155 @@
+---
+date: ""
+---
+
+# Glossaire {.unnumbered}
+
+Voici une liste des fonctions et des termes utilisés dans le livre. Les définitions sont volontairement courtes : elles servent de repères pour la lecture des chapitres et des exercices. Consultez les chapitres pour les explications détaillées et les exemples.
+
+## Fonctions
+
+### Notation
+
+- **`|>`** — L'opérateur *pipe*. Il passe le résultat de gauche comme premier argument de la fonction de droite. `d |> filter(note > 60)` équivaut à `filter(d, note > 60)`.
+- **`~`** — Le tilde signifie « en fonction de » dans une formule. `note ~ ville` se lit « la note en fonction de la ville ». À gauche, la variable de réponse; à droite, la ou les variables prédictives.
+- **`<-` et `=`** — Deux façons d'assigner une valeur à un objet. `d <- read_csv("villes.csv")` crée l'objet `d`. Le signe `=` sert aussi à nommer les arguments d'une fonction, comme dans `mean(x = notes)`.
+- **`$`** — Extrait une colonne d'un tableau sous forme de vecteur. `villes$note` donne toutes les notes.
+- **`::`** — Précise l'extension d'où vient une fonction, sans avoir à la charger entièrement. `janitor::clean_names()`.
+- **`#|`** — Préfixe des options d'un bloc de code dans un document Quarto, comme `#| echo: false`.
+
+### Fonctions principales
+
+Ces six fonctions du *tidyverse* couvrent la grande majorité du travail sur un tableau de données. Les autres sous-sections regroupent les fonctions complémentaires.
+
+- **`select()`** — Garde ou enlève des **colonnes**. `select(d, note, ville)` garde ces deux colonnes; `select(d, -duree)` enlève `duree`.
+- **`filter()`** — Garde les **lignes** qui respectent une condition. `filter(d, note > 60)` garde les notes supérieures à 60. Attention : `select()` agit sur les colonnes, `filter()` sur les lignes.
+- **`mutate()`** — Crée une nouvelle colonne ou modifie une colonne existante, sans changer le nombre de lignes. `mutate(d, note10 = note / 10)`.
+- **`summarize()`** — Réduit un tableau à une ou quelques lignes de statistiques. `summarize(d, m = mean(note), .by = ville)` donne une moyenne par ville. Contrairement à `mutate()`, le tableau obtenu est plus court.
+- **`arrange()`** — Ordonne les lignes selon une ou plusieurs colonnes, en ordre croissant par défaut. `arrange(d, desc(note))` donne l'ordre décroissant.
+- **`pivot_longer()`** — Transforme un tableau **large** en tableau **long** : plusieurs colonnes deviennent deux colonnes, l'une pour les noms, l'autre pour les valeurs. Nécessaire pour la plupart des figures de `ggplot2`.
+
+### Importer et inspecter
+
+- **`library()`** — Charge une extension déjà installée dans la session. À répéter à chaque nouvelle session. Exemple : `library(tidyverse)`.
+- **`install.packages()`** — Installe une extension sur l'ordinateur. Une seule fois par extension, contrairement à `library()`.
+- **`read_csv()`** — Importe un fichier `.csv` dont le séparateur est la virgule. Produit un tableau (*tibble*).
+- **`read_csv2()`** — Version pour les fichiers `.csv` dont le séparateur est le point-virgule et dont les décimales sont marquées par une virgule, format fréquent en français.
+- **`glimpse()`** — Affiche un aperçu compact du tableau : nombre de lignes, de colonnes, type de chaque variable et premières valeurs.
+- **`summary()`** — Résumé statistique d'un objet. Sur un tableau, donne minimum, médiane, moyenne et maximum de chaque colonne; sur un modèle, donne les coefficients et les tests.
+- **`names()`** — Donne les noms des colonnes d'un tableau.
+- **`clean_names()`** — Normalise les noms de colonnes (minuscules, sans accents ni espaces). Vient de l'extension `janitor`.
+
+### Autres fonctions de manipulation
+
+- **`if_else()`** — Renvoie une valeur si une condition est vraie, une autre si elle est fausse. Sert souvent à créer une variable binaire dans `mutate()`.
+- **`rename()`** — Change le nom d'une colonne, sous la forme `nouveau = ancien`.
+- **`desc()`** — S'utilise dans `arrange()` pour inverser l'ordre : `arrange(d, desc(note))` donne l'ordre décroissant.
+- **`pull()`** — Extrait une colonne sous forme de vecteur, comme `$`, mais utilisable dans une chaîne de *pipes*.
+- **`across()`** — Applique la même opération à plusieurs colonnes à la fois, à l'intérieur de `mutate()` ou de `summarize()`.
+- **`as_factor()`** — Convertit une variable en facteur, c'est-à-dire en variable catégorique dont les niveaux ont un ordre.
+
+### Résumer et grouper
+
+- **`.by =`** — Argument de `summarize()` et de `mutate()` qui effectue le calcul séparément pour chaque groupe. `summarize(d, m = mean(note), .by = ville)` donne une moyenne par ville.
+- **`group_by()`** — Ancienne façon de grouper les données avant un calcul. Demande normalement `ungroup()` par la suite; ce livre privilégie `.by =`.
+- **`n()`** — Donne le nombre d'observations, à utiliser à l'intérieur de `summarize()` ou de `mutate()`.
+- **`mean()`, `median()`** — Moyenne et médiane d'un vecteur numérique.
+- **`sd()`, `var()`** — Écart type et variance d'un vecteur numérique.
+- **`round()`** — Arrondit une valeur au nombre de décimales demandé : `round(3.14159, 2)` donne `3.14`.
+
+### Changer la forme du tableau
+
+- **`pivot_wider()`** — L'opération inverse : transforme un tableau long en tableau large.
+- **`tibble()`, `tribble()`** — Créent un tableau à la main, la seconde ligne par ligne, ce qui est utile pour de petits exemples.
+
+### Visualiser
+
+- **`ggplot()`** — Ouvre un graphique et reçoit les données. Les couches suivantes s'ajoutent avec `+`, et non avec le *pipe*.
+- **`aes()`** — Définit les correspondances entre les variables et les propriétés visuelles : axes `x` et `y`, couleur, remplissage, forme.
+- **`geom_boxplot()`** — Boîtes à moustaches : médiane, quartiles et valeurs extrêmes pour chaque groupe.
+- **`geom_point()`** — Nuage de points, une marque par observation.
+- **`geom_jitter()`** — Comme `geom_point()`, mais décale légèrement les points au hasard pour éviter qu'ils se superposent.
+- **`geom_histogram()`** — Histogramme : distribution d'une variable continue découpée en intervalles.
+- **`geom_density()`** — Courbe de densité, version lissée de l'histogramme.
+- **`geom_vline()`, `geom_hline()`** — Ajoutent une ligne verticale ou horizontale de référence, souvent une moyenne ou un seuil.
+- **`stat_summary()`** — Calcule et trace un résumé des données, typiquement la moyenne avec des barres d'erreur.
+- **`stat_smooth()`** — Ajoute une droite ou une courbe de tendance au graphique.
+- **`labs()`** — Définit les titres et les étiquettes des axes et des légendes.
+- **`theme_minimal()`, `theme_classic()`** — Thèmes visuels qui remplacent l'apparence par défaut de `ggplot2`.
+- **`coord_cartesian()`** — Ajuste les limites visibles des axes sans supprimer de données du calcul.
+- **`scale_fill_manual()`, `scale_color_manual()`** — Imposent des couleurs choisies à la main plutôt que les couleurs par défaut.
+- **`ggsave()`** — Enregistre une figure dans un fichier, avec des dimensions et une résolution données.
+
+### Analyser
+
+- **`t.test()`** — Exécute un test $t$ (celui de Welch par défaut). S'écrit `t.test(note ~ ville, data = villes)`.
+- **`aov()`** — Ajuste une ANOVA, qui compare les moyennes de plus de deux groupes.
+- **`TukeyHSD()`** — Test post hoc appliqué à une ANOVA pour savoir **quelles** paires de groupes diffèrent.
+- **`lm()`** — Ajuste un modèle linéaire (régression linéaire).
+- **`glm()`** — Ajuste un modèle linéaire généralisé. Avec `family = binomial`, il s'agit d'une régression logistique.
+- **`predict()`** — Calcule les valeurs prédites par un modèle, pour les données d'origine ou pour de nouvelles données.
+- **`invlogit()`** — Convertit une valeur en *log-odds* en probabilité. Vient de l'extension `arm`.
+- **`exp()`** — Fonction exponentielle. Appliquée à un coefficient logistique, elle donne le rapport de cotes.
+- **`tab_model()`** — Produit un tableau lisible des résultats d'un modèle. Vient de l'extension `sjPlot`.
+- **`emmeans()`** — Calcule les moyennes estimées par un modèle et compare les groupes deux à deux.
+- **`set.seed()`** — Fixe le point de départ du générateur de nombres aléatoires, ce qui rend une simulation reproductible.
+- **`sample()`** — Prélève un échantillon au hasard dans un ensemble de valeurs.
+
+## Termes statistiques
+
+### Échantillonnage et inférence
+
+- **population** — Ensemble complet des individus ou des observations qui nous intéressent. On y a rarement accès directement.
+- **échantillon** — Sous-ensemble de la population, effectivement observé et analysé.
+- **inférence statistique** — Démarche qui consiste à estimer une propriété de la population à partir d'un échantillon : on estime le tout à partir de la partie.
+- **paramètre** — Valeur qui décrit la **population**, notée par une lettre grecque. Elle est normalement inconnue.
+- **statistique** — Valeur calculée à partir de l'**échantillon**, notée par une lettre latine. Elle sert à estimer un paramètre.
+- **$\mu$, $\sigma$** — Moyenne et écart type de la population.
+- **$\bar{x}$, $s$** — Moyenne et écart type de l'échantillon.
+- **moyenne** — Somme des valeurs divisée par leur nombre. Sensible aux valeurs extrêmes.
+- **médiane** — Valeur qui sépare les données en deux moitiés égales. Moins sensible aux valeurs extrêmes que la moyenne.
+- **variance** — Mesure de la dispersion : moyenne des écarts au carré par rapport à la moyenne.
+- **écart type** — Racine carrée de la variance, exprimée dans l'unité d'origine de la variable, donc plus facile à interpréter.
+- **loi normale** — Distribution symétrique en forme de cloche. Plusieurs tests, dont le test $t$, la supposent pour les données.
+- **test paramétrique** — Test qui suppose une distribution particulière des données, typiquement la loi normale.
+- **variable de réponse** — Variable qu'on cherche à expliquer, à gauche du `~` dans une formule. Aussi appelée « variable dépendante ».
+- **variable prédictive** — Variable qui sert à expliquer la réponse, à droite du `~`. Aussi appelée « variable indépendante ».
+- **variable continue** — Variable numérique qui peut prendre une infinité de valeurs dans un intervalle, comme une note ou une durée.
+- **variable catégorique** — Variable dont les valeurs sont des catégories, comme la ville. En R, souvent un facteur.
+- **tableau *tidy*** — Tableau où chaque ligne est une observation et chaque colonne une variable. Format attendu par le *tidyverse*.
+
+### Test d'hypothèses
+
+- **NHST** — *Null Hypothesis Significance Testing*, la démarche classique des tests d'hypothèses : on formule une hypothèse nulle, on mesure à quel point les données s'en écartent, puis on décide de la rejeter ou non.
+- **hypothèse nulle (H$_0$)** — Hypothèse selon laquelle il n'y a aucune différence réelle entre les groupes, c'est-à-dire qu'ils proviennent de la même population sous-jacente.
+- **hypothèse alternative** — Hypothèse selon laquelle une différence réelle existe entre les groupes.
+- **hypothèse bilatérale** — Hypothèse qui n'indique pas de direction : l'un ou l'autre des groupes pourrait avoir la moyenne la plus élevée. C'est le comportement par défaut de `t.test()`.
+- **hypothèse unilatérale** — Hypothèse qui indique une direction précise, par exemple que le groupe A dépasse le groupe B.
+- **valeur $p$** — Probabilité d'observer des résultats aussi extrêmes que les nôtres, **si l'hypothèse nulle était vraie**. Une valeur $p$ faible indique que le hasard seul explique mal les données.
+- **seuil $\alpha$** — Seuil de décision fixé d'avance, normalement 0,05 en sciences sociales. Si $p < \alpha$, on rejette l'hypothèse nulle.
+- **significatif** — Se dit d'un résultat dont la valeur $p$ est inférieure au seuil. Le terme concerne la décision statistique, pas l'importance réelle de l'effet.
+- **test $t$** — Test qui compare les moyennes de **deux** groupes. La version de Welch, utilisée par défaut dans R, ne suppose pas des variances égales.
+- **statistique $t$** — Rapport entre l'écart observé et l'écart attendu par le hasard : l'écart des moyennes divisé par le bruit. Une valeur de 4 signifie que l'écart est quatre fois plus grand que ce que le hasard produit d'habitude.
+- **distribution $t$** — Distribution de toutes les valeurs de $t$ que le hasard produit quand l'hypothèse nulle est vraie. Centrée sur zéro, elle ressemble à la loi normale, mais avec des queues plus épaisses.
+- **degrés de liberté** — Quantité d'information disponible pour estimer la variation. Ils déterminent l'épaisseur des queues de la distribution $t$ : plus l'échantillon est grand, plus la distribution s'approche de la loi normale.
+- **valeur critique** — Valeur de $t$ qui marque la frontière de la région critique. Pour $\alpha = 0{,}05$ et une hypothèse bilatérale avec de grands échantillons, elle est d'environ $|1{,}98|$.
+- **région critique** — Zone aux extrémités de la distribution qui représente 5 % des valeurs. Une statistique qui y tombe mène au rejet de l'hypothèse nulle.
+- **intervalle de confiance** — Intervalle de valeurs plausibles pour le paramètre estimé. Un intervalle à 95 % qui ne contient pas zéro correspond à un résultat significatif au seuil de 0,05.
+- **ANOVA** — Analyse de variance : compare les moyennes de **plus de deux** groupes à l'aide de la statistique $F$, sans multiplier les tests $t$.
+- **statistique $F$** — Rapport entre la variation **entre** les groupes et la variation **à l'intérieur** des groupes. Plus elle est grande, plus les groupes se distinguent.
+- **test post hoc** — Test effectué après une ANOVA significative pour déterminer quelles paires de groupes diffèrent réellement, par exemple le test de Tukey.
+
+### Modèles de régression
+
+- **régression linéaire** — Modèle qui décrit une variable de réponse **continue** en fonction d'une ou plusieurs variables prédictives. S'ajuste avec `lm()`.
+- **coefficient ($\hat\beta$)** — Estimation de l'effet d'une variable prédictive : de combien la réponse change quand cette variable augmente d'une unité.
+- **intercept** — Valeur prédite par le modèle quand toutes les variables prédictives valent zéro ou, pour une variable catégorique, quand on se trouve au niveau de référence.
+- **niveau de référence** — Catégorie à laquelle les autres catégories sont comparées dans un modèle. Par défaut, R choisit la première par ordre alphabétique.
+- **résidu** — Écart entre une valeur observée et la valeur prédite par le modèle. Ce qui reste inexpliqué.
+- **interaction** — Situation où l'effet d'une variable prédictive dépend de la valeur d'une autre.
+- **régression logistique** — Modèle dont la variable de réponse est **binaire** (0 ou 1, oui ou non). S'ajuste avec `glm()` et `family = binomial`.
+- **variable binaire** — Variable qui ne prend que deux valeurs, typiquement codées `0` et `1`.
+- **cote (*odds*)** — Rapport entre la probabilité qu'un événement se produise et celle qu'il ne se produise pas. Une cote de 2,9 signifie qu'il est 2,9 fois plus probable que l'événement arrive.
+- ***log-odds* (logit)** — Logarithme de la cote. Cette échelle est symétrique et centrée sur zéro, ce qui la rend utilisable dans un modèle linéaire. C'est l'unité des coefficients d'une régression logistique.
+- **rapport de cotes (*odds ratio*)** — Résultat de `exp()` appliqué à un coefficient logistique. Il indique par quel facteur les chances sont multipliées.
+- **probabilité prédite** — Valeur entre 0 et 1 obtenue en reconvertissant des *log-odds*, par exemple avec `invlogit()`. Plus facile à interpréter que les coefficients bruts.

@@ -59,6 +59,7 @@ book:
         - quarto-markdown.qmd
         - outils.qmd
         - reussir.qmd
+        - glossaire.qmd
         - references.qmd
 
 bibliography: references.bib
