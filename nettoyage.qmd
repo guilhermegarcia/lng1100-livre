@@ -76,7 +76,7 @@ library(janitor)
 q = read_csv2("donnees/supplementaires/questionnaire.csv")
 ```
 
-Si vous visualisez les données avec `glimpse(d)`, vous verrez que le fichier n'est pas *tidy* : il y a plusieurs colonnes qui ne sont pas nécessaires. En plus, les questions sont distribuées à travers les colonnes, et les noms des colonnes sont immenses. Simplement dit, le fichier est chaotique.
+Si vous visualisez les données avec `glimpse(q)`, vous verrez que le fichier n'est pas *tidy* : il y a plusieurs colonnes qui ne sont pas nécessaires. En plus, les questions sont distribuées à travers les colonnes, et les noms des colonnes sont immenses. Simplement dit, le fichier est chaotique.
 
 ### Standardisation des noms
 
@@ -100,7 +100,7 @@ glimpse(q, width = 50) # largeur de 50%
 
 ### Transformation *wide-to-long*
 
-On a déjà vu comment transformer les tableaux qui sont trop longs : on utilise la fonction `pivot_longer()`. Dans la fonction, il faut spécifier quelles colonnes seront transformées. Normalement, c'est facile de nommer ces colonnes. Le problème ici, ce sont les noms des colonnes, qui sont trop longs. Une solution est d'utiliser les indices des colonnes pertinentes (c'est-à-dire les positions des colonnes dans le tableau). Comment trouver ces indices? On utilise la fonction `names(q)` pour lister les noms de toutes les colonnes *avec leurs indices*. Cherchez la première question et remarquez son indice. Ici, les questions de notre questionnaire sont dans les colonnes 6 à 15.
+On a déjà vu comment transformer les tableaux qui sont trop larges : on utilise la fonction `pivot_longer()`. Dans la fonction, il faut spécifier quelles colonnes seront transformées. Normalement, c'est facile de nommer ces colonnes. Le problème ici, ce sont les noms des colonnes, qui sont trop longs. Une solution est d'utiliser les indices des colonnes pertinentes (c'est-à-dire les positions des colonnes dans le tableau). Comment trouver ces indices? On utilise la fonction `names(q)` pour lister les noms de toutes les colonnes *avec leurs indices*. Cherchez la première question et remarquez son indice. Ici, les questions de notre questionnaire sont dans les colonnes 6 à 15.
 
 ```{r}
 #| message: false

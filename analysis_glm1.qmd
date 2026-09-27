@@ -24,7 +24,7 @@ $$logit(P) = \hat\beta_0 + \hat\beta_1x_{i_{1}}$$
 
 -   On veut utiliser la même architecture de modèle[^analysis_c-1] utilisée pour les régressions linéaires déjà discutées dans le cours : une droite (changement constant)
 -   Mais cela n'est pas compatible avec la notion de probabilité, qui contraint les valeurs à l'intervalle \[0,1\]. En plus, la ligne de tendance représentant une probabilité est typiquement en forme de S (sigmoïde)
--   On pourrait utiliser les cotes (*odds*), qui sont linéaires et qui, par conséquent, génèrent une droite. Cependant, les *odds* sont asymétriques, comme discuté en classe
+-   On pourrait utiliser les cotes (*odds*), qui éliminent la limite supérieure : elles vont de 0 à $\infty$. Cependant, elles restent bornées à 0 (une droite finirait par prédire des cotes négatives, ce qui est impossible) et elles sont asymétriques autour de 1, comme discuté en classe
 -   **Solution** : on utilise les **logs de cotes** (*log-odds*) = c'est le **logit de la probabilité**
 
 [^analysis_c-1]: Il s'agit d'une famille de modèles statistiques : les [modèles linéaires généralisés](https://fr.wikipedia.org/wiki/Modèle_linéaire_généralisé){target="_blank"} (*Generalized Linear Models*), ce qui comprend les régressions linéaires, logistiques, poissons, etc.
@@ -36,19 +36,19 @@ Voici l'exemple discuté en classe (`villes2.csv`) :
 
 À partir du point central (1), on remarque que l'échelle en *odds* est très asymétrique :
 
-![*Odds* : linéaires mais asymétriques](Figures/odds.png){width="70%" fig-align="center"}
+![*Odds* : bornées à 0 et asymétriques](Figures/odds.png){width="70%" fig-align="center"}
 
 Lorsqu'on transforme *odds* en *log-odds*, on arrive à une échelle symétrique dont le point central est toujours zéro :
 
 -   Le *log-odds* d'être dans une ville francophone = **1.08**
 -   Le *log-odds* de n'être pas dans une ville francophone = **-1.08**
 
-![*Log-odds* : linéaires et symétriques](Figures/logodds.png){width="80%" fig-align="center"}
+![*Log-odds* : non bornés et symétriques](Figures/logodds.png){width="80%" fig-align="center"}
 
 Donc, alors que les modèles linéaires donnent des coefficients dans l'unité originale (brute) de la variable de réponse, les modèles logistiques donnent des coefficients en *log-odds*. C'est la principale différence du modèle dans notre cours, vu que les modèles linéaires ont déjà été discutés.
 
 ::: {.callout-note title="Tableau de conversion" collapse="true"}
-Voici un tableau adapté à partir de @garcia_2021_dvaslr (p. 146) pour faciliter la conversion entre les unités discutées en classe. L'hypothèse nulle = $\hat\beta = 0$, ce qui équivaut intuitivement à une probabilité de 50 %.
+Voici un tableau adapté à partir de @garcia_2021_dvaslr (p. 146) pour faciliter la conversion entre les unités discutées en classe. Pour l'intercept, 0 *log-odds* équivaut à une probabilité de 50 %. Pour les autres coefficients, l'hypothèse nulle ($H_0 : \beta = 0$) signifie plutôt qu'il n'y a **aucun changement** : les *log-odds* ne changent pas quand la variable prédictive change (le rapport des cotes est de $e^0 = 1$), peu importe la probabilité de départ.
 
 |    P | **Odds** | **ln(odds)** = $\hat\beta$ |
 |-----:|---------:|---------------------------:|
@@ -137,9 +137,9 @@ Voici le rapport du modèle discuté en classe (@tbl-glm1).
 
 <!-- [^analysis_c-3]: Le $R^2$ dans le @tbl-glm1 n'est pas exactement le même type de coefficient de détermination déjà vu pour les régressions linéaires (on l'appelle pseudo $R^2$), mais vous pouvez l'utiliser si vous voulez. Consultez @tjur. -->
 
-> Notre modèle confirme un effet significatif de la variable \var{note} sur la variable \var{francophone} ($\hat\beta = 0,04$, IC 95 % = $[0,0094; 0,0076], p = 0,015$). Ces résultats indiquent que, pour chaque augmentation de 10 points dans la note d'un apprenant, les log-odds d'être dans une ville francophone augmente de 0,4. Autrement dit, les chances d'être dans une ville francophone augmentent d'un facteur de 1,5.[^analysis_c-4]
+> Notre modèle confirme un effet significatif de la variable `note` sur la variable `francophone` ($\hat\beta = 0,04$, IC 95 % = $[0,0094; 0,0765]$, $p = 0,015$). Ces résultats indiquent que, pour chaque augmentation de 10 points dans la note d'un apprenant, les log-odds d'être dans une ville francophone augmentent de 0,4. Autrement dit, les chances d'être dans une ville francophone augmentent d'un facteur de 1,5.[^analysis_c-4]
 
-[^analysis_c-4]: C'est le résultat de `exp(0.04^10)`. La fonction `exp()` nous donne le rapport des cotes (*odds-ratio*). Le `10` ici indique la quantité de points qu'on veut utiliser dans le calcul. Pour calculer le rapport des cotes d'un seul point, on utiliserait `exp(0.04)`. Si vous utilisez la fonction `tab_model()` de l'extension `sjPlot`, les coefficients seront affichés en *odds-ratio*, pas en *log-odds*. Consultez le code ci-dessous pour vérifier comment afficher les coefficients en *log-odds*.
+[^analysis_c-4]: C'est le résultat de `exp(0.04 * 10)`. La fonction `exp()` nous donne le rapport des cotes (*odds-ratio*). Le `10` ici indique la quantité de points qu'on veut utiliser dans le calcul. Pour calculer le rapport des cotes d'un seul point, on utiliserait `exp(0.04)`. Si vous utilisez la fonction `tab_model()` de l'extension `sjPlot`, les coefficients seront affichés en *odds-ratio*, pas en *log-odds*. Consultez le code ci-dessous pour vérifier comment afficher les coefficients en *log-odds*.
 
 ```{r}
 #| label: tbl-glm1
@@ -163,7 +163,7 @@ $$
 R^2 = 1 - \frac{\text{RSS}}{\text{TSS}}
 $$
 
-où RSS est la somme des carrés des résidus et TSS est la somme totale des carrés. Ce $R^2$) varie de 0 à 1 et a une interprétation intuitive : il indique le pourcentage de la variance de $Y$ que le modèle explique.
+où RSS est la somme des carrés des résidus et TSS est la somme totale des carrés. Ce $R^2$ varie de 0 à 1 et a une interprétation intuitive : il indique le pourcentage de la variance de $Y$ que le modèle explique.
 
 En revanche, pour les modèles de type `glm(family = "binomial")`, où la variable dépendante est binaire (0 ou 1), le $R^2$ classique n’est plus approprié, car la variance des résidus ne suit plus une loi normale avec variance constante. Pour évaluer l'ajustement dans ce contexte, plusieurs mesures de **pseudo-$R^2$** ont été proposées. Parmi celles-ci, le **$R^2$ de Tjur** est particulièrement intuitif [@tjur].
 
@@ -207,7 +207,7 @@ Ce résultat indique que le modèle sépare assez bien les deux classes.
 
 ## Prédictions
 
-Quel est l'effet de `note` sur `francophone`? La question ici est vraiment « *Quelle est la probabilité qu'une ville soit francophone étant donnée la note moyenne d'un apprenant qui étudie dans cette ville?* ». Autrement dit, on veut analyser $P(francophone = 1 | note)$. Le modèle nous donne un effet positif de `note` : $\hat\beta=$ `r mod1$coefficients[[2]] |> round(2)` (log-odds). Cela veut dire qu'une augmentation d'un point dans la note augmente les chances que la ville est francophone d'un facteur de `r exp(mod1$coefficients[[2]]) |> round(3)` (`exp(beta)` = `r exp(mod1$coefficients[[2]]) |> round(3)`), c'est-à-dire une augmentation de `r stringr::str_c(((exp(mod1$coefficients[[2]])-1) * 100) |> round(2), " %")`. On parle des chances (*odds*) et de *log-odds* parce que les deux nous donnent une droite, c'est-à-dire un changement constant qui nous permet d'évaluer n'importe quel effet pour n'importe quelle valeur de variable prédictive qu'on choisit.
+Quel est l'effet de `note` sur `francophone`? La question ici est vraiment « *Quelle est la probabilité qu'une ville soit francophone étant donnée la note moyenne d'un apprenant qui étudie dans cette ville?* ». Autrement dit, on veut analyser $P(francophone = 1 | note)$. Le modèle nous donne un effet positif de `note` : $\hat\beta=$ `r mod1$coefficients[[2]] |> round(2)` (log-odds). Cela veut dire qu'une augmentation d'un point dans la note augmente les chances que la ville est francophone d'un facteur de `r exp(mod1$coefficients[[2]]) |> round(3)` (`exp(beta)` = `r exp(mod1$coefficients[[2]]) |> round(3)`), c'est-à-dire une augmentation de `r stringr::str_c(((exp(mod1$coefficients[[2]])-1) * 100) |> round(2), " %")`. On parle des *log-odds* et des chances (*odds*) parce que l'effet y est constant : chaque point de plus **ajoute** toujours $\hat\beta$ aux *log-odds* (une droite) et **multiplie** toujours les chances par le même facteur, $e^{\hat\beta}$ (une courbe, mais un rapport constant). On peut donc évaluer l'effet à partir de n'importe quelle valeur de la variable prédictive, ce qui n'est pas le cas avec les probabilités.
 
 Si vous voulez parler des probabilités, la suggestion est de prendre des valeurs spécifiques pour la variable `note` et de vérifier les changements des probabilités. On peut utiliser la fonction `invlogit()` de l'extension `arm` :
 

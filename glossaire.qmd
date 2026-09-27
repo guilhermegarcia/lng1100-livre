@@ -150,6 +150,6 @@ Ces six fonctions du *tidyverse* couvrent la grande majorité du travail sur un 
 - **régression logistique** — Modèle dont la variable de réponse est **binaire** (0 ou 1, oui ou non). S'ajuste avec `glm()` et `family = binomial`.
 - **variable binaire** — Variable qui ne prend que deux valeurs, typiquement codées `0` et `1`.
 - **cote (*odds*)** — Rapport entre la probabilité qu'un événement se produise et celle qu'il ne se produise pas. Une cote de 2,9 signifie qu'il est 2,9 fois plus probable que l'événement arrive.
-- ***log-odds* (logit)** — Logarithme de la cote. Cette échelle est symétrique et centrée sur zéro, ce qui la rend utilisable dans un modèle linéaire. C'est l'unité des coefficients d'une régression logistique.
+- ***log-odds* (logit)** — Logarithme de la cote. Cette échelle n'est pas bornée (de $-\infty$ à $+\infty$), elle est symétrique et centrée sur zéro, ce qui la rend utilisable dans un modèle linéaire. C'est l'unité des coefficients d'une régression logistique.
 - **rapport de cotes (*odds ratio*)** — Résultat de `exp()` appliqué à un coefficient logistique. Il indique par quel facteur les chances sont multipliées.
 - **probabilité prédite** — Valeur entre 0 et 1 obtenue en reconvertissant des *log-odds*, par exemple avec `invlogit()`. Plus facile à interpréter que les coefficients bruts.

@@ -76,7 +76,7 @@ tab_model(mod2, transform = NULL,
 -   la fonction `predict()` est extrêmement utile pour prévoir des réponses à partir des nouvelles données en utilisant un modèle (soit la régression linéaire *ou* logistique).
 
 ::: {.callout-note title="Tableau de conversion" collapse="true"}
-Voici un tableau adapté à partir de @garcia_2021_dvaslr (p. 146) pour faciliter la conversion entre les unités discutées en classe. L'hypothèse nulle = $\hat\beta = 0$, ce qui équivaut intuitivement à une probabilité de 50 %.
+Voici un tableau adapté à partir de @garcia_2021_dvaslr (p. 146) pour faciliter la conversion entre les unités discutées en classe. Pour l'intercept, 0 *log-odds* équivaut à une probabilité de 50 %. Pour les autres coefficients, l'hypothèse nulle ($H_0 : \beta = 0$) signifie plutôt qu'il n'y a **aucun changement** : les *log-odds* ne changent pas quand la variable prédictive change (le rapport des cotes est de $e^0 = 1$), peu importe la probabilité de départ.
 
 |    P | **Odds** | **ln(odds)** = $\hat\beta$ |
 |-----:|---------:|---------------------------:|
@@ -438,11 +438,11 @@ Les étapes énumérées ci-dessus combinent l'analyse de données quantitatives
 Voici une liste de concepts statistiques discutés en classe pendant le cours.
 
 ::: {.callout-tip title="Les concepts de base" collapse="true"}
--   **Valeur** $p$ : la probabilité de trouver des données en question étant donné l'hypothèse nulle
+-   **Valeur** $p$ : la probabilité d'observer des données aussi extrêmes (ou plus) que celles obtenues, si l'hypothèse nulle est vraie
     -   Si l'hypothèse nulle est vraie et on la rejette $\rightarrow$ erreur de type I. Autrement dit, notre effet n'est pas réel, mais notre valeur $p$ est significatif
     -   Si l'hypothèse nulle est fausse et on ne la rejette pas $\rightarrow$ erreur de type II. Autrement dit, notre effet est réel, mais notre valeur $p$ n'est pas significatif (la [puissance statistique](https://fr.wikipedia.org/wiki/Puissance_statistique#:~:text=La%20puissance%20statistique%20d%27un,réalité%20les%20groupes%20sont%20différents){target="_blank"}.))
     -   *Le problème* : on ne sait jamais si $H_0$ est vraie
--   **Intervalle de confiance** : si on répétait la même expérience $n$ fois, la valeur réelle serait dans l'intervalle en question 95 % du temps (mais l'intervalle serait différent pour chaque échantillon!). Simplement dit, l'intervalle de confiance à 95 % vous dit que la moyenne de la population est dans cet intervalle avec une probabilité de 95 % (pas trop intuitif!)
+-   **Intervalle de confiance** : si on répétait la même expérience $n$ fois, la valeur réelle serait dans l'intervalle en question 95 % du temps (mais l'intervalle serait différent pour chaque échantillon!). Attention : le 95 % décrit la méthode, pas un intervalle en particulier. On ne peut pas dire qu'il y a une probabilité de 95 % que la valeur réelle soit dans *cet* intervalle-ci (pas trop intuitif!)
 -   **Hypothèse nulle** : notre point de départ. On n'a que deux options : rejeter l'hypothèse nulle OU ne pas rejeter l'hypothèse nulle. **On ne l'accepte jamais!** Autrement dit, on ne peut pas prouver l'absence d'un effet, logiquement.[^revision_b-2]
     -   Si on n'examine qu'un groupe, $H_0 : \mu = 0$ (la moyenne est de zéro)
     -   Si on compare les moyennes de deux groupes, *a* et *b*, $H_0 : \mu_a = \mu_b$ (il n'y a pas de différence entre les deux moyennes; autrement dit, les deux groupes/échantillons viennent de la même population)

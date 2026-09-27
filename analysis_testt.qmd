@@ -93,17 +93,17 @@ t.test(note ~ ville, data = villes)
 
 Faites attention à la syntaxe de la fonction : `note ~ ville`. Cela nous dit que l'objet de l'analyse est la `note` (la variable de **réponse**, aussi connue comme la « variable dépendante »). La variable `ville` est la variable **prédictive**, aussi connue comme la « variable indépendante ».
 
-On observe dans les résultats du test que la valeur $p$ est extrêmement basse. R utilise par défaut la notation scientifique, donc : `8.385e-05` $= 8.385^{-5} = 0.0000835$. Simplement dit, notre valeur $p$ est inférieure à 0,05 (le seuil normalement utilisé dans les sciences sociales et dans la linguistique). Donc, on conclut que les deux groupes sont statistiquement différents. Autrement dit, on a des évidences statistiques pour dire que les deux échantillons viennent des deux populations distinctes.
+On observe dans les résultats du test que la valeur $p$ est extrêmement basse. R utilise par défaut la notation scientifique, donc : `8.385e-05` $= 8.385 \times 10^{-5} = 0.00008385$. Simplement dit, notre valeur $p$ est inférieure à 0,05 (le seuil normalement utilisé dans les sciences sociales et dans la linguistique). Donc, on conclut que les deux groupes sont statistiquement différents. Autrement dit, on a des évidences statistiques pour dire que les deux échantillons viennent des deux populations distinctes.
 
 ## Le test *t*
 
 Bien que notre cours ne soit pas un cours de statistique, c'est utile de connaître la formule du test $t$. Voici le test $t$ de Welch (la version utilisée dans la fonction `t.test()`, qui suppose des variances inégales).
 
-$$ t = \frac{\bar{x}_1 - \bar{x}_2}{s \cdot \sqrt{\frac{1}{n_1} + \frac{1}{n_2}}} = \frac{\bar{x}_1 - \bar{x}_2}{\sqrt{s^2 \left(\frac{1}{n_1} + \frac{1}{n_2}\right)}} = \frac{\bar{x}_1 - \bar{x}_2}{\sqrt{\frac{s^2}{n_1} + \frac{s^2}{n_2}}}$$
+$$ t = \frac{\bar{x}_1 - \bar{x}_2}{\sqrt{\frac{s_1^2}{n_1} + \frac{s_2^2}{n_2}}}$$
 
 
 -   $\bar{x} \rightarrow$ la moyenne de chaque groupe (1 et 2)
--   $s^2 \rightarrow$ la variance^[La variance mesure à quel point les valeurs s’écartent de la moyenne.] (fonction `var()`) de chaque groupe (1 et 2)
+-   $s_1^2, s_2^2 \rightarrow$ la variance^[La variance mesure à quel point les valeurs s’écartent de la moyenne.] (fonction `var()`) de chaque groupe (1 et 2)
 -   $n \rightarrow$ la taille de chaque échantillon (1 et 2)
 
 ::: {.callout-important collapse="true"}
@@ -251,7 +251,7 @@ ggplot(courbes, aes(x = note, y = densite)) +
 À gauche, les notes varient peu : les deux groupes se superposent à peine, et un écart de 4,6 points est énorme. À droite, les notes varient beaucoup : les deux distributions se recouvrent presque entièrement, et le même écart de 4,6 points devient banal. C'est exactement ce que la formule encode :
 
 - le **numérateur** ($\bar{x}_1 - \bar{x}_2$) est le *signal* : l'écart qu'on a observé;
-- le **dénominateur** ($\sqrt{\frac{s^2}{n_1} + \frac{s^2}{n_2}}$) est le *bruit* : l'écart que le hasard produit d'habitude, compte tenu de la variation ($s^2$) et de la taille des échantillons ($n$).
+- le **dénominateur** ($\sqrt{\frac{s_1^2}{n_1} + \frac{s_2^2}{n_2}}$) est le *bruit* : l'écart que le hasard produit d'habitude, compte tenu de la variation ($s_1^2$, $s_2^2$) et de la taille des échantillons ($n$).
 
 :::{.callout-note}
 ## Pourquoi la taille de l'échantillon compte
@@ -358,13 +358,13 @@ Cette rareté de notre valeur observée---`r n_extremes` fois sur dix mille---es
 
 ## La valeur *p*
 
-La **p-value**, ou "valeur p", est une mesure utilisée en statistique pour répondre à une question fondamentale : *"Les résultats observés sont-ils dus au hasard, ou indiquent-ils quelque chose de significatif?"*
+La **valeur *p*** (*p-value*) répond à une question précise : *si l'hypothèse nulle était vraie, à quel point des résultats comme les nôtres seraient-ils surprenants?*
 
 Dans le contexte examiné ici, la valeur *p* nous donne essentiellement la 
 
-> probabilité d’obtenir les moyennes observées pour les trois groupes si ces groupes faisaient partie d’une même population, c’est-à-dire s’ils étaient effectivement identiques au départ (notre hypothèse nulle).
+> probabilité d’obtenir un écart entre les moyennes aussi grand (ou plus grand) que celui observé si les deux groupes faisaient partie d’une même population, c’est-à-dire s’ils étaient effectivement identiques au départ (notre hypothèse nulle).
 
-La p-value vous aide à déterminer si les différences observées entre les deux groupes sont suffisamment importantes pour conclure qu’elles ne sont probablement pas dues au hasard. **Si la p-value est petite** (par exemple, inférieure à 0,05 ou 5 %), cela signifie qu’il est très improbable que les différences soient dues au hasard. Vous pouvez donc raisonnablement conclure que la méthode semble avoir un effet. **Si la p-value est grande** (par exemple, 0,3 ou 30 %), cela indique que les différences pourraient être dues au hasard. Dans ce cas, il est difficile d’affirmer que la méthode produit un effet significatif.
+La valeur *p* est donc calculée **en supposant que H$_0$ est vraie** : ce n'est ni la probabilité que H$_0$ soit vraie, ni la probabilité que nos résultats soient « dus au hasard ». **Si la valeur *p* est petite** (par exemple, inférieure à 0,05 ou 5 %), des données comme les nôtres seraient très improbables si H$_0$ était vraie; on rejette donc l'hypothèse nulle et on conclut que la ville semble avoir un effet. **Si la valeur *p* est grande** (par exemple, 0,3 ou 30 %), des données comme les nôtres seraient assez fréquentes sous H$_0$; on ne peut donc pas rejeter l'hypothèse nulle (ce qui ne prouve pas pour autant qu'elle soit vraie).
 
 
 

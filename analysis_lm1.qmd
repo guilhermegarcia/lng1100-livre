@@ -12,7 +12,7 @@ Privilégier un modèle de régression linéaire complet plutôt qu'une simple A
 
 L'idée principale d'une régression linéaire est d'analyser la relation entre une variable de réponse `y` et une variable prédictive `x`. Naturellement, cette relation doit être linéaire pour que nos résultats soient fiables et précis. On représente cette relation avec l'expression `y ~ x` et on utilise la fonction `lm()` en R. La représentation mathématique est donnée ci-dessous :
 
-$$\hat y_i = \hat\beta_0 + \hat\beta_1x_{i_{1}} + \hat{e}$$ 
+$$y_i = \hat\beta_0 + \hat\beta_1x_{i_{1}} + \hat{e}$$ 
 
 « La réponse $y_i$ est le résultat de la somme des variables + l'erreur ($\hat{e}$) ».
 
@@ -66,7 +66,7 @@ tab_model(mod1,
 
 Le modèle nous donne les coefficients, c'est-à-dire nos bêtas ($\hat\beta$). Notre variable prédictive (`ville`) étant catégorielle, R choisit Montréal comme l'intercept (ordre alphabétique). Par conséquent, notre modèle peut être représenté par :
 
-$$\hat y_i = \hat\beta_0 + \overbrace{\hat\beta_1x_{i_{1}}}^{\text{Québec}} + \hat{e}$$ L'intercept **est toujours** la réponse prévue lorsque toutes les autres variables prédictives sont égales à zéro. Ici, on voit que :
+$$y_i = \hat\beta_0 + \overbrace{\hat\beta_1x_{i_{1}}}^{\text{Québec}} + \hat{e}$$ L'intercept **est toujours** la réponse prévue lorsque toutes les autres variables prédictives sont égales à zéro. Ici, on voit que :
 
 -   la moyenne du groupe de Montréal = 69.6
 -   la moyenne du groupe de Québec = 69.6 + 4.59
@@ -79,6 +79,11 @@ confint(mod1)
 ```
 
 Finalement, il faut noter que chaque valeur *p* représente un test statistique qui nous permet de rejeter ou non l'hypothèse nulle. Prenons l'intercept, représenté ici par Montréal. L'hypothèse nulle de notre bêta est que la note moyenne de Montréal est de zéro. Évidemment, on rejette cette hypothèse, vu que la note moyenne est de 69.58. Ensuite, l'hypothèse nulle pour Québec (notre slope) sera de zéro aussi, c'est-à-dire que la différence entre la note moyenne de Montréal et Québec est de zéro. On rejette cette hypothèse aussi.
+
+:::{.callout-tip}
+## Le coefficient de détermination ($R^2$)
+Le $R^2$ indique la **proportion de la variation** de la variable de réponse qui est expliquée par les variables prédictives du modèle. Il varie de 0 (le modèle n'explique rien) à 1 (le modèle explique toute la variation). Ici, $R^2 =$ `r summary(mod1)$r.squared |> round(2)` : la variable `ville` explique environ `r round(summary(mod1)$r.squared * 100)` % de la variation des notes. On le trouve dans le résultat de `summary()` (*Multiple R-squared*) ou dans le tableau de `tab_model()`.
+:::
 
 ## Comparaison avec l'ANOVA
 
