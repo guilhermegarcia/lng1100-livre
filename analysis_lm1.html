@@ -381,7 +381,7 @@ window.Quarto = {
 <section id="la-régression-linéaire" class="level2" data-number="6.2">
 <h2 data-number="6.2" data-anchor-id="la-régression-linéaire"><span class="header-section-number">6.2</span> La régression linéaire</h2>
 <p>L’idée principale d’une régression linéaire est d’analyser la relation entre une variable de réponse <code>y</code> et une variable prédictive <code>x</code>. Naturellement, cette relation doit être linéaire pour que nos résultats soient fiables et précis. On représente cette relation avec l’expression <code>y ~ x</code> et on utilise la fonction <code>lm()</code> en R. La représentation mathématique est donnée ci-dessous :</p>
-<p><span class="math display">\[\hat y_i = \hat\beta_0 + \hat\beta_1x_{i_{1}} + \hat{e}\]</span></p>
+<p><span class="math display">\[y_i = \hat\beta_0 + \hat\beta_1x_{i_{1}} + \hat{e}\]</span></p>
 <p>« La réponse <span class="math inline">\(y_i\)</span> est le résultat de la somme des variables + l’erreur (<span class="math inline">\(\hat{e}\)</span>) ».</p>
 <p>On peut ajouter n’importe combien de variables à notre modèle : <code>y ~ x + w + z ...</code>. Donc, c’est facile d’examiner les effets de plusieurs variables prédictives sur la variable de réponse <code>y</code>. Dans la séance, on a commencé notre analyse avec le modèle suivant (<code>villes.csv</code>) :</p>
 <p><code>mod1 = lm(note ~ ville, data = villes)</code></p>
@@ -464,7 +464,7 @@ Figure&nbsp;6.1. Les apprenants de Montréal vs Québec
 </div>
 </div>
 <p>Le modèle nous donne les coefficients, c’est-à-dire nos bêtas (<span class="math inline">\(\hat\beta\)</span>). Notre variable prédictive (<code>ville</code>) étant catégorielle, R choisit Montréal comme l’intercept (ordre alphabétique). Par conséquent, notre modèle peut être représenté par :</p>
-<p><span class="math display">\[\hat y_i = \hat\beta_0 + \overbrace{\hat\beta_1x_{i_{1}}}^{\text{Québec}} + \hat{e}\]</span> L’intercept <strong>est toujours</strong> la réponse prévue lorsque toutes les autres variables prédictives sont égales à zéro. Ici, on voit que :</p>
+<p><span class="math display">\[y_i = \hat\beta_0 + \overbrace{\hat\beta_1x_{i_{1}}}^{\text{Québec}} + \hat{e}\]</span> L’intercept <strong>est toujours</strong> la réponse prévue lorsque toutes les autres variables prédictives sont égales à zéro. Ici, on voit que :</p>
 <ul>
 <li>la moyenne du groupe de Montréal = 69.6</li>
 <li>la moyenne du groupe de Québec = 69.6 + 4.59</li>
@@ -483,6 +483,19 @@ villeQuébec  2.37048  6.80752</code></pre>
 </div>
 </div>
 <p>Finalement, il faut noter que chaque valeur <em>p</em> représente un test statistique qui nous permet de rejeter ou non l’hypothèse nulle. Prenons l’intercept, représenté ici par Montréal. L’hypothèse nulle de notre bêta est que la note moyenne de Montréal est de zéro. Évidemment, on rejette cette hypothèse, vu que la note moyenne est de 69.58. Ensuite, l’hypothèse nulle pour Québec (notre slope) sera de zéro aussi, c’est-à-dire que la différence entre la note moyenne de Montréal et Québec est de zéro. On rejette cette hypothèse aussi.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Astuce</span>Le coefficient de détermination (<span class="math inline">\(R^2\)</span>)
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Le <span class="math inline">\(R^2\)</span> indique la <strong>proportion de la variation</strong> de la variable de réponse qui est expliquée par les variables prédictives du modèle. Il varie de 0 (le modèle n’explique rien) à 1 (le modèle explique toute la variation). Ici, <span class="math inline">\(R^2 =\)</span> 0.15 : la variable <code>ville</code> explique environ 15 % de la variation des notes. On le trouve dans le résultat de <code>summary()</code> (<em>Multiple R-squared</em>) ou dans le tableau de <code>tab_model()</code>.</p>
+</div>
+</div>
 </section>
 <section id="comparaison-avec-lanova" class="level2" data-number="6.3">
 <h2 data-number="6.3" data-anchor-id="comparaison-avec-lanova"><span class="header-section-number">6.3</span> Comparaison avec l’ANOVA</h2>
@@ -510,7 +523,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <p><i class="fa-solid fa-question-circle fa-xs" aria-label="question-circle"></i> <strong>Question 1.</strong> <em>Une ville de plus</em>. Dans un nouveau script, importez le fichier <code>villes2.csv</code> et explorez les différences entre les groupes par rapport à la variable <code>ville</code>. Créez une figure pour les variables <code>ville</code> et <code>note</code>. Exécutez un modèle linéaire avec ces variables. Interprétez les résultats. Répétez les étapes 3–6 avec les variables <code>duree</code> (temps d’étude du français) et <code>note</code></p>
 <p><i class="fa-solid fa-question-circle fa-xs" aria-label="question-circle"></i> <strong>Question 2.</strong> <em>Une variable de plus</em>. On peut avoir plusieurs variables prédictives : <code>y ~ x + w + z ...</code>. Créez une figure pour <code>note</code>, <code>ville</code> et <code>duree</code>. Exécutez un modèle linéaire avec ses variables. Interprétez les résultats : nos conclusions changent-elles? <strong>Extra</strong> : reproduisez la figure dans la diapo de la séance 5.</p>
 <div class="callout callout-style-default callout-warning callout-titled" title="Régression linéaire multiple">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -519,7 +532,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-1" class="callout-1-contents callout-collapse collapse">
+<div id="callout-2" class="callout-2-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>Quand on ajoute plus d’une variable prédictive dans une régression, il s’agit d’une <strong>régression (linéaire) multiple</strong>. Essentiellement, ici on pose la question « lorsque la variable <code>ville</code> est considérée, est-ce que l’on observe un effet de la variable <code>duree</code>? » (et vice versa). C’est pourquoi il est important de considérer plusieurs variables à la fois : parfois, l’effet observé provient d’une autre variable! Notre modèle ici peut être représenté mathématiquement ainsi :</p>
 <p><span class="math display">\[\overbrace{\hat\beta_0}^{\text{Calgary}} + \overbrace{\hat\beta_1X}^{\text{Montréal}} +\overbrace{\hat\beta_2X}^{\text{Québec}} + \overbrace{\hat\beta_3X}^{\text{temps d'étude}} + {\hat{e}}\]</span></p>

@@ -403,7 +403,7 @@ margin: 10px;
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># On utilise ici le script déjà créé pour</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co"># nettoyer les données :</span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(<span class="st">"Scripts/script_11_nettoyage.R"</span>)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(<span class="st">"Scripts/script_10_nettoyage.R"</span>)</span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> long, <span class="fu">aes</span>(<span class="at">x =</span> langues, <span class="at">y =</span> correct)) <span class="sc">+</span> </span>
 <span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">stat_summary</span>(<span class="at">geom =</span> <span class="st">"bar"</span>, <span class="at">fill =</span> <span class="fl">0.2</span>, </span>
@@ -496,7 +496,7 @@ Figure&nbsp;12.1. L’influence de parler une autre langue sur la précision d�
 </div>
 <div id="callout-1" class="callout-1-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>Voici un tableau adapté à partir de <span class="citation" data-cites="garcia_2021_dvaslr">Garcia (<a href="references.html#ref-garcia_2021_dvaslr" role="doc-biblioref">2021</a>)</span> (p.&nbsp;146) pour faciliter la conversion entre les unités discutées en classe. L’hypothèse nulle = <span class="math inline">\(\hat\beta = 0\)</span>, ce qui équivaut intuitivement à une probabilité de 50 %.</p>
+<p>Voici un tableau adapté à partir de <span class="citation" data-cites="garcia_2021_dvaslr">Garcia (<a href="references.html#ref-garcia_2021_dvaslr" role="doc-biblioref">2021</a>)</span> (p.&nbsp;146) pour faciliter la conversion entre les unités discutées en classe. Pour l’intercept, 0 <em>log-odds</em> équivaut à une probabilité de 50 %. Pour les autres coefficients, l’hypothèse nulle (<span class="math inline">\(H_0 : \beta = 0\)</span>) signifie plutôt qu’il n’y a <strong>aucun changement</strong> : les <em>log-odds</em> ne changent pas quand la variable prédictive change (le rapport des cotes est de <span class="math inline">\(e^0 = 1\)</span>), peu importe la probabilité de départ.</p>
 <table class="caption-top table">
 <thead>
 <tr class="header">
@@ -867,13 +867,13 @@ Important
 <div id="callout-3" class="callout-3-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <ul>
-<li><strong>Valeur</strong> <span class="math inline">\(p\)</span> : la probabilité de trouver des données en question étant donné l’hypothèse nulle
+<li><strong>Valeur</strong> <span class="math inline">\(p\)</span> : la probabilité d’observer des données aussi extrêmes (ou plus) que celles obtenues, si l’hypothèse nulle est vraie
 <ul>
 <li>Si l’hypothèse nulle est vraie et on la rejette <span class="math inline">\(\rightarrow\)</span> erreur de type I. Autrement dit, notre effet n’est pas réel, mais notre valeur <span class="math inline">\(p\)</span> est significatif</li>
 <li>Si l’hypothèse nulle est fausse et on ne la rejette pas <span class="math inline">\(\rightarrow\)</span> erreur de type II. Autrement dit, notre effet est réel, mais notre valeur <span class="math inline">\(p\)</span> n’est pas significatif (la <a href="https://fr.wikipedia.org/wiki/Puissance_statistique#:~:text=La%20puissance%20statistique%20d%27un,réalité%20les%20groupes%20sont%20différents" target="_blank">puissance statistique</a>.))</li>
 <li><em>Le problème</em> : on ne sait jamais si <span class="math inline">\(H_0\)</span> est vraie</li>
 </ul></li>
-<li><strong>Intervalle de confiance</strong> : si on répétait la même expérience <span class="math inline">\(n\)</span> fois, la valeur réelle serait dans l’intervalle en question 95 % du temps (mais l’intervalle serait différent pour chaque échantillon!). Simplement dit, l’intervalle de confiance à 95 % vous dit que la moyenne de la population est dans cet intervalle avec une probabilité de 95 % (pas trop intuitif!)</li>
+<li><strong>Intervalle de confiance</strong> : si on répétait la même expérience <span class="math inline">\(n\)</span> fois, la valeur réelle serait dans l’intervalle en question 95 % du temps (mais l’intervalle serait différent pour chaque échantillon!). Attention : le 95 % décrit la méthode, pas un intervalle en particulier. On ne peut pas dire qu’il y a une probabilité de 95 % que la valeur réelle soit dans <em>cet</em> intervalle-ci (pas trop intuitif!)</li>
 <li><strong>Hypothèse nulle</strong> : notre point de départ. On n’a que deux options : rejeter l’hypothèse nulle OU ne pas rejeter l’hypothèse nulle. <strong>On ne l’accepte jamais!</strong> Autrement dit, on ne peut pas prouver l’absence d’un effet, logiquement.<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>
 <ul>
 <li>Si on n’examine qu’un groupe, <span class="math inline">\(H_0 : \mu = 0\)</span> (la moyenne est de zéro)</li>

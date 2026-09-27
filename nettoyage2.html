@@ -627,11 +627,11 @@ B --&gt; C{Analyse}
 </div>
 </div>
 <p>On a révisé ci-dessus comment (a) nettoyer un fichier et (b) créer des graphiques. Vous pouvez certainement compléter (a) et (b) dans un même script. Par contre, comme discuté dans le <a href="./nettoyage.html">chapitre 9</a>, c’est toujours une bonne idée de séparer les différents éléments dans une analyse pour maximiser l’organisation de notre flux de travail.</p>
-<p>Supposez que le nettoyage ci-dessus est dans un script appelé <code>script_10_net.R</code>. Dans ce script, un charge nos extensions et on importe notre fichier de données. Naturellement, on nettoie les données dans le même script. Ensuite, créez un script appelé <code>script_10_exp.R</code> pour ajouter les codes qui génèrent les graphiques discutés ci-dessus (ainsi que les tableaux pour les moyennes, etc.). Dans ce script, on peut simplement charger le script précédent :</p>
+<p>Supposez que le nettoyage ci-dessus est dans un script appelé <code>script_10_net.R</code>. Dans ce script, on charge nos extensions et on importe notre fichier de données. Naturellement, on nettoie les données dans le même script. Ensuite, créez un script appelé <code>script_10_exp.R</code> pour ajouter les codes qui génèrent les graphiques discutés ci-dessus (ainsi que les tableaux pour les moyennes, etc.). Dans ce script, on peut simplement charger le script précédent :</p>
 <div class="cell">
 <details open="" class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Contenu du fichier script_10_vis.R</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Contenu du fichier script_10_exp.R</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(<span class="st">"script_10_net.R"</span>)</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Exemple d'un des graphiques de la question 5 :</span></span>

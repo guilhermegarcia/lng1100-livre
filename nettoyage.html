@@ -404,7 +404,7 @@ margin: 10px;
 <span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>q <span class="ot">=</span> <span class="fu">read_csv2</span>(<span class="st">"donnees/supplementaires/questionnaire.csv"</span>)</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
-<p>Si vous visualisez les données avec <code>glimpse(d)</code>, vous verrez que le fichier n’est pas <em>tidy</em> : il y a plusieurs colonnes qui ne sont pas nécessaires. En plus, les questions sont distribuées à travers les colonnes, et les noms des colonnes sont immenses. Simplement dit, le fichier est chaotique.</p>
+<p>Si vous visualisez les données avec <code>glimpse(q)</code>, vous verrez que le fichier n’est pas <em>tidy</em> : il y a plusieurs colonnes qui ne sont pas nécessaires. En plus, les questions sont distribuées à travers les colonnes, et les noms des colonnes sont immenses. Simplement dit, le fichier est chaotique.</p>
 <section id="standardisation-des-noms" class="level3" data-number="9.3.1">
 <h3 data-number="9.3.1" data-anchor-id="standardisation-des-noms"><span class="header-section-number">9.3.1</span> Standardisation des noms</h3>
 <p>Il faut simplifier et standardiser les noms des colonnes. Idéalement, on ne veut pas avoir des espaces dans les noms des variables (c’est pourquoi on voit plusieurs accents graves dans les noms de colonnes maintenant). La fonction <code>clean_names()</code> de l’extension <code>janitor</code> sera très utile ici :</p>
@@ -500,7 +500,7 @@ margin: 10px;
 </section>
 <section id="transformation-wide-to-long" class="level3" data-number="9.3.3">
 <h3 data-number="9.3.3" data-anchor-id="transformation-wide-to-long"><span class="header-section-number">9.3.3</span> Transformation <em>wide-to-long</em></h3>
-<p>On a déjà vu comment transformer les tableaux qui sont trop longs : on utilise la fonction <code>pivot_longer()</code>. Dans la fonction, il faut spécifier quelles colonnes seront transformées. Normalement, c’est facile de nommer ces colonnes. Le problème ici, ce sont les noms des colonnes, qui sont trop longs. Une solution est d’utiliser les indices des colonnes pertinentes (c’est-à-dire les positions des colonnes dans le tableau). Comment trouver ces indices? On utilise la fonction <code>names(q)</code> pour lister les noms de toutes les colonnes <em>avec leurs indices</em>. Cherchez la première question et remarquez son indice. Ici, les questions de notre questionnaire sont dans les colonnes 6 à 15.</p>
+<p>On a déjà vu comment transformer les tableaux qui sont trop larges : on utilise la fonction <code>pivot_longer()</code>. Dans la fonction, il faut spécifier quelles colonnes seront transformées. Normalement, c’est facile de nommer ces colonnes. Le problème ici, ce sont les noms des colonnes, qui sont trop longs. Une solution est d’utiliser les indices des colonnes pertinentes (c’est-à-dire les positions des colonnes dans le tableau). Comment trouver ces indices? On utilise la fonction <code>names(q)</code> pour lister les noms de toutes les colonnes <em>avec leurs indices</em>. Cherchez la première question et remarquez son indice. Ici, les questions de notre questionnaire sont dans les colonnes 6 à 15.</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>

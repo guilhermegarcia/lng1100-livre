@@ -416,7 +416,7 @@ margin: 10px;
 </style>
 <section id="plus-de-deux-groupes" class="level2" data-number="5.1">
 <h2 data-number="5.1" data-anchor-id="plus-de-deux-groupes"><span class="header-section-number">5.1</span> Plus de deux groupes…?</h2>
-<p>Dans le chapitre précédent, on a analysé les notes de deux groupes d’apprenants (Montréal et Québec). C’est une situation typique pour l’utilisation d’un test <span class="math inline">\(t\)</span>. Si, par contre, on avait trois groupes, on aurait des problèmes, vu que cette méthode est utilisée juste pour un ou deux groupes. Une solution possible serait d’exécuter deux tests <span class="math inline">\(t\)</span>. On verra bientôt que cette approche est très problématique. La solution traditionnelle est donc d’utiliser une autre méthode d’analyse : l’<strong>ANOVA</strong>. Avant de discuter cette méthode célèbre, il faut bien comprendre pourquoi on évite l’utilisation de plusieurs tests <span class="math inline">\(t\)</span>, ce qui exige l’introduction de deux types d’erreurs en statistique.</p>
+<p>Dans le chapitre précédent, on a analysé les notes de deux groupes d’apprenants (Montréal et Québec). C’est une situation typique pour l’utilisation d’un test <span class="math inline">\(t\)</span>. Si, par contre, on avait trois groupes, on aurait des problèmes, vu que cette méthode est utilisée juste pour un ou deux groupes. Une solution possible serait d’exécuter un test <span class="math inline">\(t\)</span> pour chaque paire de groupes (trois tests <span class="math inline">\(t\)</span> pour trois groupes). On verra bientôt que cette approche est très problématique. La solution traditionnelle est donc d’utiliser une autre méthode d’analyse : l’<strong>ANOVA</strong>. Avant de discuter cette méthode célèbre, il faut bien comprendre pourquoi on évite l’utilisation de plusieurs tests <span class="math inline">\(t\)</span>, ce qui exige l’introduction de deux types d’erreurs en statistique.</p>
 <section id="sec-type1" class="level3" data-number="5.1.1">
 <h3 data-number="5.1.1" data-anchor-id="sec-type1"><span class="header-section-number">5.1.1</span> Erreur de type I</h3>
 <p>Une erreur de type I, souvent appelée « faux positif », se produit lorsque nous rejetons à tort une hypothèse nulle qui est en réalité vraie. Dans le contexte de la recherche, cela peut avoir des conséquences importantes, car cela peut mener à des conclusions incorrectes sur l’effet d’un traitement, par exemple, en affirmant qu’un médicament est efficace alors qu’il ne l’est pas. Dans notre contexte, le traitement est la ville où les apprenants étudient le français. Si on arrive à une valeur <span class="math inline">\(p\)</span> de 0,01, par exemple, on rejette l’hypothèse nulle, c’est-à-dire qu’on conclut que les notes des apprenants des deux villes sont différentes. Toutefois, cette conclusion peut être trompeuse : si, en réalité, au niveau de la population de tous les apprenants de français entre les deux villes, la différence n’existe pas, notre résultat est incorrect. Le problème, naturellement, est qu’on ne sait jamais quelle est la réalité : voilà pourquoi on utilise la statistique.</p>
@@ -427,7 +427,7 @@ margin: 10px;
 </section>
 <section id="un-exercice-déquilibre" class="level3" data-number="5.1.3">
 <h3 data-number="5.1.3" data-anchor-id="un-exercice-déquilibre"><span class="header-section-number">5.1.3</span> Un exercice d’équilibre</h3>
-<p>Une analyse statistique est donc un exercice d’équilibre : on veut réduire la probabilité des erreurs de type I et II. Bien que les deux soient importants, on a tendance à éviter davantage les erreurs de type I. Voilà pourquoi on n’utilise pas plusieurs tests <em>t</em> dans notre analyse : étant donné notre <span class="math inline">\(\alpha\)</span>, chaque test a une probabilité de 5 % de produire une erreur de type I. Dans un exemple avec trois villes, on aurait besoin d’exécuter deux tests <span class="math inline">\(t\)</span>. En utilisant la formule ci-dessous, on arrive à une probabilité de presque 10 %, ce qui est trop élevé : <span class="math inline">\(P(erreur) = 1 - (0.95)^2 = 0.0975\)</span>. Si on avait quatre villes (c’est-à-dire quatre groupes), on aurait besoin d’exécuter 6 tests <span class="math inline">\(t\)</span> : <span class="math inline">\(\frac{n(n-1)}{2}\)</span>. Donc, la probabilité d’une erreur de type I serait de <span class="math inline">\(P(erreur) = 1 - (0.95)^6 \approx 0.735\)</span> (!). On voit donc que l’application de plusieurs tests devient rapidement problématique.</p>
+<p>Une analyse statistique est donc un exercice d’équilibre : on veut réduire la probabilité des erreurs de type I et II. Bien que les deux soient importants, on a tendance à éviter davantage les erreurs de type I. Voilà pourquoi on n’utilise pas plusieurs tests <em>t</em> dans notre analyse : étant donné notre <span class="math inline">\(\alpha\)</span>, chaque test a une probabilité de 5 % de produire une erreur de type I. Dans un exemple avec trois villes, on aurait besoin d’exécuter trois tests <span class="math inline">\(t\)</span> (Calgary–Montréal, Calgary–Québec, Montréal–Québec). En utilisant la formule ci-dessous, on arrive à une probabilité de plus de 14 %, ce qui est trop élevé : <span class="math inline">\(P(erreur) = 1 - (0.95)^3 \approx 0.143\)</span>. Si on avait quatre villes (c’est-à-dire quatre groupes), on aurait besoin d’exécuter 6 tests <span class="math inline">\(t\)</span> : <span class="math inline">\(\frac{k(k-1)}{2}\)</span>, où <span class="math inline">\(k\)</span> est le nombre de groupes. Donc, la probabilité d’une erreur de type I serait de <span class="math inline">\(P(erreur) = 1 - (0.95)^6 \approx 0.265\)</span> (!), soit plus de cinq fois notre <span class="math inline">\(\alpha\)</span>. On voit donc que l’application de plusieurs tests devient rapidement problématique.</p>
 <p><span class="math display">\[P(\text{Erreur de type I}) = 1 - (1 - \alpha)^n\]</span></p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -467,7 +467,7 @@ F = \frac{\text{Variabilité entre les groupes}}{\text{Variabilité à l'intéri
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p><span class="math display">\[H_0 = \mu_{Calgary} = \mu_{Montréal} = \mu_{Québec}\]</span></p>
+<p><span class="math display">\[H_0 : \mu_{Calgary} = \mu_{Montréal} = \mu_{Québec}\]</span></p>
 <p>Les moyennes des notes des trois villes sont identiques. Autrement dit, il n’y pas de différences entre les moyennes des villes.</p>
 </div>
 </div>
@@ -484,9 +484,9 @@ F = \frac{\text{Variabilité entre les groupes}}{\text{Variabilité à l'intéri
 <div class="callout-body-container callout-body">
 <ul>
 <li><p>Variation entre les groupes : <span class="math inline">\(SCE_{\text{entre}} = \sum_{j=1}^{k} n_j (\bar{x}_j - \bar{X}_{\text{total}})^2\)</span></p></li>
-<li><p>Variation à l’intérieur des groupes : <span class="math inline">\(SCE_{\text{intra}} = \sum_{j=1}^{k} \sum_{i=1}^{n_i} (x_{ij} - \bar{X}_j)^2\)</span></p></li>
-<li><p>Dégrés de liberté entre : <span class="math inline">\(k - 1\)</span></p></li>
-<li><p>Dégrés de liberté intra : <span class="math inline">\(N - k\)</span></p></li>
+<li><p>Variation à l’intérieur des groupes : <span class="math inline">\(SCE_{\text{intra}} = \sum_{j=1}^{k} \sum_{i=1}^{n_j} (x_{ij} - \bar{x}_j)^2\)</span></p></li>
+<li><p>Degrés de liberté entre : <span class="math inline">\(k - 1\)</span></p></li>
+<li><p>Degrés de liberté intra : <span class="math inline">\(N - k\)</span></p></li>
 <li><p>Valeur <em>F</em> :</p></li>
 </ul>
 <p><span class="math display">\[F = \frac{\frac{SCE_{\text{entre}}}{ddl_{entre}}}{\frac{SCE_{\text{intra}}}{ddl_{intra}}}\]</span></p>
@@ -500,7 +500,7 @@ F = \frac{\text{Variabilité entre les groupes}}{\text{Variabilité à l'intéri
 </li>
 <li><span class="math inline">\(\bar{X}_{\text{total}}\)</span> : moyenne globale de toutes les observations</li>
 <li><span class="math inline">\(SCE_{\text{entre}}\)</span> : somme des carrés expliquée par la variation <em>entre</em> les groupes</li>
-<li><span class="math inline">\(SCE_{\text{intra}}\)</span> : somme des carrés expliquée par la variation <em>à l’intérieur</em> des groupes</li>
+<li><span class="math inline">\(SCE_{\text{intra}}\)</span> : somme des carrés non expliquée, c’est-à-dire la variation <em>à l’intérieur</em> des groupes</li>
 <li><span class="math inline">\(ddl_{\text{entre}}\)</span> : degrés de liberté entre les groupes (<span class="math inline">\(k - 1\)</span>)</li>
 <li><span class="math inline">\(ddl_{\text{intra}}\)</span> : degrés de liberté à l’intérieur des groupes (<span class="math inline">\(N - k\)</span>, où <span class="math inline">\(N\)</span> est le nombre total d’observations)</li>
 <li><span class="math inline">\(F\)</span> : valeur du test <span class="math inline">\(F\)</span>, qui compare la variance entre les groupes à la variance à l’intérieur des groupes</li>
@@ -532,7 +532,7 @@ F = \frac{\text{Variabilité entre les groupes}}{\text{Variabilité à l'intéri
 <span id="cb1-11"><a href="#cb1-11" aria-label="11"></a>k <span class="ot">=</span> <span class="dv">3</span> <span class="co"># trois villes</span></span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Notre prochaine étape consiste à calculer les sommes des carrés écarts (SCE). On commence par la simplification de notre tableau : vu qu’on n’utilisera pas la colonne <code>duree</code>, on l’enlève avec la fonction <code>select()</code>. Après, on crée un nouveau tableau, <code>entreVilles</code>, qui contiendra les colonnes essentielles pour notre calcul. Le code entre les lignes 7 et 13 nous donne un tableau avec toutes les variables nécessaires : la note moyenne (<code>moyenne</code>) et la quantité d’observations pour chaque ville (<code>n</code>), ainsi que la différence entre la moyenne de chaque ville et la moyenne générale des trois villes (<code>X</code>, créé ci-dessus). Finalement, on élève cette différence au carré (<code>CE</code>) et on multiplie <code>CE</code> par <code>n</code>, ce qui nous donne la colonne finale <code>n_CE</code>. Notre tableau est imprimé entre les lignes 17 et 21, donc observez attentivement les valeurs. Veuillez noter que la fonction <code>n()</code> dans la ligne 9 nous donne le nombre d’observation selon le groupement par ville (<code>.by = ville</code>), ce qui est très pratique.</p>
-<p>Lorsqu’on a calculé toutes ces variables, il faut juste sommer les trois valeurs dans la colonne <code>n_CE</code> et diviser le résultat par <code>k-1</code>. Cela nous donne notre SCE entre groupes, représenté par la variable <code>SCEentre</code> dans la ligne 27, dont la valeur est imprimée dans la ligne 28. Finalement, on utilise la fonction <code>pull()</code> ici pour extraire des valeurs d’un tableau (d’un <code>tibble</code> dans notre cas).</p>
+<p>Lorsqu’on a calculé toutes ces variables, il faut juste sommer les trois valeurs dans la colonne <code>n_CE</code>. Cela nous donne notre SCE entre groupes, représenté par la variable <code>SCEentre</code>. En divisant ce résultat par <code>k-1</code>, on obtient la moyenne des carrés entre groupes (<code>MSCEentre</code>). Finalement, on utilise la fonction <code>pull()</code> ici pour extraire des valeurs d’un tableau (d’un <code>tibble</code> dans notre cas).</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-label="1"></a><span class="co"># Ajoutons la moyenne de chaque ville au tableau :</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-label="2"></a>villes <span class="ot">=</span> villes <span class="sc">|&gt;</span> </span>
@@ -576,7 +576,7 @@ F = \frac{\text{Variabilité entre les groupes}}{\text{Variabilité à l'intéri
 <ol type="1">
 <li>On calcule les écarts. Rappelez-vous qu’on a déjà calculé la moyenne pour chaque ville (colonne <code>moyenne</code>). Donc, pour calculer <code>diff</code>, on n’a pas besoin de grouper les données.</li>
 <li>On élève <code>diff</code> au carré</li>
-<li>Finalement, on somme les carrés des écarts et on divise le résultat par <code>N - k</code>.</li>
+<li>Finalement, on somme les carrés des écarts (<code>SCEintra</code>); en divisant ce résultat par <code>N - k</code>, on obtient la moyenne des carrés intra (<code>MSCEintra</code>).</li>
 </ol>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-label="1"></a>SCEintra <span class="ot">=</span> villes <span class="sc">|&gt;</span> </span>
@@ -684,9 +684,9 @@ F = \frac{\text{Variabilité entre les groupes}}{\text{Variabilité à l'intéri
 </div>
 <p>Observez l’output de la fonction. Voici chaque élément dans l’output généré par la fonction :</p>
 <ul>
-<li><code>Df</code> : <em>Degrees of freedom</em>. Cette colonne nous donne les dégrés de liberté (ddl) de la variable <code>ville</code>. Il s’agit d’un concept clé en statistique qui désigne le nombre de valeurs indépendantes qui peuvent varier dans une analyse sans violer une contrainte. On a trois villes, donc notre dégré de liberté est 2 (<span class="math inline">\(n-1\)</span>).</li>
+<li><code>Df</code> : <em>Degrees of freedom</em>. Cette colonne nous donne les degrés de liberté (ddl) de la variable <code>ville</code>. Il s’agit d’un concept clé en statistique qui désigne le nombre de valeurs indépendantes qui peuvent varier dans une analyse sans violer une contrainte. On a trois villes, donc notre degré de liberté est 2 (<span class="math inline">\(k-1\)</span>).</li>
 <li><code>Sum Sq</code> : la variabilité des données. La première ligne nous donne 1317, ce qui représente la variabilité des données explicable à partir de la variable <code>ville</code>. La variabilité des résiduelles (16610) nous montre le complément de la variabilité : c’est la variation qui n’est pas expliquée par <code>ville</code>.</li>
-<li><code>Mean Sq</code> : si on divise <code>Sum Sq</code> par <code>Df</code>, on arrive à la colonne <code>Mean Sq</code>. Cette colonne nous permet de comparer la variabilité expliquée à travers plusieurs source de variation, vu qu’elle normalise la variation par rapport aux dégrés de liberté de chaque variable.</li>
+<li><code>Mean Sq</code> : si on divise <code>Sum Sq</code> par <code>Df</code>, on arrive à la colonne <code>Mean Sq</code>. Cette colonne nous permet de comparer la variabilité expliquée à travers plusieurs source de variation, vu qu’elle normalise la variation par rapport aux degrés de liberté de chaque variable.</li>
 <li><code>F value</code> : La valeur <em>F</em> nous donne le ratio entre la variation expliquée par <code>ville</code> et la variation dans chaque groupe (c’est-à-dire, la variation qui n’est pas expliqué par <code>ville</code>; les résiduelles). Essentiellement, <em>F</em> = <code>Mean Sq</code> d’une variable divisé par <code>Mean Sq</code> des résiduelles.</li>
 <li><code>Pr(&gt;F)</code> : la valeur <em>p</em> de chaque variable (il y en a juste une dans notre ANOVA)</li>
 </ul>
@@ -712,7 +712,7 @@ F = \frac{\text{Variabilité entre les groupes}}{\text{Variabilité à l'intéri
 <section id="tukey-hsd" class="level3" data-number="5.5.1">
 <h3 data-number="5.5.1" data-anchor-id="tukey-hsd"><span class="header-section-number">5.5.1</span> Tukey HSD</h3>
 <p>L’une des façons de dériver les comparaisons multiples à partir de notre ANOVA est d’utiliser le test Tukey HSD (<em>Honest Significant Difference</em>). C’est une méthode <em>post-hoc</em> utilisée après une ANOVA pour comparer toutes les paires de moyennes entre les groupes. Il permet de déterminer quelles différences spécifiques entre les groupes sont significatives, tout en contrôlant le risque d’erreur de type I (faux positifs). Intuitivement, Tukey ajuste les seuils de significativité pour tenir compte du fait que plusieurs comparaisons sont effectuées en même temps (p.&nbsp;ex., notre discussion plus tôt à propos des multiples tests <em>t</em>). Cela garantit que les conclusions restent fiables, même avec de nombreuses comparaisons. Ce test est particulièrement utile quand l’ANOVA indique une différence globale, mais qu’on souhaite savoir précisément où ces différences se situent.</p>
-<p>La fonction <code>tukeyHSD()</code> est très pratique : à partir d’une ANOVA, elle renvoie toutes les comparaisons des villes dans nos données.</p>
+<p>La fonction <code>TukeyHSD()</code> est très pratique : à partir d’une ANOVA, elle renvoie toutes les comparaisons des villes dans nos données.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-label="1"></a><span class="fu">TukeyHSD</span>(notreAnova)</span>
 <span id="cb10-2"><a href="#cb10-2" aria-label="2"></a><span class="co">#&gt;   Tukey multiple comparisons of means</span></span>
@@ -735,7 +735,7 @@ F = \frac{\text{Variabilité entre les groupes}}{\text{Variabilité à l'intéri
 <ul>
 <li><code>aov(y ~ x, data = ...)</code> pour exécuter une ANOVA</li>
 <li><code>summary()</code> pour imprimer les résultats (fonction générale qui est applicable à plusieurs objets en R)</li>
-<li><code>tukeyHSD()</code> pour générer un test <em>posthoc</em> de comparaisons multiples</li>
+<li><code>TukeyHSD()</code> pour générer un test <em>posthoc</em> de comparaisons multiples</li>
 </ul>
 </section>
 <section id="b58fc729-690b-4000-b19f-365a4093b2ff7b7b3c2066612062756c6c736579652073697a653d7873203e7d7d-pratique" class="level2 unnumbered">

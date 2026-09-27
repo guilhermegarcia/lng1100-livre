@@ -506,7 +506,7 @@ window.Quarto = {
 <li><strong>régression logistique</strong> — Modèle dont la variable de réponse est <strong>binaire</strong> (0 ou 1, oui ou non). S’ajuste avec <code>glm()</code> et <code>family = binomial</code>.</li>
 <li><strong>variable binaire</strong> — Variable qui ne prend que deux valeurs, typiquement codées <code>0</code> et <code>1</code>.</li>
 <li><strong>cote (<em>odds</em>)</strong> — Rapport entre la probabilité qu’un événement se produise et celle qu’il ne se produise pas. Une cote de 2,9 signifie qu’il est 2,9 fois plus probable que l’événement arrive.</li>
-<li><strong><em>log-odds</em> (logit)</strong> — Logarithme de la cote. Cette échelle est symétrique et centrée sur zéro, ce qui la rend utilisable dans un modèle linéaire. C’est l’unité des coefficients d’une régression logistique.</li>
+<li><strong><em>log-odds</em> (logit)</strong> — Logarithme de la cote. Cette échelle n’est pas bornée (de <span class="math inline">\(-\infty\)</span> à <span class="math inline">\(+\infty\)</span>), elle est symétrique et centrée sur zéro, ce qui la rend utilisable dans un modèle linéaire. C’est l’unité des coefficients d’une régression logistique.</li>
 <li><strong>rapport de cotes (<em>odds ratio</em>)</strong> — Résultat de <code>exp()</code> appliqué à un coefficient logistique. Il indique par quel facteur les chances sont multipliées.</li>
 <li><strong>probabilité prédite</strong> — Valeur entre 0 et 1 obtenue en reconvertissant des <em>log-odds</em>, par exemple avec <code>invlogit()</code>. Plus facile à interpréter que les coefficients bruts.</li>
 </ul>

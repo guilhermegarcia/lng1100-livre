@@ -433,15 +433,15 @@ img.wrapfig {
 <span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;                69.5838                74.1728</span></span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Faites attention à la syntaxe de la fonction : <code>note ~ ville</code>. Cela nous dit que l’objet de l’analyse est la <code>note</code> (la variable de <strong>réponse</strong>, aussi connue comme la « variable dépendante »). La variable <code>ville</code> est la variable <strong>prédictive</strong>, aussi connue comme la « variable indépendante ».</p>
-<p>On observe dans les résultats du test que la valeur <span class="math inline">\(p\)</span> est extrêmement basse. R utilise par défaut la notation scientifique, donc : <code>8.385e-05</code> <span class="math inline">\(= 8.385^{-5} = 0.0000835\)</span>. Simplement dit, notre valeur <span class="math inline">\(p\)</span> est inférieure à 0,05 (le seuil normalement utilisé dans les sciences sociales et dans la linguistique). Donc, on conclut que les deux groupes sont statistiquement différents. Autrement dit, on a des évidences statistiques pour dire que les deux échantillons viennent des deux populations distinctes.</p>
+<p>On observe dans les résultats du test que la valeur <span class="math inline">\(p\)</span> est extrêmement basse. R utilise par défaut la notation scientifique, donc : <code>8.385e-05</code> <span class="math inline">\(= 8.385 \times 10^{-5} = 0.00008385\)</span>. Simplement dit, notre valeur <span class="math inline">\(p\)</span> est inférieure à 0,05 (le seuil normalement utilisé dans les sciences sociales et dans la linguistique). Donc, on conclut que les deux groupes sont statistiquement différents. Autrement dit, on a des évidences statistiques pour dire que les deux échantillons viennent des deux populations distinctes.</p>
 </section>
 <section id="le-test-t" class="level2" data-number="4.2">
 <h2 data-number="4.2" data-anchor-id="le-test-t"><span class="header-section-number">4.2</span> Le test <em>t</em></h2>
 <p>Bien que notre cours ne soit pas un cours de statistique, c’est utile de connaître la formule du test <span class="math inline">\(t\)</span>. Voici le test <span class="math inline">\(t\)</span> de Welch (la version utilisée dans la fonction <code>t.test()</code>, qui suppose des variances inégales).</p>
-<p><span class="math display">\[ t = \frac{\bar{x}_1 - \bar{x}_2}{s \cdot \sqrt{\frac{1}{n_1} + \frac{1}{n_2}}} = \frac{\bar{x}_1 - \bar{x}_2}{\sqrt{s^2 \left(\frac{1}{n_1} + \frac{1}{n_2}\right)}} = \frac{\bar{x}_1 - \bar{x}_2}{\sqrt{\frac{s^2}{n_1} + \frac{s^2}{n_2}}}\]</span></p>
+<p><span class="math display">\[ t = \frac{\bar{x}_1 - \bar{x}_2}{\sqrt{\frac{s_1^2}{n_1} + \frac{s_2^2}{n_2}}}\]</span></p>
 <ul>
 <li><span class="math inline">\(\bar{x} \rightarrow\)</span> la moyenne de chaque groupe (1 et 2)</li>
-<li><span class="math inline">\(s^2 \rightarrow\)</span> la variance<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> (fonction <code>var()</code>) de chaque groupe (1 et 2)</li>
+<li><span class="math inline">\(s_1^2, s_2^2 \rightarrow\)</span> la variance<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> (fonction <code>var()</code>) de chaque groupe (1 et 2)</li>
 <li><span class="math inline">\(n \rightarrow\)</span> la taille de chaque échantillon (1 et 2)</li>
 </ul>
 <div class="callout callout-style-default callout-important callout-titled">
@@ -556,7 +556,7 @@ img.wrapfig {
 <p>À gauche, les notes varient peu : les deux groupes se superposent à peine, et un écart de 4,6 points est énorme. À droite, les notes varient beaucoup : les deux distributions se recouvrent presque entièrement, et le même écart de 4,6 points devient banal. C’est exactement ce que la formule encode :</p>
 <ul>
 <li>le <strong>numérateur</strong> (<span class="math inline">\(\bar{x}_1 - \bar{x}_2\)</span>) est le <em>signal</em> : l’écart qu’on a observé;</li>
-<li>le <strong>dénominateur</strong> (<span class="math inline">\(\sqrt{\frac{s^2}{n_1} + \frac{s^2}{n_2}}\)</span>) est le <em>bruit</em> : l’écart que le hasard produit d’habitude, compte tenu de la variation (<span class="math inline">\(s^2\)</span>) et de la taille des échantillons (<span class="math inline">\(n\)</span>).</li>
+<li>le <strong>dénominateur</strong> (<span class="math inline">\(\sqrt{\frac{s_1^2}{n_1} + \frac{s_2^2}{n_2}}\)</span>) est le <em>bruit</em> : l’écart que le hasard produit d’habitude, compte tenu de la variation (<span class="math inline">\(s_1^2\)</span>, <span class="math inline">\(s_2^2\)</span>) et de la taille des échantillons (<span class="math inline">\(n\)</span>).</li>
 </ul>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -636,12 +636,12 @@ img.wrapfig {
 </section>
 <section id="la-valeur-p" class="level2" data-number="4.5">
 <h2 data-number="4.5" data-anchor-id="la-valeur-p"><span class="header-section-number">4.5</span> La valeur <em>p</em></h2>
-<p>La <strong>p-value</strong>, ou “valeur p”, est une mesure utilisée en statistique pour répondre à une question fondamentale : <em>“Les résultats observés sont-ils dus au hasard, ou indiquent-ils quelque chose de significatif?”</em></p>
+<p>La <strong>valeur <em>p</em></strong> (<em>p-value</em>) répond à une question précise : <em>si l’hypothèse nulle était vraie, à quel point des résultats comme les nôtres seraient-ils surprenants?</em></p>
 <p>Dans le contexte examiné ici, la valeur <em>p</em> nous donne essentiellement la</p>
 <blockquote class="blockquote">
-<p>probabilité d’obtenir les moyennes observées pour les trois groupes si ces groupes faisaient partie d’une même population, c’est-à-dire s’ils étaient effectivement identiques au départ (notre hypothèse nulle).</p>
+<p>probabilité d’obtenir un écart entre les moyennes aussi grand (ou plus grand) que celui observé si les deux groupes faisaient partie d’une même population, c’est-à-dire s’ils étaient effectivement identiques au départ (notre hypothèse nulle).</p>
 </blockquote>
-<p>La p-value vous aide à déterminer si les différences observées entre les deux groupes sont suffisamment importantes pour conclure qu’elles ne sont probablement pas dues au hasard. <strong>Si la p-value est petite</strong> (par exemple, inférieure à 0,05 ou 5 %), cela signifie qu’il est très improbable que les différences soient dues au hasard. Vous pouvez donc raisonnablement conclure que la méthode semble avoir un effet. <strong>Si la p-value est grande</strong> (par exemple, 0,3 ou 30 %), cela indique que les différences pourraient être dues au hasard. Dans ce cas, il est difficile d’affirmer que la méthode produit un effet significatif.</p>
+<p>La valeur <em>p</em> est donc calculée <strong>en supposant que H<span class="math inline">\(_0\)</span> est vraie</strong> : ce n’est ni la probabilité que H<span class="math inline">\(_0\)</span> soit vraie, ni la probabilité que nos résultats soient « dus au hasard ». <strong>Si la valeur <em>p</em> est petite</strong> (par exemple, inférieure à 0,05 ou 5 %), des données comme les nôtres seraient très improbables si H<span class="math inline">\(_0\)</span> était vraie; on rejette donc l’hypothèse nulle et on conclut que la ville semble avoir un effet. <strong>Si la valeur <em>p</em> est grande</strong> (par exemple, 0,3 ou 30 %), des données comme les nôtres seraient assez fréquentes sous H<span class="math inline">\(_0\)</span>; on ne peut donc pas rejeter l’hypothèse nulle (ce qui ne prouve pas pour autant qu’elle soit vraie).</p>
 </section>
 <section id="b58fc729-690b-4000-b19f-365a4093b2ff7b7b3c2066612062756c6c736579652073697a653d7873203e7d7d-pratique" class="level2 unnumbered">
 <h2 class="unnumbered" data-anchor-id="b58fc729-690b-4000-b19f-365a4093b2ff7b7b3c2066612062756c6c736579652073697a653d7873203e7d7d-pratique"><i class="fa-solid fa-bullseye fa-xs" aria-label="bullseye"></i> Pratique</h2>
