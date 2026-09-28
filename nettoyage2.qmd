@@ -292,13 +292,13 @@ B --> C{Analyse}
 
 On a révisé ci-dessus comment (a) nettoyer un fichier et (b) créer des graphiques. Vous pouvez certainement compléter (a) et (b) dans un même script. Par contre, comme discuté dans le [chapitre 9](nettoyage.qmd), c'est toujours une bonne idée de séparer les différents éléments dans une analyse pour maximiser l'organisation de notre flux de travail.
 
-Supposez que le nettoyage ci-dessus est dans un script appelé `script_10_net.R`. Dans ce script, un charge nos extensions et on importe notre fichier de données. Naturellement, on nettoie les données dans le même script. Ensuite, créez un script appelé `script_10_exp.R` pour ajouter les codes qui génèrent les graphiques discutés ci-dessus (ainsi que les tableaux pour les moyennes, etc.). Dans ce script, on peut simplement charger le script précédent :
+Supposez que le nettoyage ci-dessus est dans un script appelé `script_10_net.R`. Dans ce script, on charge nos extensions et on importe notre fichier de données. Naturellement, on nettoie les données dans le même script. Ensuite, créez un script appelé `script_10_exp.R` pour ajouter les codes qui génèrent les graphiques discutés ci-dessus (ainsi que les tableaux pour les moyennes, etc.). Dans ce script, on peut simplement charger le script précédent :
 
 ```{r}
 #| code-fold: show
 #| eval: false
 
-# Contenu du fichier script_10_vis.R
+# Contenu du fichier script_10_exp.R
 source("script_10_net.R")
 
 # Exemple d'un des graphiques de la question 5 :

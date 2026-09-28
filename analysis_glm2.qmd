@@ -43,7 +43,7 @@ Voici la figure et le modèle du questionnaire 2 (déjà examinés). On avait vu
 
 # On utilise ici le script déjà créé pour
 # nettoyer les données :
-source("Scripts/script_11_nettoyage.R")
+source("Scripts/script_10_nettoyage.R")
 
 ggplot(data = long, aes(x = langues, y = correct)) + 
     stat_summary(geom = "bar", fill = 0.2, 
