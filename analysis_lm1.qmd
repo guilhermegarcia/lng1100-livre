@@ -225,7 +225,7 @@ echant = sample(pop, size = 50)
 sd(echant) / sqrt(50)
 ```
 
-Consultez l'appli *Standard Error* [ici](https://guilherme.shinyapps.io/lng1100/){target="_blank"} pour examiner la relation entre la taille de l'échantillon et l'erreur standard.
+Consultez l'onglet *Erreur std* de l'appli [ici](https://fr.gdgarcia.ca/stats#se){target="_blank"} pour examiner la relation entre la taille de l'échantillon et l'erreur standard.
 
 ### Le calcul de la droite
 
@@ -242,7 +242,7 @@ Après, on peut calculer l'intercept et le slope :
 $$\hat\beta_0 = \bar{y} - \hat\beta_1\bar{x}$$
 
 $$\hat\beta_1 = \frac{\sum\limits_{i=1}^n(x_i - \bar{x})(y_i - \bar{y})}{\sum\limits_{i=1}^n(x_i - \bar{x})^2}$$\
-Simplement dit, la droite idéale sera cela qui minimise la distance entre chaque point dans la figure et elle-même. Consultez la simulation [ici](https://guilherme.shinyapps.io/lng1100/){target="_blank"} (*trend line*).
+Simplement dit, la droite idéale sera cela qui minimise la distance entre chaque point dans la figure et elle-même. Consultez la simulation [ici](https://fr.gdgarcia.ca/stats#lma){target="_blank"} (onglet *LMa*).
 
 ### Les résidus
 
