@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="fr" xml:lang="fr"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.10.18">
+<meta name="generator" content="quarto-1.10.19">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -97,7 +97,7 @@ div.csl-indent {
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-bf27225e3a48a9273f3daa8f8e829971.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="site_libs/bootstrap/bootstrap-a8cf447e70958a6c1d57630ca7eb2ad7.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
@@ -520,27 +520,27 @@ F = \frac{\text{Variabilité entre les groupes}}{\text{Variabilité à l'intéri
 <p>On profite du calcul manuel pour réviser quelques fonctions de <code>dplyr</code> déjà explorées dans le <a href="./intro_a_r.html">chapitre d’introduction à R</a> (ainsi que dans <span class="citation" data-cites="barnier_R">Barnier (<a href="references.html#ref-barnier_R" role="doc-biblioref">2023</a>)</span>). Dans le code ci-dessous, on charge l’extension et les données. Ensuite, on créé des variables importantes pour le calcul manuel de la valeur <em>F</em> pour l’ANOVA.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-label="1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-label="2"></a>villes <span class="ot">=</span> <span class="fu">read_csv</span>(<span class="st">"donnees/base/villes2.csv"</span>)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-label="2"></a>villes <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"donnees/base/villes2.csv"</span>)</span>
 <span id="cb1-3"><a href="#cb1-3" aria-label="3"></a></span>
 <span id="cb1-4"><a href="#cb1-4" aria-label="4"></a><span class="co"># Nombre d'observations :</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-label="5"></a>N <span class="ot">=</span> <span class="fu">nrow</span>(villes) <span class="co"># = le nombre de lignes dans le tableau</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-label="5"></a>N <span class="ot">&lt;-</span> <span class="fu">nrow</span>(villes) <span class="co"># = le nombre de lignes dans le tableau</span></span>
 <span id="cb1-6"><a href="#cb1-6" aria-label="6"></a></span>
 <span id="cb1-7"><a href="#cb1-7" aria-label="7"></a><span class="co"># Moyenne totalle X :</span></span>
-<span id="cb1-8"><a href="#cb1-8" aria-label="8"></a>X <span class="ot">=</span> <span class="fu">mean</span>(villes<span class="sc">$</span>note)</span>
+<span id="cb1-8"><a href="#cb1-8" aria-label="8"></a>X <span class="ot">&lt;-</span> <span class="fu">mean</span>(villes<span class="sc">$</span>note)</span>
 <span id="cb1-9"><a href="#cb1-9" aria-label="9"></a></span>
 <span id="cb1-10"><a href="#cb1-10" aria-label="10"></a><span class="co"># Nombre de groupes k :</span></span>
-<span id="cb1-11"><a href="#cb1-11" aria-label="11"></a>k <span class="ot">=</span> <span class="dv">3</span> <span class="co"># trois villes</span></span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb1-11"><a href="#cb1-11" aria-label="11"></a>k <span class="ot">&lt;-</span> <span class="dv">3</span> <span class="co"># trois villes</span></span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Notre prochaine étape consiste à calculer les sommes des carrés écarts (SCE). On commence par la simplification de notre tableau : vu qu’on n’utilisera pas la colonne <code>duree</code>, on l’enlève avec la fonction <code>select()</code>. Après, on crée un nouveau tableau, <code>entreVilles</code>, qui contiendra les colonnes essentielles pour notre calcul. Le code entre les lignes 7 et 13 nous donne un tableau avec toutes les variables nécessaires : la note moyenne (<code>moyenne</code>) et la quantité d’observations pour chaque ville (<code>n</code>), ainsi que la différence entre la moyenne de chaque ville et la moyenne générale des trois villes (<code>X</code>, créé ci-dessus). Finalement, on élève cette différence au carré (<code>CE</code>) et on multiplie <code>CE</code> par <code>n</code>, ce qui nous donne la colonne finale <code>n_CE</code>. Notre tableau est imprimé entre les lignes 17 et 21, donc observez attentivement les valeurs. Veuillez noter que la fonction <code>n()</code> dans la ligne 9 nous donne le nombre d’observation selon le groupement par ville (<code>.by = ville</code>), ce qui est très pratique.</p>
 <p>Lorsqu’on a calculé toutes ces variables, il faut juste sommer les trois valeurs dans la colonne <code>n_CE</code>. Cela nous donne notre SCE entre groupes, représenté par la variable <code>SCEentre</code>. En divisant ce résultat par <code>k-1</code>, on obtient la moyenne des carrés entre groupes (<code>MSCEentre</code>). Finalement, on utilise la fonction <code>pull()</code> ici pour extraire des valeurs d’un tableau (d’un <code>tibble</code> dans notre cas).</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-label="1"></a><span class="co"># Ajoutons la moyenne de chaque ville au tableau :</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-label="2"></a>villes <span class="ot">=</span> villes <span class="sc">|&gt;</span> </span>
+<span id="cb2-2"><a href="#cb2-2" aria-label="2"></a>villes <span class="ot">&lt;-</span> villes <span class="sc">|&gt;</span> </span>
 <span id="cb2-3"><a href="#cb2-3" aria-label="3"></a>  <span class="fu">select</span>(<span class="sc">-</span>duree) <span class="sc">|&gt;</span> </span>
 <span id="cb2-4"><a href="#cb2-4" aria-label="4"></a>  <span class="fu">mutate</span>(<span class="at">moyenne =</span> <span class="fu">mean</span>(note), <span class="at">.by =</span> ville)</span>
 <span id="cb2-5"><a href="#cb2-5" aria-label="5"></a></span>
 <span id="cb2-6"><a href="#cb2-6" aria-label="6"></a><span class="co"># Un tableau simples avec la moyenne de chaque ville</span></span>
-<span id="cb2-7"><a href="#cb2-7" aria-label="7"></a>entreVilles <span class="ot">=</span> villes <span class="sc">|&gt;</span> </span>
+<span id="cb2-7"><a href="#cb2-7" aria-label="7"></a>entreVilles <span class="ot">&lt;-</span> villes <span class="sc">|&gt;</span> </span>
 <span id="cb2-8"><a href="#cb2-8" aria-label="8"></a>  <span class="fu">summarize</span>(<span class="at">moyenne =</span> <span class="fu">mean</span>(note), </span>
 <span id="cb2-9"><a href="#cb2-9" aria-label="9"></a>            <span class="at">n =</span> <span class="fu">n</span>(),</span>
 <span id="cb2-10"><a href="#cb2-10" aria-label="10"></a>            <span class="at">.by =</span> ville) <span class="sc">|&gt;</span> </span>
@@ -556,7 +556,7 @@ F = \frac{\text{Variabilité entre les groupes}}{\text{Variabilité à l'intéri
 <span id="cb2-20"><a href="#cb2-20" aria-label="20"></a><span class="co">#&gt; 2 Montréal    69.6    50 -0.671  0.451  22.5</span></span>
 <span id="cb2-21"><a href="#cb2-21" aria-label="21"></a><span class="co">#&gt; 3 Québec      74.2    50  3.92  15.3   767.</span></span>
 <span id="cb2-22"><a href="#cb2-22" aria-label="22"></a></span>
-<span id="cb2-23"><a href="#cb2-23" aria-label="23"></a>SCEentre <span class="ot">=</span> entreVilles <span class="sc">|&gt;</span> </span>
+<span id="cb2-23"><a href="#cb2-23" aria-label="23"></a>SCEentre <span class="ot">&lt;-</span> entreVilles <span class="sc">|&gt;</span> </span>
 <span id="cb2-24"><a href="#cb2-24" aria-label="24"></a>  <span class="fu">summarize</span>(<span class="at">SCEentre =</span> <span class="fu">sum</span>(n_CE)) <span class="sc">|&gt;</span> </span>
 <span id="cb2-25"><a href="#cb2-25" aria-label="25"></a>  <span class="fu">pull</span>() </span>
 <span id="cb2-26"><a href="#cb2-26" aria-label="26"></a></span>
@@ -564,7 +564,7 @@ F = \frac{\text{Variabilité entre les groupes}}{\text{Variabilité à l'intéri
 <span id="cb2-28"><a href="#cb2-28" aria-label="28"></a><span class="co">#&gt; [1] 1316.82</span></span>
 <span id="cb2-29"><a href="#cb2-29" aria-label="29"></a></span>
 <span id="cb2-30"><a href="#cb2-30" aria-label="30"></a><span class="co"># La moyenne des la SCEentre :</span></span>
-<span id="cb2-31"><a href="#cb2-31" aria-label="31"></a>MSCEentre <span class="ot">=</span> SCEentre <span class="sc">/</span> (k <span class="sc">-</span> <span class="dv">1</span>)</span>
+<span id="cb2-31"><a href="#cb2-31" aria-label="31"></a>MSCEentre <span class="ot">&lt;-</span> SCEentre <span class="sc">/</span> (k <span class="sc">-</span> <span class="dv">1</span>)</span>
 <span id="cb2-32"><a href="#cb2-32" aria-label="32"></a>MSCEentre</span>
 <span id="cb2-33"><a href="#cb2-33" aria-label="33"></a><span class="co">#&gt; [1] 658.4101</span></span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
@@ -579,7 +579,7 @@ F = \frac{\text{Variabilité entre les groupes}}{\text{Variabilité à l'intéri
 <li>Finalement, on somme les carrés des écarts (<code>SCEintra</code>); en divisant ce résultat par <code>N - k</code>, on obtient la moyenne des carrés intra (<code>MSCEintra</code>).</li>
 </ol>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-label="1"></a>SCEintra <span class="ot">=</span> villes <span class="sc">|&gt;</span> </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-label="1"></a>SCEintra <span class="ot">&lt;-</span> villes <span class="sc">|&gt;</span> </span>
 <span id="cb3-2"><a href="#cb3-2" aria-label="2"></a>  <span class="fu">mutate</span>(<span class="at">diff =</span> note <span class="sc">-</span> moyenne) <span class="sc">|&gt;</span> </span>
 <span id="cb3-3"><a href="#cb3-3" aria-label="3"></a>  <span class="fu">mutate</span>(<span class="at">CE =</span> diff<span class="sc">^</span><span class="dv">2</span>) <span class="sc">|&gt;</span> </span>
 <span id="cb3-4"><a href="#cb3-4" aria-label="4"></a>  <span class="fu">summarize</span>(<span class="at">SCEintra =</span> <span class="fu">sum</span>(CE)) <span class="sc">|&gt;</span> </span>
@@ -589,7 +589,7 @@ F = \frac{\text{Variabilité entre les groupes}}{\text{Variabilité à l'intéri
 <span id="cb3-8"><a href="#cb3-8" aria-label="8"></a><span class="co">#&gt; [1] 16609.83</span></span>
 <span id="cb3-9"><a href="#cb3-9" aria-label="9"></a></span>
 <span id="cb3-10"><a href="#cb3-10" aria-label="10"></a><span class="co"># La moyenne des la SCEintra :</span></span>
-<span id="cb3-11"><a href="#cb3-11" aria-label="11"></a>MSCEintra <span class="ot">=</span> SCEintra <span class="sc">/</span> (N <span class="sc">-</span> k)</span>
+<span id="cb3-11"><a href="#cb3-11" aria-label="11"></a>MSCEintra <span class="ot">&lt;-</span> SCEintra <span class="sc">/</span> (N <span class="sc">-</span> k)</span>
 <span id="cb3-12"><a href="#cb3-12" aria-label="12"></a>MSCEintra</span>
 <span id="cb3-13"><a href="#cb3-13" aria-label="13"></a><span class="co">#&gt; [1] 112.992</span></span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
@@ -598,7 +598,7 @@ F = \frac{\text{Variabilité entre les groupes}}{\text{Variabilité à l'intéri
 <h3 data-number="5.3.3" data-anchor-id="la-valeur-f"><span class="header-section-number">5.3.3</span> La valeur <em>F</em></h3>
 <p>Maintenant, on est prêt à calculer notre valeur <em>F</em> à partir des moyennes des SCE calculées. Veuillez noter que <code>MSCEentre</code> équivaut à <span class="math inline">\(\frac{SCE_{entre}}{ddl_{entre}}\)</span>, par exemple. Donc, la ligne 1 ci-dessous nous donne exactement l’équation de la valeur <em>F</em></p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-label="1"></a>valeurF <span class="ot">=</span> MSCEentre <span class="sc">/</span> MSCEintra</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-label="1"></a>valeurF <span class="ot">&lt;-</span> MSCEentre <span class="sc">/</span> MSCEintra</span>
 <span id="cb4-2"><a href="#cb4-2" aria-label="2"></a></span>
 <span id="cb4-3"><a href="#cb4-3" aria-label="3"></a>valeurF </span>
 <span id="cb4-4"><a href="#cb4-4" aria-label="4"></a><span class="co">#&gt; [1] 5.82705</span></span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
@@ -626,7 +626,7 @@ F = \frac{\text{Variabilité entre les groupes}}{\text{Variabilité à l'intéri
 <h3 class="unnumbered" data-anchor-id="chargez-les-données">1. Chargez les données</h3>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-label="1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb6-2"><a href="#cb6-2" aria-label="2"></a>villes <span class="ot">=</span> <span class="fu">read_csv</span>(<span class="st">"donnees/base/villes2.csv"</span>)</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb6-2"><a href="#cb6-2" aria-label="2"></a>villes <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"donnees/base/villes2.csv"</span>)</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
 <section id="vérifier-les-premières-lignes" class="level3 unnumbered">
@@ -674,7 +674,7 @@ F = \frac{\text{Variabilité entre les groupes}}{\text{Variabilité à l'intéri
 <h3 class="unnumbered" data-anchor-id="analysez-les-données-anova">4. Analysez les données : ANOVA</h3>
 <p>On est maintenant prêt à exécuter notre anova. On utilise la fonction <code>aov()</code> en R. Ensuite, on utilise <code>summary()</code> pour imprimer un résumé du modèle :</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-label="1"></a>notreAnova <span class="ot">=</span> <span class="fu">aov</span>(note <span class="sc">~</span> ville, <span class="at">data =</span> villes)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-label="1"></a>notreAnova <span class="ot">&lt;-</span> <span class="fu">aov</span>(note <span class="sc">~</span> ville, <span class="at">data =</span> villes)</span>
 <span id="cb9-2"><a href="#cb9-2" aria-label="2"></a><span class="fu">summary</span>(notreAnova)</span>
 <span id="cb9-3"><a href="#cb9-3" aria-label="3"></a><span class="co">#&gt;              Df Sum Sq Mean Sq F value  Pr(&gt;F)   </span></span>
 <span id="cb9-4"><a href="#cb9-4" aria-label="4"></a><span class="co">#&gt; ville         2   1317   658.4   5.827 0.00367 **</span></span>

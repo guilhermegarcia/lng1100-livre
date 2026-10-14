@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="fr" xml:lang="fr"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.10.18">
+<meta name="generator" content="quarto-1.10.19">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -97,7 +97,7 @@ div.csl-indent {
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-bf27225e3a48a9273f3daa8f8e829971.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="site_libs/bootstrap/bootstrap-a8cf447e70958a6c1d57630ca7eb2ad7.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
@@ -445,7 +445,7 @@ kbd {
 <div class="callout-body-container callout-body">
 <p>Explorons les concepts de variance et d’écart-type.</p>
 <!-- Prenons l'objet défini plus tôt : -->
-<!-- `mesNombres = c(5, 10, 15, 20, 25, 30, 35, 40, 45, 50)` -->
+<!-- `mesNombres <- c(5, 10, 15, 20, 25, 30, 35, 40, 45, 50)` -->
 <p><strong>La formule de la variance d’échantillon :</strong></p>
 <p><span class="math display">\[
 \text{Variance} = s^2 = \frac{\sum_{i=1}^{n} (x_i - \bar{x})^2}{n-1}
@@ -502,7 +502,7 @@ kbd {
 </div>
 <div id="callout-3" class="callout-3-contents callout-collapse collapse show">
 <div class="callout-body-container callout-body">
-<p>Traditionnellement, on utilise <code>&lt;-</code> pour créer une variable en R. Ici, on utilise <code>=</code>, qui sert le même objectif. Bien que les deux soient acceptables, il y a une préférence pour <code>&lt;-</code> dans le LSP (<em>Language Syntax Protocol</em>) du langage.</p>
+<p>Dans ce livre, on utilise <code>&lt;-</code> pour créer une variable en R. Le signe <code>=</code> sert le même objectif et vous le verrez souvent ailleurs, mais les guides de style de la communauté (comme celui du <code>tidyverse</code>) recommandent <code>&lt;-</code>. Ce choix évite aussi la confusion avec le <code>=</code> qui sert à nommer les arguments d’une fonction, comme dans <code>mean(x = notes)</code>.</p>
 </div>
 </div>
 </div>
@@ -513,7 +513,7 @@ kbd {
 <p><i class="fa-solid fa-question-circle fa-xs" aria-label="question-circle"></i>️ <strong>Question 5.</strong> Créez un vecteur <code>langues</code> avec les mots <code>français</code>, <code>anglais</code>, <code>espagnol</code> et <code>allemand</code>. Nommez-le <code>langues</code>.</p>
 <p><i class="fa-solid fa-question-circle fa-xs" aria-label="question-circle"></i>️ <strong>Question 6.</strong> Exécuter la commande <code>nchar(langues)</code>. Quelle est la réponse?</p>
 <p><i class="fa-solid fa-question-circle fa-xs" aria-label="question-circle"></i>️ <strong>Question 7.</strong> Comment ordonner alphabétiquement les langues?</p>
-<p><i class="fa-solid fa-question-circle fa-xs" aria-label="question-circle"></i>️ <strong>Question 8.</strong> Quelle sera la conséquence d’exécuter <code>langues = sort(langues)</code>?</p>
+<p><i class="fa-solid fa-question-circle fa-xs" aria-label="question-circle"></i>️ <strong>Question 8.</strong> Quelle sera la conséquence d’exécuter <code>langues &lt;- sort(langues)</code>?</p>
 <div class="callout callout-style-default callout-important callout-titled">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="true" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -546,7 +546,7 @@ kbd {
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse) </span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Large</span></span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>large <span class="ot">=</span> <span class="fu">tribble</span>(<span class="sc">~</span>id, <span class="sc">~</span>phonologie, <span class="sc">~</span>syntaxe, <span class="sc">~</span>phonetique,</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>large <span class="ot">&lt;-</span> <span class="fu">tribble</span>(<span class="sc">~</span>id, <span class="sc">~</span>phonologie, <span class="sc">~</span>syntaxe, <span class="sc">~</span>phonetique,</span>
 <span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>                <span class="st">"PLK"</span>,        <span class="dv">80</span>,       <span class="dv">55</span>,          <span class="dv">92</span>,</span>
 <span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>                <span class="st">"GP"</span>,         <span class="dv">67</span>,       <span class="dv">79</span>,          <span class="dv">83</span>,</span>
 <span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>                <span class="st">"MFG"</span>,        <span class="dv">72</span>,       <span class="dv">99</span>,          <span class="dv">90</span>)</span>
@@ -571,7 +571,7 @@ kbd {
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co">#</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Long</span></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>long <span class="ot">=</span> <span class="fu">tribble</span>(<span class="sc">~</span>id,           <span class="sc">~</span>cours,     <span class="sc">~</span>note,</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>long <span class="ot">&lt;-</span> <span class="fu">tribble</span>(<span class="sc">~</span>id,           <span class="sc">~</span>cours,     <span class="sc">~</span>note,</span>
 <span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>               <span class="st">"PLK"</span>,   <span class="st">"phonologie"</span>,        <span class="dv">80</span>,</span>
 <span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>               <span class="st">"PLK"</span>,      <span class="st">"syntaxe"</span>,        <span class="dv">55</span>,</span>
 <span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>               <span class="st">"PLK"</span>,   <span class="st">"phonetique"</span>,        <span class="dv">92</span>,</span>
