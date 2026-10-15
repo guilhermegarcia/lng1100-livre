@@ -44,17 +44,17 @@ library(tidyverse)
 library(janitor)
 
 # Clé de correction :
-cle = c("le dzongkha",
+cle <- c("le dzongkha",
         "le catalan",
         "le néerlandais",
         "le swati et l'anglais",
         "le tétum et le portugais")
 
 # Données :
-q2 = read_csv2("donnees/supplementaires/questionnaire2.csv")
+q2 <- read_csv2("donnees/supplementaires/questionnaire2.csv")
 
 # Nettoyage (version enchaînée) :
-q_net = q2 |>
+q_net <- q2 |>
     clean_names() |>
     select(-matches("heure|adresse|total|points|feedback|quiz|nom")) |>
     pivot_longer(names_to = "question",
@@ -237,9 +237,9 @@ On peut facilement dichotomiser n'importe quelle variable catégorielle en utili
 ```{r}
 #| message: false
 
-villes = read_csv("donnees/base/villes2.csv")
+villes <- read_csv("donnees/base/villes2.csv")
 
-villes = villes |> 
+villes <- villes |> 
     mutate(langue = if_else(ville == "Calgary", 
                             "anglais", 
                             "français"))

@@ -12,7 +12,7 @@ Voici une petite liste des raccourcis qui seront utilisés pendant le cours. Vou
 | Exécuter tout le script | <kbd>Cmd</kbd> + <kbd>Shift</kbd> + <kbd>Entrée</kbd> | <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>Entrée</kbd> |
 | Nettoyer la console     | <kbd>^</kbd> + <kbd>L</kbd>                   | <kbd>Ctrl</kbd> + <kbd>L</kbd>            |
 | Compiler un doc `Qmd`   | <kbd>Cmd</kbd> + <kbd>Shift</kbd> + <kbd>K</kbd> | <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>K</kbd> |
-| Ajouter  `<-`   | <kbd>Option</kbd> + <kbd>-</kbd> | <kbd>Alt</kbd> + <kbd>Shift</kbd> + <kbd>K</kbd> |
+| Ajouter  `<-`   | <kbd>Option</kbd> + <kbd>-</kbd> | <kbd>Alt</kbd> + <kbd>-</kbd> |
 
 Consultez la liste complète [ici](https://support.posit.co/hc/en-us/articles/200711853-Keyboard-Shortcuts-in-the-RStudio-IDE){target="_blank"}.
 
@@ -64,7 +64,7 @@ Voici les principales fonctions utilisées dans le cours --- ces fonctions vienn
 
 -   `==` (deux `=`) : indique si deux valeurs sont identiques
 -   `!=` (`! =` sans espace) : indique si deux valeurs sont différentes
--   `=` ou `<-` (`< -` sans espace) : attribue des valeurs à un objet
+-   `<-` (`< -` sans espace) ou `=` : attribue des valeurs à un objet
 -   `|>` (`| >` sans espace) ou `%>%` : le *pipe* enchaîne des opérations
 -   `%in%` : vérifie la présence des valeurs dans un objet. Par exemple, `5 %in% c(1, 3, 5)` renvoie `TRUE`
 -   `!` : la négation d'une opération. Par exemple, `!5 %in% c(1, 3, 5)` renvoie `FALSE`, vu que ce n'est pas vrai que 5 n'est pas dans le vecteur

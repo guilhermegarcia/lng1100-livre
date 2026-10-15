@@ -63,7 +63,7 @@ Comme d'habitude, c'est une bonne idée de visualiser les données pour commence
 #| warning: false
 library(tidyverse)
 
-villes = read_csv("donnees/base/villes.csv")
+villes <- read_csv("donnees/base/villes.csv")
 
 ggplot(data = villes, aes(x = note)) + 
   geom_histogram(aes(fill = ville, y = ..density..), 

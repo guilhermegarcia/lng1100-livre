@@ -61,7 +61,7 @@ Explorons les concepts de variance et d'écart-type.
 
 <!-- Prenons l'objet défini plus tôt : -->
 
-<!-- `mesNombres = c(5, 10, 15, 20, 25, 30, 35, 40, 45, 50)` -->
+<!-- `mesNombres <- c(5, 10, 15, 20, 25, 30, 35, 40, 45, 50)` -->
 
 **La formule de la variance d'échantillon :**
 
@@ -113,7 +113,7 @@ sd(objet)
 
 ## L'opérateur d'affectation
 
-Traditionnellement, on utilise `<-` pour créer une variable en R. Ici, on utilise `=`, qui sert le même objectif. Bien que les deux soient acceptables, il y a une préférence pour `<-` dans le LSP (*Language Syntax Protocol*) du langage.
+Dans ce livre, on utilise `<-` pour créer une variable en R. Le signe `=` sert le même objectif et vous le verrez souvent ailleurs, mais les guides de style de la communauté (comme celui du `tidyverse`) recommandent `<-`. Ce choix évite aussi la confusion avec le `=` qui sert à nommer les arguments d'une fonction, comme dans `mean(x = notes)`.
 
 :::
 
@@ -133,7 +133,7 @@ Traditionnellement, on utilise `<-` pour créer une variable en R. Ici, on utili
 
 
 
-{{< fa question-circle size=xs >}}️ **Question 8.** Quelle sera la conséquence d'exécuter `langues = sort(langues)`?
+{{< fa question-circle size=xs >}}️ **Question 8.** Quelle sera la conséquence d'exécuter `langues <- sort(langues)`?
 
 ::: {.callout-important collapse="false"}
 
@@ -161,7 +161,7 @@ Il s'agit d'un tableau où plusieurs colonnes représentent une même variable. 
 library(tidyverse) 
 
 # Large
-large = tribble(~id, ~phonologie, ~syntaxe, ~phonetique,
+large <- tribble(~id, ~phonologie, ~syntaxe, ~phonetique,
                 "PLK",        80,       55,          92,
                 "GP",         67,       79,          83,
                 "MFG",        72,       99,          90)
@@ -179,7 +179,7 @@ Dans le tableau long ci-dessous, chaque ligne représente **une seule** observat
 #| message: false
 #
 # Long
-long = tribble(~id,           ~cours,     ~note,
+long <- tribble(~id,           ~cours,     ~note,
                "PLK",   "phonologie",        80,
                "PLK",      "syntaxe",        55,
                "PLK",   "phonetique",        92,

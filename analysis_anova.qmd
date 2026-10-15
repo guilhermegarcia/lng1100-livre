@@ -135,16 +135,16 @@ On profite du calcul manuel pour réviser quelques fonctions de `dplyr` déjà e
 #| code-fold: false
 #| 
 library(tidyverse)
-villes = read_csv("donnees/base/villes2.csv")
+villes <- read_csv("donnees/base/villes2.csv")
 
 # Nombre d'observations :
-N = nrow(villes) # = le nombre de lignes dans le tableau
+N <- nrow(villes) # = le nombre de lignes dans le tableau
 
 # Moyenne totalle X :
-X = mean(villes$note)
+X <- mean(villes$note)
 
 # Nombre de groupes k :
-k = 3 # trois villes
+k <- 3 # trois villes
 ```
 
 Notre prochaine étape consiste à calculer les sommes des carrés écarts (SCE). On commence par la simplification de notre tableau : vu qu'on n'utilisera pas la colonne `duree`, on l'enlève avec la fonction `select()`. Après, on crée un nouveau tableau, `entreVilles`, qui contiendra les colonnes essentielles pour notre calcul. Le code entre les lignes 7 et 13 nous donne un tableau avec toutes les variables nécessaires : la note moyenne (`moyenne`) et la quantité d'observations pour chaque ville (`n`), ainsi que la différence entre la moyenne de chaque ville et la moyenne générale des trois villes (`X`, créé ci-dessus). Finalement, on élève cette différence au carré (`CE`) et on multiplie `CE` par `n`, ce qui nous donne la colonne finale `n_CE`. Notre tableau est imprimé entre les lignes 17 et 21, donc observez attentivement les valeurs. Veuillez noter que la fonction `n()` dans la ligne 9 nous donne le nombre d'observation selon le groupement par ville (`.by = ville`), ce qui est très pratique.
@@ -154,12 +154,12 @@ Lorsqu'on a calculé toutes ces variables, il faut juste sommer les trois valeur
 ```{r}
 #| code-fold: false
 # Ajoutons la moyenne de chaque ville au tableau :
-villes = villes |> 
+villes <- villes |> 
   select(-duree) |> 
   mutate(moyenne = mean(note), .by = ville)
 
 # Un tableau simples avec la moyenne de chaque ville
-entreVilles = villes |> 
+entreVilles <- villes |> 
   summarize(moyenne = mean(note), 
             n = n(),
             .by = ville) |> 
@@ -169,14 +169,14 @@ entreVilles = villes |>
 
 entreVilles
 
-SCEentre = entreVilles |> 
+SCEentre <- entreVilles |> 
   summarize(SCEentre = sum(n_CE)) |> 
   pull() 
 
 SCEentre
 
 # La moyenne des la SCEentre :
-MSCEentre = SCEentre / (k - 1)
+MSCEentre <- SCEentre / (k - 1)
 MSCEentre
 ```
 
@@ -195,7 +195,7 @@ Observez le code ci-dessous. C'est un code très économique qui est capable d'a
 ```{r}
 #| code-fold: false
 
-SCEintra = villes |> 
+SCEintra <- villes |> 
   mutate(diff = note - moyenne) |> 
   mutate(CE = diff^2) |> 
   summarize(SCEintra = sum(CE)) |> 
@@ -204,7 +204,7 @@ SCEintra = villes |>
 SCEintra
 
 # La moyenne des la SCEintra :
-MSCEintra = SCEintra / (N - k)
+MSCEintra <- SCEintra / (N - k)
 MSCEintra
 ```
 
@@ -215,7 +215,7 @@ Maintenant, on est prêt à calculer notre valeur *F* à partir des moyennes des
 
 ```{r}
 #| code-fold: false
-valeurF = MSCEentre / MSCEintra
+valeurF <- MSCEentre / MSCEintra
 
 valeurF 
 ```
@@ -250,7 +250,7 @@ On vera comment exécuter une ANOVA dans l'étape 4 ci-dessous. Veuillez noter q
 #| echo: true
 #| eval: true
 library(tidyverse)
-villes = read_csv("donnees/base/villes2.csv")
+villes <- read_csv("donnees/base/villes2.csv")
 ```
 
 ### 2. Vérifier les premières lignes {-}
@@ -292,7 +292,7 @@ On est maintenant prêt à exécuter notre anova. On utilise la fonction `aov()`
 
 ```{r}
 #| code-fold: false
-notreAnova = aov(note ~ ville, data = villes)
+notreAnova <- aov(note ~ ville, data = villes)
 summary(notreAnova)
 ```
 

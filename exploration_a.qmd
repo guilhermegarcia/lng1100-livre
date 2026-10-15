@@ -45,7 +45,7 @@ L'idée principale du `ggplot2` implique l'utilisation des « couches » d'infor
 # ggplot(data = ..., aes(x = ..., y = ...)) + 
 # 
 library(tidyverse)
-donnees = read_csv("donnees/base/sampleData.csv")
+donnees <- read_csv("donnees/base/sampleData.csv")
 
 # la première couche de la figure :
 ggplot(data = donnees, aes(x = group, y = testA)) 
@@ -108,7 +108,7 @@ donnees
 On a déjà vu en classe qu'il s'agit d'un tableau large (donc, pas *tidy*). Par conséquent, c'est difficile de créer une figure dont l'axe `y` montre **toutes** les notes des tests A, B et C : la fonction `aes()` dans `ggplot()` ne permet qu'une colonne pour chaque axe du graphique. Donc, avant de développer la figure en question, il faut transformer les données vers le format *tidy* en utilisant la fonction `pivot_longer()` (consultez la page de la deuxième séance [ici](1-intro_a_r.html)) :
 
 ```{r}
-long = donnees |> 
+long <- donnees |> 
     pivot_longer(names_to = "test",  
                  values_to = "note", 
                  cols = testA:testC) 
@@ -258,9 +258,9 @@ Ici, le code n'a pas du sens, vu que la fonction `stat_summary(geom = "bar")` pe
 #| fig-height: 3
 #| message: false
 #| warning: false
-fb = read_csv("donnees/base/feedbackData.csv")
+fb <- read_csv("donnees/base/feedbackData.csv")
 
-fb = fb |> 
+fb <- fb |> 
     select(-c(task_B1:task_B5)) |> 
     pivot_longer(names_to = "tache",
                  values_to = "note",

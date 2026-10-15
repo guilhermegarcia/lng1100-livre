@@ -90,10 +90,10 @@ library(tidyverse)
 library(arm)
 
 # Importer les données
-villes = read_csv("donnees/base/villes2.csv")
+villes <- read_csv("donnees/base/villes2.csv")
 
 # Créer la nouvelle colonne : 0/1
-villes = villes |> 
+villes <- villes |> 
     mutate(francophone = if_else(ville == "Calgary", 0, 1))
 
 # Figure
@@ -146,7 +146,7 @@ Voici le rapport du modèle discuté en classe (@tbl-glm1).
 #| tbl-cap: Régression logistique (coefficients en log-odds)
 library(sjPlot)
 
-mod1 = glm(francophone ~ note, data = villes, family = "binomial")
+mod1 <- glm(francophone ~ note, data = villes, family = "binomial")
 
 tab_model(mod1, transform = NULL,
           string.pred = "Variables", 

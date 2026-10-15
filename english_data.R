@@ -4,7 +4,7 @@ library(tidyverse)
 data(english)
 
 set.seed(1)
-en = english |> 
+en <- english |> 
   as_tibble() |> 
   select(Word, Familiarity, AgeSubject, RTlexdec) |> 
   rename(TR = "RTlexdec",
@@ -25,13 +25,13 @@ en
 # write_csv(en, file = "donnees/base/anglais.csv")
 # 
 
-en = en |> 
+en <- en |> 
   mutate(Fam_cat = ntile(Familiarite, 4))
 
 en
-fit1 = lm(TR ~ Age + Familiarite, data = en)
+fit1 <- lm(TR ~ Age + Familiarite, data = en)
 
-fit2 = lm(TR ~ Age + Fam_cat, data = en)
+fit2 <- lm(TR ~ Age + Fam_cat, data = en)
 
 
 summary(fit1)
@@ -41,6 +41,6 @@ library(emmeans)
 emmeans(fit, pairwise ~ Fam_cat, adjust = "tukey")$contrasts
 
 
-newdata = expand.grid(Class = c("1st", "2nd", "3rd", "Crew"),
+newdata <- expand.grid(Class = c("1st", "2nd", "3rd", "Crew"),
                               Sex = rep(c("Male", "Female")),
                               Age = c("Child", "Adult")) |> as_tibble()

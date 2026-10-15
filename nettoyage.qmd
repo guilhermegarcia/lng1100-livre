@@ -73,7 +73,7 @@ library(tidyverse)
 library(janitor)
 
 # Importer les données :
-q = read_csv2("donnees/supplementaires/questionnaire.csv")
+q <- read_csv2("donnees/supplementaires/questionnaire.csv")
 ```
 
 Si vous visualisez les données avec `glimpse(q)`, vous verrez que le fichier n'est pas *tidy* : il y a plusieurs colonnes qui ne sont pas nécessaires. En plus, les questions sont distribuées à travers les colonnes, et les noms des colonnes sont immenses. Simplement dit, le fichier est chaotique.
@@ -83,7 +83,7 @@ Si vous visualisez les données avec `glimpse(q)`, vous verrez que le fichier n'
 Il faut simplifier et standardiser les noms des colonnes. Idéalement, on ne veut pas avoir des espaces dans les noms des variables (c'est pourquoi on voit plusieurs accents graves dans les noms de colonnes maintenant). La fonction `clean_names()` de l'extension `janitor` sera très utile ici :
 
 ```{r}
-q = clean_names(q) # Remplacer la version originale par la version simplifiée/standardisée
+q <- clean_names(q) # Remplacer la version originale par la version simplifiée/standardisée
 glimpse(q)
 ```
 
@@ -92,7 +92,7 @@ glimpse(q)
 Ensuite, on va enlever des colonnes inutiles. Par exemple, on voit des colonnes qui commencent par « feedback\_... », par « points\_... », etc. Les colonnes qui commencent par « heure\_... », « adresse\_... », « quiz\_... » ou « total\_... » peuvent être enlevées aussi. Ici, on utilise la fonction `select()`, déjà utilisée dans le cours, ainsi que la fonction `matches()` pour trouver des patrons des caractères. L'accent circonflexe signifie « le début d'une séquence »; la barre verticale signifie « ou ». Donc, ici on enlève les colonnes qui contiennent les mots « heure », « adresse », « nom », « feedback », « points », « total » ou « quiz ».
 
 ```{r}
-q = q |> 
+q <- q |> 
   select(-matches("^(heure|adresse|nom|feedback|points|total|quiz)"))
 
 glimpse(q, width = 50) # largeur de 50%
@@ -112,7 +112,7 @@ names(q)
 # Notez que les questions du questionnaire commencent dans la colonne 6 (jusqu'à la colonne 15)
 
 # Transformation wide-to-long :
-long = q |> 
+long <- q |> 
   pivot_longer(names_to = "question",
                values_to = "reponse",
                cols = 6:15)
@@ -126,7 +126,7 @@ glimpse(long, width = 50)
 Finalement, notez qu'on a une colonne immense : « avez_vous_suivi\_... ». C'est terrible. On va encore simplifier les noms des variables avec la fonction `rename()` :
 
 ```{r}
-long = long |> 
+long <- long |> 
   rename("nom" = "votre_nom", # on va enlever cette colonne pour garantir l'anonymat
          "naissance" = "votre_date_de_naissance",
          "langues" = "combien_de_langues_parlez_vous",
@@ -141,7 +141,7 @@ glimpse(long, width = 50)
 L'avantage d'utiliser la fonction `glimpse()` est qu'elle nous donne la classe de chaque variable dans le tableau. Ici, on voit que la variable `id` est considérée comme `dbl` (*double*, c'est-à-dire numérique). C'est un problème, vu que l'identification de chaque participant représente un facteur (`fct`). En plus, toutes les variables `chr` sont, en réalité, `fct` aussi. Observez le code ci-dessous.
 
 ```{r}
-long = long |> 
+long <- long |> 
   mutate(id = as_factor(id),
          across(where(is_character), as_factor))
 
@@ -159,7 +159,7 @@ Nos données représentent un questionnaire dont les questions ont des réponses
 
 ```{r}
 # Notre clé de correction!
-reponses = c("oui", "non", "oui", "non",
+reponses <- c("oui", "non", "oui", "non",
              "oui", "non", "oui", "non",
              "oui", "non")
 ```
@@ -167,7 +167,7 @@ reponses = c("oui", "non", "oui", "non",
 Maintenant, on colle les réponses dans notre tableau principal. **Faites attention :** on n'a que 10 réponses, mais notre tableau contient `r 10 * length(levels(long$id))` lignes (nombre de participants = `r length(levels(long$id))`). Donc, il faut **grouper** les données *avant* d'ajouter la nouvelle colonne :
 
 ```{r}
-long = long |> 
+long <- long |> 
   mutate(correction = reponses, .by = id)
 
 glimpse(long, width = 50)
@@ -178,14 +178,14 @@ Finalement, on peut corriger les réponses en utilisant la fonction `if_else()`.
 [^donnees-binaires-2]: Notez la différence entre les lettres majuscules et minuscules. On utilise la fonction `str_to_lower()` pour s'assurer que les caractères seront minuscules avant l'évaluation.
 
 ```{r}
-long = long |> 
+long <- long |> 
   mutate(bonne_reponse = if_else(
       str_to_lower(reponse) == correction, 
       1,  # valeur si TRUE
       0)) # valeur si FALSE
   
 # Maintenant, on peut enlever la colonne « correction » :
-long = long |> 
+long <- long |> 
   select(-correction)
 
 glimpse(long, width = 50)
@@ -199,7 +199,7 @@ Vu que nos données contiennent les dates de naissance des participants, on pour
 ```{r}
 #| eval: false
 #
-long = long |> 
+long <- long |> 
   mutate(naissance = mdy(naissance),
          age = (interval(naissance, today())/years(1)) |> round(0))
 

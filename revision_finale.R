@@ -2,7 +2,7 @@ library(tidyverse)
 library(languageR)
 
 # Data for LM question (q4)
-d = read_csv("donnees/base/prepost.csv")
+d <- read_csv("donnees/base/prepost.csv")
 
 d |> glimpse()
 
@@ -15,7 +15,7 @@ ggplot(data = d, aes(x = Proficiency, y = PostTest-PreTest)) +
   facet_grid(L1~Feedback)
 
 set.seed(2)
-d2 = tibble(ID = str_c("Learner_", seq(101, 150)),
+d2 <- tibble(ID = str_c("Learner_", seq(101, 150)),
             L1 = rep("Mandarin", times = 50),
             Proficiency = rep(c("Int", "Adv"), times = c(20, 30)),
             Sex = sample(x = c("Male", "Female"), size = 50, replace = TRUE),
@@ -42,7 +42,7 @@ ggplot(data = d2, aes(x = Hours, y = DIFF)) +
   geom_smooth(method = "lm")
 
 
-d = d |> 
+d <- d |> 
   bind_rows(d2) |> 
   select(-c(DelayedPostTest, DIFF))
 
@@ -55,11 +55,11 @@ ggplot(data = d, aes(x = Proficiency, y = PostTest-PreTest)) +
 
 d |> glimpse()
 
-d = d |> 
+d <- d |> 
   mutate(PostTest = PostTest + Hours/2,
          diff = PostTest - PreTest)
 
-fit = lm(diff ~ L1 + Feedback + Hours, data = d)
+fit <- lm(diff ~ L1 + Feedback + Hours, data = d)
 
 summary(fit)
 
@@ -74,7 +74,7 @@ emmeans(fit, pairwise ~ L1, adjust = "tukey")$contrasts
 # Treatment : phonetics component in course (recast) vs. no phonetics (explicit correction)
 
 # Rename cols:
-d = d |> 
+d <- d |> 
   rename(Condition = Feedback,
          Pre = PreTest,
          Post = PostTest,
@@ -83,7 +83,7 @@ d = d |>
 d
 
 # Rename levels:
-d = d |> 
+d <- d |> 
   mutate(L1 = case_when(L1 == "German" ~ "espagnol",
                         L1 == "Japanese" ~ "portugais",
                         L1 == "Mandarin" ~ "danois",
@@ -102,7 +102,7 @@ ggplot(data = d, aes(x = Compétence, y = Post-Pre)) +
   geom_hline(yintercept = 0, linetype = "dashed")
 
 
-phon = d |> select(-diff)
+phon <- d |> select(-diff)
 
 save(phon, file = "donnees/base/phonetique.RData")
 

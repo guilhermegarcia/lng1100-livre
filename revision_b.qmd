@@ -158,12 +158,12 @@ b. Modélisez les données et rapportez les résultats. La méthode d'enseigneme
 library(tidyverse)
 data(Titanic)
 
-tit = Titanic |> 
+tit <- Titanic |> 
   as_tibble() |> 
   uncount(n) |> 
   mutate(Survived = if_else(Survived == "Yes", 1, 0))
 
-fit = glm(Survived ~ Class + Sex + Age, data = tit, family = "binomial")
+fit <- glm(Survived ~ Class + Sex + Age, data = tit, family = "binomial")
 
 summary(fit)$coefficients |> round(4)
 ```
@@ -177,12 +177,12 @@ c. Considérant les types de passagers analysés ici, quelle était le meilleure
 ```{r}
 #| echo: false
 #| eval: false
-newdata = expand.grid(Class = c("1st", "2nd", "3rd", "Crew"),
+newdata <- expand.grid(Class = c("1st", "2nd", "3rd", "Crew"),
                               Sex = rep(c("Male", "Female")),
                               Age = c("Child", "Adult")) |> 
   as_tibble()
 
-newdata = newdata |> 
+newdata <- newdata |> 
   mutate(pred = predict(fit, newdata, type = "response"))
 
 newdata |> arrange(desc(pred))
